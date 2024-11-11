@@ -1,0 +1,13 @@
+POST https://api.alba-72.ru/api/v1/web/feedback
+Content-Type: application/json
+
+{
+  "sender": "Kostya",
+  "senderPhone": "999999999",
+  "senderEmail": "mail@mail.com",
+  "message": "Test message",
+}
+
+###
+
+GET https://api.alba-72.ru/api/v1/catalog/products/
