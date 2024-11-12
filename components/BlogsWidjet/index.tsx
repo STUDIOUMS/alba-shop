@@ -22,7 +22,7 @@ const BlogsWidjet = (): JSX.Element => {
     <Grid2 container spacing={6}>
       {isSuccess &&
         data.results.map((blog) => (
-          <BlogsWidjetItem key={blog.id} item={blog} />
+          <BlogsWidjetItem key={blog.id} item={blog} size={{ xs: 12, lg: 6 }} />
         ))}
     </Grid2>
   );

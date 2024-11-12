@@ -1,23 +1,25 @@
 "use client";
 
-import { Grid2, styled, Typography } from "@mui/material";
+import { Grid2, Grid2Props, styled, Typography } from "@mui/material";
 import { BlogItem } from "@/types";
 import { createDate } from "@/utils/helpers";
 import Link from "next/link";
 
-type BlogsWidjetItemProps = {
+type BlogsWidjetItemProps = Grid2Props & {
   item: BlogItem;
 };
 const Item = styled(Grid2)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[100],
-  borderRadius: "6px",
+  borderColor: theme.palette.grey[300],
+  borderStyle: "solid",
+  borderWidth: 1,
+  borderRadius: 6,
   padding: theme.spacing(5),
 }));
 
 const BlogsWidjetItem = (props: BlogsWidjetItemProps): JSX.Element => {
   const { item } = props;
   return (
-    <Item size={{ xs: 12, lg: 6 }}>
+    <Item {...props}>
       <Typography variant="h4" component="div" sx={{ mb: 2 }}>
         <Link href={`/blog/${item.slug}`}>{item.title}</Link>
       </Typography>

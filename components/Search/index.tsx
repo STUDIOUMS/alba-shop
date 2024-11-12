@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import CustomInput from "@/ui/CustomInput";
 import { Box, Stack } from "@mui/material";
 import CustomBtn from "@/ui/CustomBtn";
-// import search from "@/assets/search.svg";
+import searchIcon from "@/assets/search.svg";
 
 const Search: React.FC = () => {
   const [val, setVal] = useState<string>("");
@@ -33,8 +33,12 @@ const Search: React.FC = () => {
             onChange={(e) => setVal(e.target.value)}
             sx={{ mb: 0 }}
           />
-          <CustomBtn type="submit" variant="outlined" sx={{ ml: 2 }}>
-            Искать
+          <CustomBtn
+            type="submit"
+            variant="outlined"
+            sx={{ ml: 1, minWidth: 40, p: 0 }}
+          >
+            <img src={searchIcon.src} alt="" style={{ width: 20 }} />
           </CustomBtn>
         </Stack>
       </form>
