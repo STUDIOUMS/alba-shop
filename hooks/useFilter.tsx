@@ -5,7 +5,7 @@ type FilterReturn = {
   hitState: boolean;
   discountState: boolean;
   newState: boolean;
-  isPack: string;
+  packState: string[];
   applyFilter: () => void;
   resetFilter: () => void;
   setHitState: React.Dispatch<SetStateAction<boolean>>;
@@ -90,7 +90,7 @@ const useFilter = (): FilterReturn => {
     discountState,
     hitState,
     newState,
-    isPack,
+    packState,
     isResetDisabled,
   };
 };

@@ -8,6 +8,7 @@ import Range from "@/ui/Range";
 import { FilterDiv, FilterFooter, FilterHeader } from "./styles";
 import useFilter from "@/hooks/useFilter";
 import CustomCheck from "@/ui/CustomCheck";
+import FilterPack from "./FilterPack";
 
 type FilterProps = {
   packs: Pack[];
@@ -26,7 +27,7 @@ const Filter = (props: FilterProps): JSX.Element => {
     discountState,
     hitState,
     newState,
-    isPack,
+    packState,
     isResetDisabled,
   } = useFilter();
 
@@ -77,20 +78,20 @@ const Filter = (props: FilterProps): JSX.Element => {
         <FilterHeader size="small">Фасовка</FilterHeader>
         <Box sx={{ p: 4 }}>
           <FormGroup>
-            {packs.map((pack) => {
-              return (
-                <CheckField
-                  key={pack.id}
-                  label={pack.name}
-                  control={
-                    <CustomCheck
-                      value={pack.id}
-                      onChange={(e) => choosePackHandler(e.target.value)}
-                    />
-                  }
-                />
-              );
-            })}
+            {packs.map((pack) => (
+              <FilterPack
+                key={pack.id}
+                handler={choosePackHandler}
+                id={pack.id.toString()}
+                label={pack.name}
+                isChecked={
+                  packState.length
+                    ? packState.some((el) => el === pack.id.toString())
+                    : false
+                }
+                reseted={!packState.length}
+              />
+            ))}
           </FormGroup>
         </Box>
       </Box>
