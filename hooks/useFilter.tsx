@@ -13,7 +13,12 @@ type FilterReturn = {
   setDiscountState: React.Dispatch<SetStateAction<boolean>>;
   choosePackHandler: (id: string) => void;
   isResetDisabled: boolean;
+  setPrices: React.Dispatch<SetStateAction<number[]>>;
+  prices: number[];
 };
+
+const MIN_PRICE = 0;
+const MAX_PRICE = 1000;
 
 const useFilter = (): FilterReturn => {
   const router = useRouter();
@@ -25,11 +30,14 @@ const useFilter = (): FilterReturn => {
   const isDiscount = searchParams.has("discount") ? true : false;
   const isNew = searchParams.has("new") ? true : false;
   const isPack = searchParams.get("pack") || "";
+  const isMin = Number(searchParams.get("price_min")) || MIN_PRICE;
+  const isMax = Number(searchParams.get("price_max")) || MAX_PRICE;
 
   // State
   const [hitState, setHitState] = useState(isHit);
   const [discountState, setDiscountState] = useState(isDiscount);
   const [newState, setNewState] = useState(isNew);
+  const [prices, setPrices] = useState<number[]>([isMin, isMax]);
   const [packState, setPackState] = useState<string[]>(
     isPack.length ? isPack.split(",") : []
   );
@@ -43,12 +51,21 @@ const useFilter = (): FilterReturn => {
   };
 
   const createQueryString = useCallback(
-    (h: boolean, d: boolean, n: boolean, pack: string) => {
+    (h: boolean, d: boolean, n: boolean, pack: string, values: number[]) => {
       const params = new URLSearchParams(searchParams.toString());
 
       h ? params.set("hit", "true") : params.delete("hit");
       d ? params.set("discount", "true") : params.delete("discount");
       n ? params.set("new", "true") : params.delete("new");
+
+      // setting prices
+      if (values[0] !== MIN_PRICE || values[1] !== MAX_PRICE) {
+        params.set("price_min", values[0].toString());
+        params.set("price_max", values[1].toString());
+      } else {
+        params.delete("price_min");
+        params.delete("price_max");
+      }
 
       pack.length ? params.set("pack", pack) : params.delete("pack");
 
@@ -62,19 +79,26 @@ const useFilter = (): FilterReturn => {
       hitState,
       discountState,
       newState,
-      packState.join(",")
+      packState.join(","),
+      prices
     );
     router.push(pathname + "?" + query);
   };
 
   const isResetDisabled =
-    !newState && !hitState && !discountState && !packState.length;
+    !newState &&
+    !hitState &&
+    !discountState &&
+    !packState.length &&
+    prices[0] === MIN_PRICE &&
+    prices[1] === MAX_PRICE;
 
   const resetFilter = () => {
     setDiscountState(false);
     setHitState(false);
     setNewState(false);
     setPackState([]);
+    setPrices([MIN_PRICE, MAX_PRICE]);
     if (!!searchParams.toString().length) {
       router.push(pathname);
     }
@@ -92,6 +116,8 @@ const useFilter = (): FilterReturn => {
     newState,
     packState,
     isResetDisabled,
+    setPrices,
+    prices,
   };
 };
 

@@ -29,6 +29,8 @@ const Filter = (props: FilterProps): JSX.Element => {
     newState,
     packState,
     isResetDisabled,
+    setPrices,
+    prices,
   } = useFilter();
 
   return (
@@ -72,7 +74,7 @@ const Filter = (props: FilterProps): JSX.Element => {
 
         <FilterHeader size="small">Цена</FilterHeader>
         <Box sx={{ p: 4 }}>
-          <Range />
+          <Range setValues={setPrices} values={prices} max={1000} />
         </Box>
 
         <FilterHeader size="small">Фасовка</FilterHeader>
