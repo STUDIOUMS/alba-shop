@@ -1,18 +1,21 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 type FilterReturn = {
-  isHit: boolean;
-  isDiscount: boolean;
-  isNew: boolean;
+  hitState: boolean;
+  discountState: boolean;
+  newState: boolean;
   isPack: string;
   applyFilter: () => void;
-  chooseFilterParam: (val: string) => void;
+  resetFilter: () => void;
+  setHitState: React.Dispatch<SetStateAction<boolean>>;
+  setNewState: React.Dispatch<SetStateAction<boolean>>;
+  setDiscountState: React.Dispatch<SetStateAction<boolean>>;
   choosePackHandler: (id: string) => void;
+  isResetDisabled: boolean;
 };
 
 const useFilter = (): FilterReturn => {
-  // url params
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,48 +27,71 @@ const useFilter = (): FilterReturn => {
   const isPack = searchParams.get("pack") || "";
 
   // State
-  const [filterState, setFilterState] = useState<string[]>([]);
-  const [packState, setPackState] = useState<string[]>([]);
-
-  const chooseFilterParam = (val: string) => {
-    setFilterState((prev) => {
-      if (!prev.includes(val)) return [...prev, val];
-      return prev.filter((el) => el !== val);
-    });
-  };
+  const [hitState, setHitState] = useState(isHit);
+  const [discountState, setDiscountState] = useState(isDiscount);
+  const [newState, setNewState] = useState(isNew);
+  const [packState, setPackState] = useState<string[]>(
+    isPack.length ? isPack.split(",") : []
+  );
 
   const choosePackHandler = (id: string) => {
-    setPackState((prev) => {
-      if (!prev.includes(id)) return [...prev, id];
-      return prev.filter((el) => el !== id);
-    });
+    if (packState.some((el) => el == id)) {
+      setPackState(packState.filter((el) => el !== id));
+    } else {
+      setPackState((prev) => [...prev, id].sort());
+    }
   };
 
   const createQueryString = useCallback(
-    (filters: string[], packs: string) => {
+    (h: boolean, d: boolean, n: boolean, pack: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      filters.forEach((el) => params.set(el, "true"));
-      isPack.length ? params.set("pack", packs) : params.delete("pack");
+
+      h ? params.set("hit", "true") : params.delete("hit");
+      d ? params.set("discount", "true") : params.delete("discount");
+      n ? params.set("new", "true") : params.delete("new");
+
+      pack.length ? params.set("pack", pack) : params.delete("pack");
+
       return params.toString();
     },
     [searchParams]
   );
 
   const applyFilter = () => {
-    const query = createQueryString(filterState, packState.join(","));
-    console.log(query);
-
+    const query = createQueryString(
+      hitState,
+      discountState,
+      newState,
+      packState.join(",")
+    );
     router.push(pathname + "?" + query);
+  };
+
+  const isResetDisabled =
+    !newState && !hitState && !discountState && !packState.length;
+
+  const resetFilter = () => {
+    setDiscountState(false);
+    setHitState(false);
+    setNewState(false);
+    setPackState([]);
+    if (!!searchParams.toString().length) {
+      router.push(pathname);
+    }
   };
 
   return {
     applyFilter,
-    chooseFilterParam,
+    resetFilter,
+    setDiscountState,
+    setHitState,
+    setNewState,
     choosePackHandler,
-    isDiscount,
-    isHit,
-    isNew,
+    discountState,
+    hitState,
+    newState,
     isPack,
+    isResetDisabled,
   };
 };
 

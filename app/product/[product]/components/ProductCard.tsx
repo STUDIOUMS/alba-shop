@@ -11,6 +11,7 @@ import CustomBtn from "@/ui/CustomBtn";
 import Packages from "@/ui/Packages";
 import Gallery from "./Gallery";
 import { GoodChip } from "@/components/Good/styles";
+import noPhoto from "@/assets/no-photo.svg";
 
 type ProductCardProps = {
   good: Product;
@@ -25,7 +26,7 @@ const ImageBox = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  minHeight: 300,
+  minHeight: 320,
   position: "relative",
   "& img": {
     display: "block",
@@ -47,10 +48,14 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
       <Grid2 container spacing={6}>
         <Grid2 size={{ xs: 12, lg: 6 }}>
           <ImageBox>
-            <Gallery
-              img={img}
-              title={`${good.title}. Упаковка: ${currentPack}`}
-            />
+            {img ? (
+              <Gallery
+                img={img}
+                title={`${good.title}. Упаковка: ${currentPack}`}
+              />
+            ) : (
+              <img src={noPhoto.src} alt="" />
+            )}
             <Stack
               direction="row"
               alignItems="center"

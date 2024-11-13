@@ -1,37 +1,13 @@
-import theme from "@/theme";
-import { Checkbox, FormControlLabel, styled } from "@mui/material";
+import { FormControlLabel, FormControlLabelProps, styled } from "@mui/material";
 
-type CheckFieldProps = {
-  checked: boolean;
-  label: string;
-  value: string;
-  handler: (val: string) => void;
-};
-
-const Item = styled(FormControlLabel)(() => ({
+const Item = styled(FormControlLabel)(({ theme }) => ({
   display: "flex",
   marginBottom: theme.spacing(2),
   padding: 0,
 }));
 
-const CheckField = (props: CheckFieldProps) => {
-  const { checked, handler, label, value } = props;
-  return (
-    <Item
-      control={
-        <Checkbox
-          value={value}
-          size="small"
-          sx={{ p: 0, pl: 2, mr: 2 }}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handler(e.target.value)
-          }
-          defaultChecked={checked}
-        />
-      }
-      label={label}
-    />
-  );
+const CheckField = (props: FormControlLabelProps) => {
+  return <Item {...props} />;
 };
 
 export default CheckField;

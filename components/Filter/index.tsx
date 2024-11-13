@@ -7,6 +7,7 @@ import CustomBtn from "@/ui/CustomBtn";
 import Range from "@/ui/Range";
 import { FilterDiv, FilterFooter, FilterHeader } from "./styles";
 import useFilter from "@/hooks/useFilter";
+import CustomCheck from "@/ui/CustomCheck";
 
 type FilterProps = {
   packs: Pack[];
@@ -17,12 +18,16 @@ const Filter = (props: FilterProps): JSX.Element => {
 
   const {
     applyFilter,
-    chooseFilterParam,
+    resetFilter,
+    setDiscountState,
+    setHitState,
+    setNewState,
     choosePackHandler,
-    isDiscount,
-    isHit,
-    isNew,
+    discountState,
+    hitState,
+    newState,
     isPack,
+    isResetDisabled,
   } = useFilter();
 
   return (
@@ -32,22 +37,34 @@ const Filter = (props: FilterProps): JSX.Element => {
         <Box sx={{ p: 4 }}>
           <FormGroup>
             <CheckField
-              handler={chooseFilterParam}
               label="Хит"
-              value="hit"
-              checked={isHit}
+              control={
+                <CustomCheck
+                  value="hit"
+                  checked={hitState}
+                  onChange={(e) => setHitState(e.target.checked)}
+                />
+              }
             />
             <CheckField
-              handler={chooseFilterParam}
               label="Скидка"
-              value="discount"
-              checked={isDiscount}
+              control={
+                <CustomCheck
+                  value="discount"
+                  checked={discountState}
+                  onChange={(e) => setDiscountState(e.target.checked)}
+                />
+              }
             />
             <CheckField
-              handler={chooseFilterParam}
               label="Новинки"
-              value="new"
-              checked={isNew}
+              control={
+                <CustomCheck
+                  value="new"
+                  checked={newState}
+                  onChange={(e) => setNewState(e.target.checked)}
+                />
+              }
             />
           </FormGroup>
         </Box>
@@ -57,17 +74,20 @@ const Filter = (props: FilterProps): JSX.Element => {
           <Range />
         </Box>
 
-        <FilterHeader size="small">Упаковка</FilterHeader>
+        <FilterHeader size="small">Фасовка</FilterHeader>
         <Box sx={{ p: 4 }}>
           <FormGroup>
-            {packs.map((el) => {
+            {packs.map((pack) => {
               return (
                 <CheckField
-                  key={el.id}
-                  handler={choosePackHandler}
-                  label={el.name}
-                  value={el.id.toString()}
-                  checked={isPack.includes(el.id.toString())}
+                  key={pack.id}
+                  label={pack.name}
+                  control={
+                    <CustomCheck
+                      value={pack.id}
+                      onChange={(e) => choosePackHandler(e.target.value)}
+                    />
+                  }
                 />
               );
             })}
@@ -89,8 +109,8 @@ const Filter = (props: FilterProps): JSX.Element => {
           variant="outlined"
           color="secondary"
           fullWidth
-          disabled
-          onClick={() => {}}
+          disabled={isResetDisabled}
+          onClick={resetFilter}
         >
           Сбросить
         </CustomBtn>

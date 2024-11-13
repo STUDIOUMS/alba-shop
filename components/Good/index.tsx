@@ -9,6 +9,7 @@ import Link from "next/link";
 import AddCart from "../AddCart";
 import PriceBox from "../PriceBox";
 import { GoodChip, GoodItem, GoodItemTitle } from "./styles";
+import noPhoto from "@/assets/no-photo.svg";
 
 type GoodProps = {
   el: Product;
@@ -45,14 +46,22 @@ const Good = (props: GoodProps): JSX.Element => {
       }}
     >
       <Stack sx={{ flexGrow: 1, mb: 4, flexDirection: condition2 }}>
-        <Box sx={{ mb: 3 }}>
-          <Link href={`/product/${el.slug}`}>
+        <Box sx={{ mb: 4 }}>
+          {img ? (
+            <Link href={`/product/${el.slug}`}>
+              <img
+                src={img}
+                alt=""
+                style={{ display: "block", margin: "0 auto", height: 120 }}
+              />
+            </Link>
+          ) : (
             <img
-              src={img}
+              src={noPhoto.src}
               alt=""
-              style={{ display: "block", margin: "0 auto", height: 140 }}
+              style={{ display: "block", margin: "0 auto", height: 120 }}
             />
-          </Link>
+          )}
         </Box>
         <GoodItemTitle>
           <Link href={`/product/${el.slug}`}>{el.title}</Link>
