@@ -2,6 +2,7 @@ import { BreadCrumbsItem } from "@/types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import Section from "@/ui/Section";
 import { Alert, AlertTitle, Typography } from "@mui/material";
+import SearchGrid from "./components/SearchGrid";
 
 type Params = {
   searchParams: Promise<{ s: string }>;
@@ -25,13 +26,7 @@ async function SearchPage(props: Params) {
       <Typography variant="h1">
         Результаты поиска по запросу - &quot;{s}&quot;
       </Typography>
-
-      <Alert variant="outlined" severity="info">
-        <AlertTitle>
-          По вашему запросу <b>&quot;{s}&quot;</b> ничего не найдено.
-        </AlertTitle>
-        Попробуйте изменить поисковый запрос.
-      </Alert>
+      <SearchGrid query={s} />
     </Section>
   );
 }

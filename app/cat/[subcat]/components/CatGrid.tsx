@@ -3,13 +3,14 @@
 import ErrorAlert from "@/components/ErrorAlert";
 import Filter from "@/components/Filter";
 import Good from "@/components/Good";
+import GoodList from "@/components/GoodList";
 import Sort from "@/components/Sort";
 import Subcats from "@/components/Subcats";
 import { PRODUCTS_LIMIT } from "@/constants";
 import useGetData from "@/hooks/useGetData";
 import { useAppStore } from "@/store/useAppStore";
 import { Cat, Pack, Product, Response } from "@/types";
-import { Grid2 } from "@mui/material";
+import { Alert, AlertTitle, Grid2 } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import CatLoading from "./CatLoading";
 
@@ -42,6 +43,14 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
   if (isLoading) return <CatLoading />;
   if (isError) return <ErrorAlert />;
 
+  if (isSuccess && !data.results.length)
+    return (
+      <Alert severity="info" variant="outlined">
+        <AlertTitle>Не найдено</AlertTitle>В данной категории пока что нет
+        товаров
+      </Alert>
+    );
+
   return (
     <Grid2 container spacing={6}>
       <Grid2 size={{ xs: 12, lg: 3 }}>
@@ -53,12 +62,7 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
 
         <Sort />
 
-        <Grid2 container spacing={4} sx={{ mb: 10 }}>
-          {isSuccess &&
-            data.results.map((product) => (
-              <Good key={product.id} el={product} />
-            ))}
-        </Grid2>
+        {isSuccess && <GoodList products={data.results} />}
       </Grid2>
     </Grid2>
   );
