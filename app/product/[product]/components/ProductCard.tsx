@@ -38,8 +38,10 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const { good } = props;
   const [quickModal, setQuickModal] = useState<boolean>(false);
 
-  const { choosePack, img, price, oldprice, currentPack, currentPackID } =
-    usePriceImg(good.relatedPacks);
+  const { choosePack, currentPack } = usePriceImg({
+    defaultPack: good.defaultPack,
+    packs: good.relatedPacks,
+  });
 
   const isSale = good.relatedPacks.some((el) => el.oldPrice !== null);
 
@@ -48,9 +50,9 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
       <Grid2 container spacing={6}>
         <Grid2 size={{ xs: 12, lg: 6 }}>
           <ImageBox>
-            {img ? (
+            {currentPack.img ? (
               <Gallery
-                img={img}
+                img={currentPack.img}
                 title={`${good.title}. Упаковка: ${currentPack}`}
               />
             ) : (
@@ -74,20 +76,25 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
           </Typography>
 
           <PriceBox
-            price={price}
-            oldprice={oldprice}
+            price={currentPack.price}
+            oldprice={currentPack.oldPrice}
             size="large"
             sx={{ mb: 6 }}
           />
 
           <Packages
-            currentPackID={currentPackID}
+            currentPackID={currentPack.id}
             handler={choosePack}
             packs={good.relatedPacks}
           />
 
           <Stack direction="row">
-            <AddCart el={good} pack={currentPack} price={price} img={img} />
+            <AddCart
+              el={good}
+              pack={currentPack.pack.name}
+              price={currentPack.price}
+              img={currentPack.img}
+            />
             <CustomBtn
               onClick={() => setQuickModal(true)}
               color="secondary"

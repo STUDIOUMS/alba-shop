@@ -42,7 +42,7 @@ export type Pack = {
   name: string;
 };
 
-export type RelatedPacks = {
+export type RelatedPack = {
   id: number;
   pack: {
     id: number;
@@ -63,8 +63,8 @@ export type ProductCat = {
 export type Product = {
   id: number;
   relatedAttrs: RelatedAttrs[];
-  relatedPacks: RelatedPacks[];
-  defaultPack: RelatedPacks;
+  relatedPacks: RelatedPack[];
+  defaultPack: RelatedPack;
   categories: ProductCat[];
   slug: string;
   title: string;

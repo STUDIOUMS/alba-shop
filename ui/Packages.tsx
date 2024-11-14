@@ -1,6 +1,6 @@
 "use client";
 
-import { RelatedPacks } from "@/types";
+import { RelatedPack } from "@/types";
 import {
   Box,
   Button,
@@ -12,8 +12,8 @@ import {
 
 type PackagesProps = {
   currentPackID: number;
-  handler: (id: number, name: string) => void;
-  packs: RelatedPacks[];
+  handler: (id: number) => void;
+  packs: RelatedPack[];
 };
 
 const PackBtn = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -40,7 +40,7 @@ const Packages = (props: PackagesProps): JSX.Element => {
           <PackBtn
             key={el.id}
             variant={currentPackID === el.id ? "contained" : "outlined"}
-            onClick={() => handler(el.pack.id, el.pack.name)}
+            onClick={() => handler(el.pack.id)}
           >
             {el.pack.name}
           </PackBtn>

@@ -1,6 +1,4 @@
-import { View } from "@/types";
-import { Box, Chip, ChipProps, Grid2, Stack, styled } from "@mui/material";
-import { BoxProps } from "@mui/system";
+import { Box, BoxProps, Chip, ChipProps, Grid2, styled } from "@mui/material";
 
 export const GoodItem = styled(Grid2)<BoxProps>(({ theme }) => ({
   borderWidth: 1,
@@ -10,6 +8,18 @@ export const GoodItem = styled(Grid2)<BoxProps>(({ theme }) => ({
   display: "flex",
   padding: theme.spacing(3),
   position: "relative",
+}));
+
+export const GoodImage = styled(Box)<BoxProps>(() => ({
+  alignItems: "center",
+  display: "flex",
+  justifyContent: "center",
+  height: 140,
+  img: {
+    display: "block",
+    margin: "0 auto",
+    height: 120,
+  },
 }));
 
 export const GoodChip = styled(Chip)<ChipProps>(({ theme }) => ({

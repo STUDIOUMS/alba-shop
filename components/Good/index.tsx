@@ -4,11 +4,11 @@ import { usePriceImg } from "@/hooks/usePriceImg";
 import { useAppStore } from "@/store/useAppStore";
 import { Product } from "@/types";
 import Packages from "@/ui/Packages";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import Link from "next/link";
 import AddCart from "../AddCart";
 import PriceBox from "../PriceBox";
-import { GoodChip, GoodItem, GoodItemTitle } from "./styles";
+import { GoodChip, GoodImage, GoodItem, GoodItemTitle } from "./styles";
 import noPhoto from "@/assets/no-photo.svg";
 
 type GoodProps = {
@@ -21,8 +21,10 @@ const Good = (props: GoodProps): JSX.Element => {
   const { view } = useAppStore();
   const isGrid = view === "grid";
 
-  const { choosePack, img, price, oldprice, currentPack, currentPackID } =
-    usePriceImg(el.relatedPacks);
+  const { choosePack, currentPack } = usePriceImg({
+    defaultPack: el.defaultPack,
+    packs: el.relatedPacks,
+  });
 
   const isSale = el.relatedPacks.some((el) => el.oldPrice !== null);
 
@@ -46,23 +48,15 @@ const Good = (props: GoodProps): JSX.Element => {
       }}
     >
       <Stack sx={{ flexGrow: 1, mb: 4, flexDirection: condition2 }}>
-        <Box sx={{ mb: 4 }}>
-          {img ? (
-            <Link href={`/product/${el.slug}`}>
-              <img
-                src={img}
-                alt=""
-                style={{ display: "block", margin: "0 auto", height: 120 }}
-              />
-            </Link>
-          ) : (
-            <img
-              src={noPhoto.src}
-              alt=""
-              style={{ display: "block", margin: "0 auto", height: 120 }}
-            />
-          )}
-        </Box>
+        <GoodImage sx={{ mb: 4 }}>
+          <Link href={`/product/${el.slug}`}>
+            {currentPack.img ? (
+              <img src={currentPack.img} alt="" />
+            ) : (
+              <img src={noPhoto.src} alt="" style={{ height: 90 }} />
+            )}
+          </Link>
+        </GoodImage>
         <GoodItemTitle>
           <Link href={`/product/${el.slug}`}>{el.title}</Link>
         </GoodItemTitle>
@@ -74,15 +68,24 @@ const Good = (props: GoodProps): JSX.Element => {
         {el.new && <GoodChip color="primary" label="new" />}
       </Stack>
 
-      <PriceBox price={price} oldprice={oldprice} sx={{ mb: 3 }} />
+      <PriceBox
+        price={currentPack.price}
+        oldprice={currentPack.oldPrice}
+        sx={{ mb: 3 }}
+      />
 
       <Packages
-        currentPackID={currentPackID}
+        currentPackID={currentPack.id}
         handler={choosePack}
         packs={el.relatedPacks}
       />
 
-      <AddCart el={el} img={img} pack={currentPack} price={price} />
+      <AddCart
+        el={el}
+        img={currentPack.img}
+        pack={currentPack.pack.name}
+        price={currentPack.price}
+      />
     </GoodItem>
   );
 };

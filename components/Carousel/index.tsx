@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 import useGetData from "@/hooks/useGetData";
 import ErrorAlert from "../ErrorAlert";
 import CarouselLoading from "./CarouselLoading";
-import { Alert, AlertTitle, Box } from "@mui/material";
+import { Alert, AlertTitle } from "@mui/material";
 
 type CarouselProps = {
   title: string;
