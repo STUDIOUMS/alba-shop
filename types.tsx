@@ -12,15 +12,9 @@ export type Response<T> = {
   results: T[];
 };
 
-export type CatParent = {
-  pk: number;
-  name: string;
-  slug: string;
-};
-
-export type Cat = {
+export type Category = {
   id: number;
-  parent: CatParent | null;
+  parent?: string;
   slug: string;
   name: string;
   description: string;

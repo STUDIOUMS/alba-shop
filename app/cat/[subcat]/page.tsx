@@ -1,4 +1,4 @@
-import { BreadCrumbsItem, Cat } from "@/types";
+import { BreadCrumbsItem, Category } from "@/types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import Section from "@/ui/Section";
 import { getData } from "@/utils/api";
@@ -12,7 +12,7 @@ type Params = {
 // Metatags
 export async function generateMetadata(props: Params) {
   const { subcat } = await props.params;
-  const cat: Cat = await getData(`/catalog/categories/${subcat}/`);
+  const cat: Category = await getData(`/catalog/categories/${subcat}/`);
   return {
     title: cat ? cat.name : "Not found",
   };
@@ -20,20 +20,13 @@ export async function generateMetadata(props: Params) {
 
 async function SubCat(props: Params) {
   const { subcat } = await props.params;
-  const cat: Cat = await getData(`/catalog/categories/${subcat}/`);
+  const cat: Category = await getData(`/catalog/categories/${subcat}/`);
 
   // breadcrumbs
   const crumbs: BreadCrumbsItem[] = [
+    { name: "Каталог", slug: "/cat" },
     { name: cat.name, slug: `/cat/${cat.slug}` },
   ];
-
-  if (cat.parent !== null) {
-    const parentCrumb: BreadCrumbsItem = {
-      name: cat.parent.name,
-      slug: `/cat/${cat.parent.slug}`,
-    };
-    crumbs.unshift(parentCrumb);
-  }
 
   return (
     <Section>

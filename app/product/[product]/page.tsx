@@ -23,11 +23,11 @@ async function ProductPage(props: Params) {
   const item = await getData<Product>(`/catalog/products/${product}`);
 
   // Breadcrumbs
-  let crumbs: BreadCrumbsItem[] = [];
+  let crumbs: BreadCrumbsItem[] = [
+    { name: "Каталог", slug: "/cat" },
+    { name: item.categories[0].name, slug: `/cat/${item.categories[0].slug}` },
+  ];
   if (product) {
-    item.categories.forEach((el) => {
-      crumbs.push({ name: el.name, slug: `/cat/${el.slug}` });
-    });
     crumbs.push({ name: item.title, slug: `/product/${item.slug}` });
   }
 
@@ -35,13 +35,7 @@ async function ProductPage(props: Params) {
     <Section>
       <BreadCrumbs links={crumbs} />
       <Typography variant="h1">{item.title}</Typography>
-
       <ProductCard good={item} />
-
-      {/* <ProductTabs
-        description={product.description}
-        features={product.relatedAttrs}
-      /> */}
     </Section>
   );
 }

@@ -2,25 +2,21 @@
 
 import ErrorAlert from "@/components/ErrorAlert";
 import Filter from "@/components/Filter";
-import Good from "@/components/Good";
 import GoodList from "@/components/GoodList";
 import Sort from "@/components/Sort";
-import Subcats from "@/components/Subcats";
 import { PRODUCTS_LIMIT } from "@/constants";
 import useGetData from "@/hooks/useGetData";
-import { useAppStore } from "@/store/useAppStore";
-import { Cat, Pack, Product, Response } from "@/types";
+import { Category, Pack, Product, Response } from "@/types";
 import { Alert, AlertTitle, Grid2 } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import CatLoading from "./CatLoading";
 
 type CatGridProps = {
-  cat: Cat;
+  cat: Category;
 };
 
 const CatGrid = (props: CatGridProps): JSX.Element => {
   const { cat } = props;
-  const { view } = useAppStore();
   const queryParams = useSearchParams();
   const queryParamsString = queryParams.toString().length
     ? `&${queryParams.toString()}`
@@ -58,10 +54,7 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
       </Grid2>
 
       <Grid2 size={{ xs: 12, lg: 9 }}>
-        <Subcats cat={cat} />
-
         <Sort />
-
         {isSuccess && <GoodList products={data.results} />}
       </Grid2>
     </Grid2>

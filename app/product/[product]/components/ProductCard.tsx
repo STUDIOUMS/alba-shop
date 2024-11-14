@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Grid2, Stack, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Grid2,
+  Stack,
+  styled,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import AddCart from "@/components/AddCart";
 import QuickModal from "@/components/Modals/QuickModal";
 import PriceBox from "@/components/PriceBox";
@@ -12,6 +20,9 @@ import Packages from "@/ui/Packages";
 import Gallery from "./Gallery";
 import { GoodChip } from "@/components/Good/styles";
 import noPhoto from "@/assets/no-photo.svg";
+import CustomTabPanel from "@/ui/CustomTabPanel";
+import Attributes from "./Attributes";
+import CustomTab from "@/ui/CustomTab";
 
 type ProductCardProps = {
   good: Product;
@@ -34,9 +45,17 @@ const ImageBox = styled(Box)(({ theme }) => ({
   },
 }));
 
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 const ProductCard = (props: ProductCardProps): JSX.Element => {
   const { good } = props;
   const [quickModal, setQuickModal] = useState<boolean>(false);
+  const [tabValue, setTabValue] = useState(0);
 
   const { choosePack, currentPack } = usePriceImg({
     defaultPack: good.defaultPack,
@@ -44,6 +63,10 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   });
 
   const isSale = good.relatedPacks.some((el) => el.oldPrice !== null);
+
+  const handleChange = (e: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
 
   return (
     <>
@@ -112,6 +135,29 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
           </p>
         </Grid2>
       </Grid2>
+
+      <Box>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={tabValue}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <CustomTab label="Описание" {...a11yProps(0)} />
+            <CustomTab label="Характеристики" {...a11yProps(1)} />
+            <CustomTab label="Документы" {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={tabValue} index={0}>
+          <Box dangerouslySetInnerHTML={{ __html: good.description }}></Box>
+        </CustomTabPanel>
+        <CustomTabPanel value={tabValue} index={1}>
+          <Attributes attrs={good.relatedAttrs} />
+        </CustomTabPanel>
+        <CustomTabPanel value={tabValue} index={2}>
+          Документы
+        </CustomTabPanel>
+      </Box>
 
       <QuickModal
         show={quickModal}

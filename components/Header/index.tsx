@@ -1,30 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { Box, CircularProgress, useMediaQuery, useTheme } from "@mui/material";
+import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import Navbar from "./NavBar";
 import CustomBtn from "@/ui/CustomBtn";
 import FeedbackModal from "../Modals/FeedbackModal";
 import { MiddleHeader, Wrap } from "./styles";
-import Image from "next/image";
-import logo from "@/assets/logo.webp";
+import logo from "@/assets/logo.svg";
 import SmallCart from "./SmallCart";
-import useGetData from "@/hooks/useGetData";
-import { Cat, Response } from "@/types";
-import CatPopup from "../CatPopup";
 import Link from "next/link";
 import NavDrawer from "./NavDrawer";
 import Search from "../Search";
+import iconBars from "@/assets/bars.svg";
 
 const Header = (): JSX.Element => {
   const [feedBack, setFeedBack] = useState<boolean>(false);
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
-
-  const { data, isSuccess, isLoading } = useGetData<Response<Cat>>({
-    key: ["cats"],
-    uri: "/catalog/categories",
-  });
+  const [openNav, setOpenNav] = useState(false);
 
   return (
     <>
@@ -37,7 +30,18 @@ const Header = (): JSX.Element => {
         })}
       >
         <Wrap>
-          {isTablet && <NavDrawer />}
+          {isTablet && (
+            <NavDrawer open={openNav} close={() => setOpenNav(false)} />
+          )}
+          {isTablet && (
+            <Link href="/">
+              <img
+                src={logo.src}
+                alt=""
+                style={{ objectFit: "contain", height: 50 }}
+              />
+            </Link>
+          )}
           {!isTablet && <Navbar />}
           <CustomBtn
             color="secondary"
@@ -52,20 +56,20 @@ const Header = (): JSX.Element => {
 
       <MiddleHeader>
         <Wrap sx={{ position: "relative" }}>
-          <Link href="/">
-            <Image
-              src={logo.src}
-              alt=""
-              width={50}
-              height={50}
-              style={{ objectFit: "contain" }}
-            />
-          </Link>
-
-          <Box sx={{ ml: 4, mr: "auto" }}>
-            {isLoading && <CircularProgress size={24} />}
-            {isSuccess && <CatPopup cats={data.results} />}
-          </Box>
+          {isTablet && (
+            <IconButton onClick={() => setOpenNav(true)}>
+              <img src={iconBars.src} alt="" style={{ width: 20 }} />
+            </IconButton>
+          )}
+          {!isTablet && (
+            <Link href="/">
+              <img
+                src={logo.src}
+                alt=""
+                style={{ objectFit: "contain", height: 50 }}
+              />
+            </Link>
+          )}
 
           <Search />
           <SmallCart />

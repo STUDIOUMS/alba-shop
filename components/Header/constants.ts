@@ -7,20 +7,21 @@ type NavItem = {
 
 export const NAV_ITEMS: NavItem[] = [
   { id: 1, title: "Главная", path: "/" },
-  { id: 2, title: "Блог", path: "/blog" },
-  { id: 3, title: "О компании", path: "/about" },
-  { id: 4, title: "Доставка и оплата", path: "/delivery" },
+  { id: 2, title: "Каталог", path: "/cat" },
+  { id: 3, title: "Блог", path: "/blog" },
+  { id: 4, title: "О компании", path: "/about" },
+  { id: 5, title: "Доставка и оплата", path: "/delivery" },
   {
-    id: 5,
+    id: 6,
     title: "Для партнеров",
     path: "#",
     children: [
-      { id: 9, title: "Документы", path: "/" },
-      { id: 10, title: "Условия", path: "/" },
-      { id: 11, title: "Сертификаты", path: "/" },
+      { id: 10, title: "Документы", path: "/" },
+      { id: 11, title: "Условия", path: "/" },
+      { id: 12, title: "Сертификаты", path: "/" },
     ],
   },
-  { id: 6, title: "Вакансии", path: "/vacancies" },
-  { id: 7, title: "Прайс", path: "/price" },
-  { id: 8, title: "Контакты", path: "/contacts" },
+  { id: 7, title: "Вакансии", path: "/vacancies" },
+  { id: 8, title: "Прайс", path: "/price" },
+  { id: 9, title: "Контакты", path: "/contacts" },
 ];

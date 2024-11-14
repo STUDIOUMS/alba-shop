@@ -23,7 +23,7 @@ const Search: React.FC = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, ml: 6, mr: 6 }}>
+    <Box sx={{ flexGrow: 1, ml: 4, mr: 4 }}>
       <form onSubmit={searchHandler}>
         <Stack direction="row">
           <CustomInput
