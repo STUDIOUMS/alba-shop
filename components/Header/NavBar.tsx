@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { NAV_ITEMS } from "./constants";
 import { Navbox } from "./styles";
 
 const Navbar = (): JSX.Element => {
   const pathname = usePathname();
-  const [opened, setOpened] = useState<boolean>(false);
 
   return (
     <Navbox>

@@ -18,6 +18,9 @@ export const MiddleHeader = styled(Box)(({ theme }) => ({
 }));
 
 export const Navbox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    display: "none",
+  },
   ul: {
     display: "flex",
     margin: 0,
