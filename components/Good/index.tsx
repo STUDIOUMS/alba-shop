@@ -4,7 +4,7 @@ import { usePriceImg } from "@/hooks/usePriceImg";
 import { useAppStore } from "@/store/useAppStore";
 import { Product } from "@/types";
 import Packages from "@/ui/Packages";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Link from "next/link";
 import AddCart from "../AddCart";
 import PriceBox from "../PriceBox";
@@ -47,8 +47,15 @@ const Good = (props: GoodProps): JSX.Element => {
         flexDirection: condition2,
       }}
     >
-      <Stack sx={{ flexGrow: 1, mb: 4, flexDirection: condition2 }}>
-        <GoodImage sx={{ mb: 4 }}>
+      <Stack
+        sx={{
+          flexGrow: 1,
+          mb: 4,
+          flexDirection: condition2,
+          alignItems: condition1,
+        }}
+      >
+        <GoodImage sx={{ mb: 4, minWidth: view === "list" ? 140 : 0 }}>
           <Link href={`/product/${el.slug}`}>
             {currentPack.img ? (
               <img src={currentPack.img} alt="" />
@@ -62,23 +69,25 @@ const Good = (props: GoodProps): JSX.Element => {
         </GoodItemTitle>
       </Stack>
 
-      <Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
-        {el.hit && <GoodChip color="warning" label="hit" />}
-        {isSale && <GoodChip color="error" label="sale" />}
-        {el.new && <GoodChip color="primary" label="new" />}
-      </Stack>
+      <Box sx={{ minWidth: view === "list" ? 220 : 0 }}>
+        <Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
+          {el.hit && <GoodChip color="warning" label="hit" />}
+          {isSale && <GoodChip color="error" label="sale" />}
+          {el.new && <GoodChip color="primary" label="new" />}
+        </Stack>
 
-      <PriceBox
-        price={currentPack.price}
-        oldprice={currentPack.oldPrice}
-        sx={{ mb: 3 }}
-      />
+        <PriceBox
+          price={currentPack.price}
+          oldprice={currentPack.oldPrice}
+          sx={{ mb: 3 }}
+        />
 
-      <Packages
-        currentPackID={currentPack.id}
-        handler={choosePack}
-        packs={el.relatedPacks}
-      />
+        <Packages
+          currentPackID={currentPack.id}
+          handler={choosePack}
+          packs={el.relatedPacks}
+        />
+      </Box>
 
       <AddCart
         el={el}
