@@ -23,14 +23,15 @@ export const GoodImage = styled(Box)<BoxProps>(() => ({
 }));
 
 export const GoodChip = styled(Chip)<ChipProps>(({ theme }) => ({
-  borderRadius: "6px",
+  borderRadius: 4,
+  fontFamily: theme.typography.h1.fontFamily,
   fontSize: theme.typography.body2.fontSize,
   letterSpacing: 1,
   marginRight: 3,
   height: "auto",
   textTransform: "uppercase",
   "& .MuiChip-label": {
-    padding: "4px 8px",
+    padding: "2px 6px",
   },
 }));
 

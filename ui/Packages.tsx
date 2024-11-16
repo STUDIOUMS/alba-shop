@@ -3,6 +3,7 @@
 import { RelatedPack } from "@/types";
 import {
   Box,
+  BoxProps,
   Button,
   ButtonGroup,
   ButtonProps,
@@ -31,8 +32,13 @@ const PackBtn = styled(Button)<ButtonProps>(({ theme }) => ({
 const Packages = (props: PackagesProps): JSX.Element => {
   const { currentPackID, handler, packs } = props;
   return (
-    <Box sx={{ mb: 6 }}>
-      <Typography variant="h6" component="div" sx={{ mb: 1 }}>
+    <Box>
+      <Typography
+        color="textSecondary"
+        variant="h6"
+        component="div"
+        sx={{ mb: 1 }}
+      >
         Фасовка:
       </Typography>
       <ButtonGroup>

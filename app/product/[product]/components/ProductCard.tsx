@@ -105,11 +105,13 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
             sx={{ mb: 6 }}
           />
 
-          <Packages
-            currentPackID={currentPack.id}
-            handler={choosePack}
-            packs={good.relatedPacks}
-          />
+          <Box sx={{ mb: 6 }}>
+            <Packages
+              currentPackID={currentPack.id}
+              handler={choosePack}
+              packs={good.relatedPacks}
+            />
+          </Box>
 
           <Stack direction="row">
             <AddCart

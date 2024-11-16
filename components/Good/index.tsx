@@ -28,8 +28,14 @@ const Good = (props: GoodProps): JSX.Element => {
 
   const isSale = el.relatedPacks.some((el) => el.oldPrice !== null);
 
-  const condition1 = slide ? "normal !important" : isGrid ? "normal" : "center";
-  const condition2 = slide ? "column !important" : isGrid ? "column" : "row";
+  const conditionAI = slide
+    ? "normal !important"
+    : isGrid
+    ? "normal"
+    : "center";
+  const conditionFD = slide ? "column !important" : isGrid ? "column" : "row";
+  const conditionMB = slide ? 6 : view === "list" ? 0 : 6;
+  const conditionMW = slide ? 0 : view === "list" ? 120 : 0;
 
   return (
     <GoodItem
@@ -43,19 +49,24 @@ const Good = (props: GoodProps): JSX.Element => {
       }
       sx={{
         height: slide ? "100%" : "auto",
-        alignItems: condition1,
-        flexDirection: condition2,
+        alignItems: conditionAI,
+        flexDirection: conditionFD,
       }}
     >
       <Stack
         sx={{
           flexGrow: 1,
-          mb: 4,
-          flexDirection: condition2,
-          alignItems: condition1,
+          mb: conditionMB,
+          flexDirection: conditionFD,
+          alignItems: conditionAI,
         }}
       >
-        <GoodImage sx={{ mb: 4, minWidth: view === "list" ? 140 : 0 }}>
+        <GoodImage
+          sx={{
+            mb: conditionMB,
+            minWidth: conditionMW,
+          }}
+        >
           <Link href={`/product/${el.slug}`}>
             {currentPack.img ? (
               <img src={currentPack.img} alt="" />
@@ -70,11 +81,11 @@ const Good = (props: GoodProps): JSX.Element => {
       </Stack>
 
       <Box sx={{ minWidth: view === "list" ? 220 : 0 }}>
-        <Stack direction="row" alignItems="center" sx={{ mb: 3 }}>
+        <Box sx={{ position: "absolute", right: 3, top: 6 }}>
           {el.hit && <GoodChip color="warning" label="hit" />}
           {isSale && <GoodChip color="error" label="sale" />}
           {el.new && <GoodChip color="primary" label="new" />}
-        </Stack>
+        </Box>
 
         <PriceBox
           price={currentPack.price}
@@ -82,19 +93,26 @@ const Good = (props: GoodProps): JSX.Element => {
           sx={{ mb: 3 }}
         />
 
-        <Packages
-          currentPackID={currentPack.id}
-          handler={choosePack}
-          packs={el.relatedPacks}
-        />
+        <Box sx={{ mb: conditionMB }}>
+          <Packages
+            currentPackID={currentPack.id}
+            handler={choosePack}
+            packs={el.relatedPacks}
+          />
+        </Box>
       </Box>
 
-      <AddCart
-        el={el}
-        img={currentPack.img}
-        pack={currentPack.pack.name}
-        price={currentPack.price}
-      />
+      <Stack
+        justifyContent="flex-end"
+        sx={{ minWidth: view === "list" ? 140 : 0 }}
+      >
+        <AddCart
+          el={el}
+          img={currentPack.img}
+          pack={currentPack.pack.name}
+          price={currentPack.price}
+        />
+      </Stack>
     </GoodItem>
   );
 };

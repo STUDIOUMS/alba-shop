@@ -14,20 +14,23 @@ const PriceBox = (props: PriceBoxProps): JSX.Element => {
   return (
     <Stack direction="row" alignItems="center" {...props}>
       <Typography
-        variant="h4"
+        variant={size === "large" ? "h2" : "h4"}
         component="span"
         sx={{ mb: 0, mr: 1 }}
         fontWeight={700}
       >
         {price}
       </Typography>
-      <Typography variant="body2" component="span">
+      <Typography
+        variant={size === "large" ? "body1" : "body2"}
+        component="span"
+      >
         {CURRENCY}
       </Typography>
       {oldprice && (
         <Stack
           direction="row"
-          alignItems="center"
+          alignItems="flex-end"
           sx={(theme) => ({
             color: theme.palette.error.main,
             ml: 2,
@@ -35,7 +38,7 @@ const PriceBox = (props: PriceBoxProps): JSX.Element => {
           })}
         >
           <Typography
-            variant="h4"
+            variant={size === "large" ? "h3" : "h4"}
             component="span"
             color="error"
             fontWeight={700}
