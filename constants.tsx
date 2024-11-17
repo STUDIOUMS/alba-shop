@@ -5,4 +5,4 @@ export const PHONE_NUMBER = "+71234567890";
 export const ERROR_TEXT = "Обязательное поле";
 export const PRODUCTS_LIMIT = 8;
 export const BLOG_LIMIT = 3;
-export const COURIER_PRICE = 500;
+export const COURIER_PRICE = 100;

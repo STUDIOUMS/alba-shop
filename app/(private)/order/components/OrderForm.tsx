@@ -34,11 +34,12 @@ const OrderForm = (): JSX.Element => {
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("acquiring");
 
-  const deliveryPrice = delivery === "courier" ? COURIER_PRICE : 0;
   const totalPrice = orders.reduce(
     (acum, order) => (acum += Number(order.total)),
     0
   );
+  const deliveryPrice =
+    delivery === "courier" && totalPrice < 1000 ? COURIER_PRICE : 0;
   const totalPriceDelivery = totalPrice + deliveryPrice;
 
   const {
@@ -159,7 +160,7 @@ const OrderForm = (): JSX.Element => {
           </OrderSection>
 
           <OrderSection title="Доставка">
-            <RadioGroup row sx={{ mb: 4 }} value={delivery}>
+            <RadioGroup sx={{ mb: 4 }} value={delivery}>
               <FormControlLabel
                 value="pickup"
                 control={
@@ -172,7 +173,9 @@ const OrderForm = (): JSX.Element => {
                 control={
                   <Radio size="small" onChange={() => setDelivery("courier")} />
                 }
-                label={`Курьером (+${COURIER_PRICE} руб.)`}
+                label={`Курьерcкая доставка - ${
+                  totalPrice > 1000 ? 0 : COURIER_PRICE
+                }₽`}
               />
             </RadioGroup>
             {delivery === "pickup" && (
@@ -181,6 +184,12 @@ const OrderForm = (): JSX.Element => {
                 6
                 <br />
                 <b>Время доставки:</b> с 10-00 по 18-00 (Пн-Сб)
+              </Alert>
+            )}
+            {delivery === "courier" && (
+              <Alert color="info" severity="info" sx={{ mb: 4 }}>
+                Курьерcкая доставка <b>{COURIER_PRICE}₽</b> при заказе до 1000₽,
+                свыше - <b>бесплатно</b>
               </Alert>
             )}
             {delivery === "courier" && (
@@ -218,39 +227,39 @@ const OrderForm = (): JSX.Element => {
           </OrderSection>
 
           <OrderSection title="Оплата">
-            <RadioGroup row value={payment}>
+            <RadioGroup value={payment}>
               {face === "individual" && (
-                <FormControlLabel
-                  value="acquiring"
-                  control={
-                    <Radio
-                      size="small"
-                      onChange={() => setPayment("acquiring")}
-                    />
-                  }
-                  label="Оплатить онлайн"
-                />
+                <>
+                  <FormControlLabel
+                    value="acquiring"
+                    control={
+                      <Radio
+                        size="small"
+                        onChange={() => setPayment("acquiring")}
+                      />
+                    }
+                    label="Оплатить онлайн"
+                  />
+                  <FormControlLabel
+                    value="delivery"
+                    control={
+                      <Radio
+                        size="small"
+                        onChange={() => setPayment("delivery")}
+                      />
+                    }
+                    label="Оплата при доставке"
+                  />
+                </>
               )}
-              {face === "legal" && (
-                <FormControlLabel
-                  value="bill"
-                  control={
-                    <Radio size="small" onChange={() => setPayment("bill")} />
-                  }
-                  label="Оплата по счету с НДС"
-                />
-              )}
+              <FormControlLabel
+                value="bill"
+                control={
+                  <Radio size="small" onChange={() => setPayment("bill")} />
+                }
+                label="Оплата по счету с НДС"
+              />
             </RadioGroup>
-            {face === "individual" && (
-              <Stack direction="row">
-                <img
-                  src={visa.src}
-                  alt=""
-                  style={{ height: 50, marginRight: 12 }}
-                />
-                <img src={mastercard.src} alt="" style={{ height: 50 }} />
-              </Stack>
-            )}
           </OrderSection>
 
           <OrderSection title="Примечание к заказу">
