@@ -111,7 +111,12 @@ export type CreatedOrder = {
 };
 
 export type Delivery = "courier" | "pickup";
-export type Payment = "acquiring" | "bill" | "delivery";
+export type Payment =
+  | "acquiring"
+  | "bill"
+  | "delivery-cash"
+  | "delivery-card"
+  | "bill-nds";
 
 export type FormOrderValues = {
   name: string;

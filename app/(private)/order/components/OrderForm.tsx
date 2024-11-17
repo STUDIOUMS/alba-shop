@@ -241,24 +241,48 @@ const OrderForm = (): JSX.Element => {
                     label="Оплатить онлайн"
                   />
                   <FormControlLabel
-                    value="delivery"
+                    value="delivery-card"
                     control={
                       <Radio
                         size="small"
-                        onChange={() => setPayment("delivery")}
+                        onChange={() => setPayment("delivery-card")}
                       />
                     }
-                    label="Оплата при доставке"
+                    label="Оплата при доставке (Картой курьеру)"
+                  />
+                  <FormControlLabel
+                    value="delivery-cash"
+                    control={
+                      <Radio
+                        size="small"
+                        onChange={() => setPayment("delivery-cash")}
+                      />
+                    }
+                    label="Оплата при доставке (Наличными курьеру)"
                   />
                 </>
               )}
-              <FormControlLabel
-                value="bill"
-                control={
-                  <Radio size="small" onChange={() => setPayment("bill")} />
-                }
-                label="Оплата по счету с НДС"
-              />
+              {face === "legal" && (
+                <>
+                  <FormControlLabel
+                    value="bill"
+                    control={
+                      <Radio size="small" onChange={() => setPayment("bill")} />
+                    }
+                    label="Оплата по счету без НДС"
+                  />
+                  <FormControlLabel
+                    value="bill-nds"
+                    control={
+                      <Radio
+                        size="small"
+                        onChange={() => setPayment("bill-nds")}
+                      />
+                    }
+                    label="Оплата по счету с НДС"
+                  />
+                </>
+              )}
             </RadioGroup>
           </OrderSection>
 
