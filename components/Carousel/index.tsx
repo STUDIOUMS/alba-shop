@@ -29,7 +29,14 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   );
 
   if (isLoading) return <CarouselLoading />;
-  if (isError) return <ErrorAlert />;
+
+  if (isError)
+    return (
+      <Section>
+        <ErrorAlert />
+      </Section>
+    );
+
   if (isSuccess && !data.results.length)
     return (
       <Alert variant="outlined" severity="info">

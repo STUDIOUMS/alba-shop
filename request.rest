@@ -10,4 +10,4 @@ Content-Type: application/json
 
 ###
 
-GET https://api.alba-72.ru/api/v1/catalog/products/
+GET https://api.alba-72.ru/api/v1/catalog/products

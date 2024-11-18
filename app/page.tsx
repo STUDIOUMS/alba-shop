@@ -3,6 +3,8 @@ import Banner from "@/components/Banner";
 import BlogsWidjet from "@/components/BlogsWidjet";
 import Brands from "@/components/Brands";
 import Carousel from "@/components/Carousel";
+import HomeCatalog from "@/components/HomeCatalog";
+
 import Section from "@/ui/Section";
 
 // Metatags
@@ -15,6 +17,8 @@ export default async function Home() {
   return (
     <div>
       <Banner />
+
+      <HomeCatalog />
 
       <Carousel title="Новинки" param="new" />
       <Carousel title="Скидки" param="discount" />
