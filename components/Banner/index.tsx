@@ -19,6 +19,7 @@ const SliderWrap = styled(Box)(({ theme }) => ({
   borderRadius: 7,
   borderColor: theme.palette.grey[300],
   height: 400,
+  marginBottom: theme.spacing(10),
   marginTop: theme.spacing(10),
   overflow: "hidden",
   position: "relative",

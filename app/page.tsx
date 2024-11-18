@@ -3,7 +3,7 @@ import Banner from "@/components/Banner";
 import BlogsWidjet from "@/components/BlogsWidjet";
 import Brands from "@/components/Brands";
 import Carousel from "@/components/Carousel";
-import HomeCatalog from "@/components/HomeCatalog";
+import MainCatalog from "@/components/MainCatalog";
 
 import Section from "@/ui/Section";
 
@@ -18,7 +18,7 @@ export default async function Home() {
     <div>
       <Banner />
 
-      <HomeCatalog />
+      <MainCatalog count={6} title="Категории" />
 
       <Carousel title="Новинки" param="new" />
       <Carousel title="Скидки" param="discount" />
