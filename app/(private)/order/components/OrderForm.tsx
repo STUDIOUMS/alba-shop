@@ -11,7 +11,6 @@ import {
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import {
-  Alert,
   FormControlLabel,
   Grid2,
   Radio,
@@ -22,11 +21,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import ChooseFace from "./ChooseFace";
 import OrderSection from "./OrderSection";
-import visa from "@/assets/visa.svg";
-import mastercard from "@/assets/mastercard.svg";
 import OrderCart from "@/components/OrderCart";
 import Link from "next/link";
 import { useOrderStore } from "@/store/useOrderStore";
+import { AlertCourier, AlertPickup } from "@/components/Alerts";
 
 const OrderForm = (): JSX.Element => {
   const { orders } = useOrderStore();
@@ -178,20 +176,8 @@ const OrderForm = (): JSX.Element => {
                 }₽`}
               />
             </RadioGroup>
-            {delivery === "pickup" && (
-              <Alert color="info" severity="info">
-                <b>Адрес:</b> г.Тюмень, ул. Коммунистическая, 70, корп. 3, стр.
-                6
-                <br />
-                <b>Время доставки:</b> с 10-00 по 18-00 (Пн-Сб)
-              </Alert>
-            )}
-            {delivery === "courier" && (
-              <Alert color="info" severity="info" sx={{ mb: 4 }}>
-                Курьерcкая доставка <b>{COURIER_PRICE}₽</b> при заказе до 1000₽,
-                свыше - <b>бесплатно</b>
-              </Alert>
-            )}
+            {delivery === "pickup" && <AlertPickup />}
+            {delivery === "courier" && <AlertCourier />}
             {delivery === "courier" && (
               <Grid2 container spacing={6}>
                 <Grid2 size={{ xs: 12, lg: 6 }}>

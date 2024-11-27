@@ -1,4 +1,4 @@
-POST https://api.alba-72.ru/api/v1/web/feedback
+POST https://api.alba-72.ru/api/v1/web/feedback/
 Content-Type: application/json
 
 {

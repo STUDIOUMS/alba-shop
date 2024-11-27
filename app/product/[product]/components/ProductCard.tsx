@@ -23,6 +23,7 @@ import noPhoto from "@/assets/no-photo.svg";
 import CustomTabPanel from "@/ui/CustomTabPanel";
 import Attributes from "./Attributes";
 import CustomTab from "@/ui/CustomTab";
+import { AlertCourier, AlertDelivery, AlertPickup } from "@/components/Alerts";
 
 type ProductCardProps = {
   good: Product;
@@ -130,11 +131,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
             </CustomBtn>
           </Stack>
 
-          <p>Какой-то текст или информация о доставке</p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias
-            adipisci eius necessitatibus, est unde consequuntur!
-          </p>
+          <AlertDelivery variant="outlined" sx={{ mt: 6 }} />
         </Grid2>
       </Grid2>
 
