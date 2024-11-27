@@ -39,7 +39,10 @@ export const ItemCat = styled(Box)(({ theme }) => ({
     padding: theme.spacing(6),
     position: "relative",
     textDecoration: "none",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
+      minHeight: 160,
+    },
+    [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(3),
       minHeight: 100,
     },
