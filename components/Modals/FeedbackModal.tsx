@@ -2,6 +2,7 @@
 
 import { ERROR_TEXT } from "@/constants";
 import useMutateData from "@/hooks/useMutateData";
+import { useAppStore } from "@/store/useAppStore";
 import { Feedback } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
@@ -23,26 +24,21 @@ type FeedbackModalProps = {
 
 const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
   const { close, show } = props;
+  const { setMessage } = useAppStore();
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm<FormData>();
 
   const { mutate, isPending } = useMutateData<Feedback>({
     key: ["feedback"],
     method: "POST",
-    uri: "/web/feedback",
+    uri: "/web/feedback/",
   });
 
   const feedbackHandler = (data: FormData) => {
-    // console.log({
-    //   message: data.message,
-    //   sender: data.name,
-    //   senderEmail: data.email,
-    //   senderPhone: data.phone,
-    // });
-
     mutate(
       {
         message: data.message,
@@ -51,8 +47,12 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
         senderPhone: data.phone,
       },
       {
-        onSuccess: (data) => {
-          console.log(data);
+        onSuccess: () => {
+          reset();
+          close();
+          setMessage(
+            "Ваше сообщение было отправлено. Менеджер свяжется с вами в ближайшее время"
+          );
         },
       }
     );
