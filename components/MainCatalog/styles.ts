@@ -6,7 +6,7 @@ export const ItemGrid = styled(Box)(({ theme }) => ({
   gridTemplateRows: "repeat(3, 1fr)",
   columnGap: theme.spacing(4),
   rowGap: theme.spacing(4),
-  minHeight: 660,
+  // minHeight: 660,
   ".div:nth-of-type(1)": { gridArea: "1 / 1 / 3 / 2" },
   ".div:nth-of-type(2)": { gridArea: "1 / 2 / 2 / 4" },
   ".div:nth-of-type(3)": { gridArea: "2 / 2 / 3 / 3" },
@@ -14,10 +14,11 @@ export const ItemGrid = styled(Box)(({ theme }) => ({
   ".div:nth-of-type(5)": { gridArea: "3 / 1 / 4 / 3" },
   ".div:nth-of-type(6)": { gridArea: "3 / 3 / 4 / 4" },
   [theme.breakpoints.down("md")]: {
-    gridTemplateColumns: "repeat(1, 1fr) !important",
-    gridTemplateRows: "auto !important",
-    minHeight: 0,
-    ".div": { gridArea: "auto !important" },
+    columnGap: theme.spacing(2),
+    rowGap: theme.spacing(2),
+    "& span": {
+      fontSize: 16,
+    },
   },
 }));
 
@@ -38,5 +39,9 @@ export const ItemCat = styled(Box)(({ theme }) => ({
     padding: theme.spacing(6),
     position: "relative",
     textDecoration: "none",
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(3),
+      minHeight: 100,
+    },
   },
 }));

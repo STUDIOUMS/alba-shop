@@ -1,7 +1,7 @@
 "use client";
 
 import useGetData from "@/hooks/useGetData";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { Category, Response } from "@/types";
 import Section from "@/ui/Section";
 import Link from "next/link";
