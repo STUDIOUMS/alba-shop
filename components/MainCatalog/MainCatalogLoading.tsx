@@ -1,20 +1,31 @@
-import Section from "@/ui/Section";
 import { createArray } from "@/utils/helpers";
-import { Skeleton } from "@mui/material";
+import { Skeleton, styled } from "@mui/material";
 import { ItemGrid } from "./styles";
+import { MainCatalogType } from ".";
 
-const MainCatalogLoading = (): JSX.Element => {
+type MainCatalogLoadProps = {
+  type?: MainCatalogType;
+};
+
+const SkeletItem = styled(Skeleton)(({ theme }) => ({
+  minHeight: 220,
+  height: "100%",
+  [theme.breakpoints.down("lg")]: {
+    minHeight: 160,
+  },
+  [theme.breakpoints.down("sm")]: {
+    minHeight: 100,
+  },
+}));
+
+const MainCatalogLoading = (props: MainCatalogLoadProps): JSX.Element => {
+  const { type = "main" } = props;
   const list = createArray(6);
+
   return (
-    <ItemGrid>
+    <ItemGrid type={type}>
       {list.map((__, index) => (
-        <Skeleton
-          key={index}
-          variant="rounded"
-          height="100%"
-          sx={{ minHeight: 220 }}
-          className="div"
-        />
+        <SkeletItem key={index} variant="rounded" className="div" />
       ))}
     </ItemGrid>
   );

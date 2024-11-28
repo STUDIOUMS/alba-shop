@@ -23,6 +23,16 @@ const SliderWrap = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(10),
   overflow: "hidden",
   position: "relative",
+  "& .sliderItem": {
+    position: "relative",
+    height: 400,
+  },
+  [theme.breakpoints.down("sm")]: {
+    height: 240,
+    "& .sliderItem": {
+      height: 240,
+    },
+  },
 }));
 
 const Banner = (): JSX.Element => {

@@ -1,7 +1,7 @@
 "use client";
 
 import useGetData from "@/hooks/useGetData";
-import { Typography, useTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Category, Response } from "@/types";
 import Section from "@/ui/Section";
 import Link from "next/link";
@@ -9,13 +9,16 @@ import ErrorAlert from "../ErrorAlert";
 import { ItemCat, ItemGrid } from "./styles";
 import MainCatalogLoading from "./MainCatalogLoading";
 
+export type MainCatalogType = "main" | "catalog";
+
 type MainCatalogProps = {
   count?: number;
   title?: string;
+  type?: MainCatalogType;
 };
 
 const MainCatalog = (props: MainCatalogProps): JSX.Element => {
-  const { count, title } = props;
+  const { count, title, type = "main" } = props;
   const { data, isLoading, isSuccess, isError } = useGetData<
     Response<Category>
   >({
@@ -23,7 +26,7 @@ const MainCatalog = (props: MainCatalogProps): JSX.Element => {
     uri: `/catalog/categories${count ? `?limit=${count}` : ""}`,
   });
 
-  if (isLoading) return <MainCatalogLoading />;
+  if (isLoading) return <MainCatalogLoading type={type} />;
   if (isError)
     return (
       <Section>
@@ -33,7 +36,7 @@ const MainCatalog = (props: MainCatalogProps): JSX.Element => {
 
   return (
     <Section title={title} sx={{ p: 0 }}>
-      <ItemGrid>
+      <ItemGrid type={type}>
         {isSuccess &&
           data.results.map((cat) => (
             <ItemCat key={cat.id} className="div">

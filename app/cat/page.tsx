@@ -18,7 +18,7 @@ async function Catalog() {
     <Section>
       <BreadCrumbs links={crumbs} />
       <Typography variant="h1">Каталог</Typography>
-      <MainCatalog />
+      <MainCatalog type="catalog" />
     </Section>
   );
 }
