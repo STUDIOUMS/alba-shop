@@ -25,6 +25,7 @@ import OrderCart from "@/components/OrderCart";
 import Link from "next/link";
 import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
+import { getTotalPrice } from "@/utils/helpers";
 
 const OrderForm = (): JSX.Element => {
   const { orders } = useOrderStore();
@@ -32,10 +33,7 @@ const OrderForm = (): JSX.Element => {
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("acquiring");
 
-  const totalPrice = orders.reduce(
-    (acum, order) => (acum += Number(order.total)),
-    0
-  );
+  const totalPrice = getTotalPrice(orders);
   const deliveryPrice =
     delivery === "courier" && totalPrice < 1000 ? COURIER_PRICE : 0;
   const totalPriceDelivery = totalPrice + deliveryPrice;
@@ -179,7 +177,7 @@ const OrderForm = (): JSX.Element => {
             {delivery === "pickup" && <AlertPickup />}
             {delivery === "courier" && <AlertCourier />}
             {delivery === "courier" && (
-              <Grid2 container spacing={6}>
+              <Grid2 container spacing={6} sx={{ mt: 6 }}>
                 <Grid2 size={{ xs: 12, lg: 6 }}>
                   <CustomInput
                     label="Город"

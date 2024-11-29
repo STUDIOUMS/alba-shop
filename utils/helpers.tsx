@@ -1,3 +1,5 @@
+import { Order } from "@/types";
+
 // createDate
 export function createDate(dateString: string, time?: boolean) {
   const months = [
@@ -27,3 +29,10 @@ export function createDate(dateString: string, time?: boolean) {
 }
 
 export const createArray = (num: number) => Array.from(new Array(num));
+
+export const getTotalPrice = (orders: Order[]): number => {
+  return orders.reduce((acum, order) => {
+    const total = order.count * order.price;
+    return (acum += total);
+  }, 0);
+};

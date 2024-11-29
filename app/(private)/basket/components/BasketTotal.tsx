@@ -1,5 +1,6 @@
 import { CURRENCY } from "@/constants";
 import { Order } from "@/types";
+import { getTotalPrice } from "@/utils/helpers";
 import { Typography } from "@mui/material";
 
 type BasketTotalProps = {
@@ -8,13 +9,11 @@ type BasketTotalProps = {
 
 const BasketTotal = (props: BasketTotalProps): JSX.Element => {
   const { orders } = props;
-  const total: number = orders.reduce(
-    (acum, el) => (acum += Number(el.total)),
-    0
-  );
+  const totalPrice: number = getTotalPrice(orders);
+
   return (
     <Typography variant="h2" fontWeight={400} textAlign="right">
-      Итого: <b>{total}</b> <small>{CURRENCY}</small>
+      Итого: <b>{totalPrice}</b> <small>{CURRENCY}</small>
     </Typography>
   );
 };

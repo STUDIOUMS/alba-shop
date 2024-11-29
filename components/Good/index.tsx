@@ -44,7 +44,8 @@ const Good = (props: GoodProps): JSX.Element => {
           ? "auto"
           : {
               xs: 12,
-              sm: view === "grid" ? 4 : 12,
+              sm: view === "grid" ? 6 : 12,
+              md: view === "grid" ? 4 : 12,
             }
       }
       sx={{
@@ -88,8 +89,8 @@ const Good = (props: GoodProps): JSX.Element => {
         </Box>
 
         <PriceBox
-          price={currentPack.price}
-          oldprice={currentPack.oldPrice}
+          price={Number(currentPack.price)}
+          oldprice={Number(currentPack.oldPrice)}
           sx={{ mb: 3 }}
         />
 
@@ -102,17 +103,13 @@ const Good = (props: GoodProps): JSX.Element => {
         </Box>
       </Box>
 
-      <Stack
-        justifyContent="flex-end"
-        sx={{ minWidth: view === "list" ? 140 : 0 }}
-      >
-        <AddCart
-          el={el}
-          img={currentPack.img}
-          pack={currentPack.pack.name}
-          price={currentPack.price}
-        />
-      </Stack>
+      <AddCart
+        el={el}
+        img={currentPack.img}
+        pack={currentPack.pack.name}
+        price={Number(currentPack.price)}
+        small
+      />
     </GoodItem>
   );
 };

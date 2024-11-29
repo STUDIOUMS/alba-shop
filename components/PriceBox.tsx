@@ -4,13 +4,14 @@ import { Stack, StackProps, Typography } from "@mui/material";
 type PriceSizeType = "large" | "small";
 
 type PriceBoxProps = StackProps & {
-  price: string;
-  oldprice?: string;
+  price: number;
+  oldprice?: number;
   size?: PriceSizeType;
 };
 
 const PriceBox = (props: PriceBoxProps): JSX.Element => {
   const { price, oldprice, size = "small" } = props;
+
   return (
     <Stack direction="row" alignItems="center" {...props}>
       <Typography
@@ -27,7 +28,7 @@ const PriceBox = (props: PriceBoxProps): JSX.Element => {
       >
         {CURRENCY}
       </Typography>
-      {oldprice && (
+      {oldprice ? (
         <Stack
           direction="row"
           alignItems="flex-end"
@@ -50,6 +51,8 @@ const PriceBox = (props: PriceBoxProps): JSX.Element => {
             {CURRENCY}
           </Typography>
         </Stack>
+      ) : (
+        <></>
       )}
     </Stack>
   );

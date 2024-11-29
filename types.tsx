@@ -82,12 +82,11 @@ export type BlogItem = {
 export type Order = {
   id: string;
   title: string;
-  price: string;
+  price: number;
   slug: string;
   img: string;
   art: string;
   count: number;
-  total: string;
   pack: string;
 };
 

@@ -29,6 +29,7 @@ export const ItemGrid = styled(Box)<{ type: MainCatalogType }>(
     [theme.breakpoints.down("md")]: {
       columnGap: theme.spacing(2),
       rowGap: theme.spacing(2),
+      gridTemplateColumns: "repeat(2, 1fr)",
       "& span": {
         fontSize: 16,
       },

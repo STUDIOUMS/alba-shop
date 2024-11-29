@@ -9,6 +9,8 @@ import {
   Tab,
   Tabs,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import AddCart from "@/components/AddCart";
 import QuickModal from "@/components/Modals/QuickModal";
@@ -57,6 +59,8 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const { good } = props;
   const [quickModal, setQuickModal] = useState<boolean>(false);
   const [tabValue, setTabValue] = useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { choosePack, currentPack } = usePriceImg({
     defaultPack: good.defaultPack,
@@ -100,8 +104,8 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
           </Typography>
 
           <PriceBox
-            price={currentPack.price}
-            oldprice={currentPack.oldPrice}
+            price={Number(currentPack.price)}
+            oldprice={Number(currentPack.oldPrice)}
             size="large"
             sx={{ mb: 6 }}
           />
@@ -114,18 +118,21 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
             />
           </Box>
 
-          <Stack direction="row">
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            justifyContent="space-between"
+          >
             <AddCart
               el={good}
               pack={currentPack.pack.name}
-              price={currentPack.price}
+              price={Number(currentPack.price)}
               img={currentPack.img}
             />
             <CustomBtn
               onClick={() => setQuickModal(true)}
               color="secondary"
               variant="outlined"
-              sx={{ ml: 4 }}
+              sx={{ ml: isMobile ? 0 : 4, mt: isMobile ? 4 : 0 }}
             >
               Быстрый заказ
             </CustomBtn>

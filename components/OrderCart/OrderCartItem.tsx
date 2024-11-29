@@ -23,6 +23,7 @@ export const Item = styled(Box)(({ theme }) => ({
 
 const OrderCartItem = (props: OrderCartItemProps): JSX.Element => {
   const { order } = props;
+  const total = order.count * order.price;
   return (
     <Item>
       <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
@@ -33,7 +34,7 @@ const OrderCartItem = (props: OrderCartItemProps): JSX.Element => {
           Кол-во: <b>{order.count}</b> шт.
         </Typography>
         <Typography variant="body2">
-          Стоимость: <b>{order.total}</b> {CURRENCY}
+          Стоимость: <b>{total}</b> {CURRENCY}
         </Typography>
       </Stack>
     </Item>

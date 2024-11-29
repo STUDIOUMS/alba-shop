@@ -3,7 +3,7 @@
 import PriceBox from "@/components/PriceBox";
 import { useOrderStore } from "@/store/useOrderStore";
 import { Order } from "@/types";
-import CountBox from "@/ui/CountBox";
+import { QuantityInput } from "@/ui/QuantityInput";
 import { IconButton, TableCell, TableRow, Typography } from "@mui/material";
 import Link from "next/link";
 
@@ -14,6 +14,7 @@ type BasketRowProps = {
 const BasketRow = (props: BasketRowProps): JSX.Element => {
   const { order } = props;
   const { deleteOrder, changeCount } = useOrderStore();
+  const total = order.count * order.price;
 
   return (
     <TableRow sx={{ position: "relative" }}>
@@ -37,13 +38,13 @@ const BasketRow = (props: BasketRowProps): JSX.Element => {
         <PriceBox price={order.price} />
       </TableCell>
       <TableCell>
-        <CountBox
+        <QuantityInput
+          onChange={(e, value) => changeCount(order.id, String(value))}
           defaultValue={order.count}
-          onChange={(e) => changeCount(order.id, e.target.value)}
         />
       </TableCell>
       <TableCell>
-        <PriceBox price={order.total} />
+        <PriceBox price={total} />
         <IconButton
           color="error"
           sx={{ position: "absolute", right: 0, top: "50%", mt: "-24px" }}
