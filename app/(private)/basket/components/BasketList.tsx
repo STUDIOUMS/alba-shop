@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Alert, Stack, Table, TableBody, TableContainer } from "@mui/material";
+import { Alert, Stack } from "@mui/material";
 import { useOrderStore } from "@/store/useOrderStore";
-import BasketHead from "./BasketHead";
-import BasketRow from "./BasketRow";
 import BasketTotal from "./BasketTotal";
 import CustomBtn from "@/ui/CustomBtn";
 import BasketModal from "./BasketModal";
 import Link from "next/link";
+import CartItem from "@/components/CartItem";
 
 const BasketList = (): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
@@ -18,16 +17,9 @@ const BasketList = (): JSX.Element => {
     <>
       {orders.length ? (
         <>
-          <TableContainer sx={{ mb: 6 }}>
-            <Table>
-              <BasketHead />
-              <TableBody>
-                {orders.map((el) => (
-                  <BasketRow key={el.id} order={el} />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {orders.map((order) => (
+            <CartItem key={order.id} order={order} />
+          ))}
 
           <BasketTotal orders={orders} />
 
