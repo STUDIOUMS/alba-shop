@@ -12,6 +12,7 @@ import Link from "next/link";
 import NavDrawer from "./NavDrawer";
 import Search from "../Search";
 import iconBars from "@/assets/bars.svg";
+import Image from "next/image";
 
 const Header = (): JSX.Element => {
   const [feedBack, setFeedBack] = useState<boolean>(false);
@@ -35,10 +36,12 @@ const Header = (): JSX.Element => {
           )}
           {isTablet && (
             <Link href="/">
-              <img
+              <Image
                 src={logo.src}
                 alt=""
-                style={{ objectFit: "contain", height: 50 }}
+                style={{ objectFit: "contain" }}
+                width={100}
+                height={50}
               />
             </Link>
           )}
@@ -58,15 +61,17 @@ const Header = (): JSX.Element => {
         <Wrap sx={{ position: "relative" }}>
           {isTablet && (
             <IconButton onClick={() => setOpenNav(true)}>
-              <img src={iconBars.src} alt="" style={{ width: 20 }} />
+              <Image src={iconBars.src} alt="" width={20} height={20} />
             </IconButton>
           )}
           {!isTablet && (
             <Link href="/">
-              <img
+              <Image
                 src={logo.src}
                 alt=""
-                style={{ objectFit: "contain", height: 50 }}
+                style={{ objectFit: "contain" }}
+                width={100}
+                height={50}
               />
             </Link>
           )}

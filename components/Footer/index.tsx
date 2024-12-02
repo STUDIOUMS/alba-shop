@@ -23,10 +23,12 @@ const Footer = (): JSX.Element => {
         <Grid2 container spacing={6}>
           <Grid2 size={{ lg: 3, xs: 12 }}>
             <div className="header-logo">
-              <img
+              <Image
                 src={logo.src}
                 alt=""
-                style={{ objectFit: "contain", height: 50 }}
+                style={{ objectFit: "contain" }}
+                width={100}
+                height={50}
               />
             </div>
             &copy; 2023 site.com

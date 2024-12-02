@@ -26,6 +26,7 @@ import CustomTabPanel from "@/ui/CustomTabPanel";
 import Attributes from "./Attributes";
 import CustomTab from "@/ui/CustomTab";
 import { AlertCourier, AlertDelivery, AlertPickup } from "@/components/Alerts";
+import Image from "next/image";
 
 type ProductCardProps = {
   good: Product;
@@ -84,7 +85,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
                 title={`${good.title}. Упаковка: ${currentPack}`}
               />
             ) : (
-              <img src={noPhoto.src} alt="" />
+              <Image src={noPhoto.src} alt="" width={200} height={200} />
             )}
             <Stack
               direction="row"

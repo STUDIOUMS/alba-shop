@@ -10,6 +10,7 @@ import AddCart from "../AddCart";
 import PriceBox from "../PriceBox";
 import { GoodChip, GoodImage, GoodItem, GoodItemTitle } from "./styles";
 import noPhoto from "@/assets/no-photo.svg";
+import Image from "next/image";
 
 type GoodProps = {
   el: Product;
@@ -70,9 +71,15 @@ const Good = (props: GoodProps): JSX.Element => {
         >
           <Link href={`/product/${el.slug}`}>
             {currentPack.img ? (
-              <img src={currentPack.img} alt="" />
+              <Image
+                src={currentPack.img}
+                alt=""
+                width={120}
+                height={120}
+                style={{ objectFit: "contain" }}
+              />
             ) : (
-              <img src={noPhoto.src} alt="" style={{ height: 90 }} />
+              <Image src={noPhoto.src} alt="" width={90} height={90} />
             )}
           </Link>
         </GoodImage>

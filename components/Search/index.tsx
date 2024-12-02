@@ -6,6 +6,7 @@ import CustomInput from "@/ui/CustomInput";
 import { Box, Stack } from "@mui/material";
 import CustomBtn from "@/ui/CustomBtn";
 import searchIcon from "@/assets/search.svg";
+import Image from "next/image";
 
 const Search: React.FC = () => {
   const [val, setVal] = useState<string>("");
@@ -38,7 +39,7 @@ const Search: React.FC = () => {
             variant="outlined"
             sx={{ ml: 1, minWidth: 40, p: 0 }}
           >
-            <img src={searchIcon.src} alt="" style={{ width: 20 }} />
+            <Image src={searchIcon.src} alt="" width={20} height={20} />
           </CustomBtn>
         </Stack>
       </form>

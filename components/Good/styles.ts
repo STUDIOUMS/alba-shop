@@ -15,11 +15,6 @@ export const GoodImage = styled(Box)<BoxProps>(() => ({
   display: "flex",
   justifyContent: "center",
   height: 140,
-  img: {
-    display: "block",
-    margin: "0 auto",
-    height: 120,
-  },
 }));
 
 export const GoodChip = styled(Chip)<ChipProps>(({ theme }) => ({

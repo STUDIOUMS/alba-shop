@@ -39,14 +39,6 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
   if (isLoading) return <CatLoading />;
   if (isError) return <ErrorAlert />;
 
-  if (isSuccess && !data.results.length)
-    return (
-      <Alert severity="info" variant="outlined">
-        <AlertTitle>Не найдено</AlertTitle>В данной категории пока что нет
-        товаров
-      </Alert>
-    );
-
   return (
     <Grid2 container spacing={6}>
       <Grid2 size={{ xs: 12, lg: 3 }}>
@@ -56,6 +48,12 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
       <Grid2 size={{ xs: 12, lg: 9 }}>
         <Sort />
         {isSuccess && <GoodList products={data.results} />}
+        {isSuccess && !data.results.length && (
+          <Alert severity="info" variant="outlined">
+            <AlertTitle>Не найдено</AlertTitle>В данной категории нет товаров по
+            данным критериям
+          </Alert>
+        )}
       </Grid2>
     </Grid2>
   );

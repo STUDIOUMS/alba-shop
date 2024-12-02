@@ -1,7 +1,5 @@
 import { Box, BoxProps, styled } from "@mui/material";
-
-const IMG_WIDTH = 150;
-const IMG_WIDTH_MOBILE = 80;
+import { IMG_WIDTH, IMG_WIDTH_MOBILE } from ".";
 
 export const CartBox = styled(Box)<BoxProps>(({ theme }) => ({
   alignItems: "center",
@@ -27,8 +25,6 @@ export const CartBoxImg = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(6),
   img: {
     display: "block",
-    maxWidth: "100%",
-    maxHeight: 140,
   },
   [theme.breakpoints.down("md")]: {
     minWidth: IMG_WIDTH_MOBILE,

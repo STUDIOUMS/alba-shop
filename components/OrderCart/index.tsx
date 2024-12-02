@@ -21,7 +21,7 @@ const OrderCartWrap = styled(Box)(({ theme }) => ({
 }));
 
 const OrderCart = (props: OrderCartProps): JSX.Element => {
-  const { delivery, deliveryPrice, orders, totalPrice } = props;
+  const { deliveryPrice, orders, totalPrice } = props;
   return (
     <OrderCartWrap>
       {orders.map((order) => (

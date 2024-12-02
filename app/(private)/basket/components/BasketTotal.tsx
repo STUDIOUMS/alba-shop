@@ -12,7 +12,7 @@ const BasketTotal = (props: BasketTotalProps): JSX.Element => {
   const totalPrice: number = getTotalPrice(orders);
 
   return (
-    <Typography variant="h2" fontWeight={400} textAlign="right">
+    <Typography variant="h2" fontWeight={400} textAlign="right" component="div">
       Итого: <b>{totalPrice}</b> <small>{CURRENCY}</small>
     </Typography>
   );

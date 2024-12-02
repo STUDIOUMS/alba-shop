@@ -1,25 +1,43 @@
 import { Order } from "@/types";
 import { CartBox, CartBoxDetails, CartBoxImg, CartBoxInfo } from "./styles";
 import nofoto from "@/assets/no-photo.svg";
-import { Box, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Link from "next/link";
 import PriceBox from "../PriceBox";
 import { QuantityInput } from "@/ui/QuantityInput";
 import { useOrderStore } from "@/store/useOrderStore";
+import Image from "next/image";
 
 type CartItemProps = {
   order: Order;
 };
 
+export const IMG_WIDTH = 150;
+export const IMG_WIDTH_MOBILE = 80;
+
 const CartItem = (props: CartItemProps): JSX.Element => {
   const { order } = props;
   const { deleteOrder, changeCount } = useOrderStore();
   const total = order.count * order.price;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <CartBox>
       <CartBoxImg>
-        <img src={order.img ? order.img : nofoto.src} alt="" />
+        <Image
+          src={order.img ? order.img : nofoto.src}
+          alt=""
+          width={isMobile ? IMG_WIDTH_MOBILE : IMG_WIDTH}
+          height={isMobile ? IMG_WIDTH_MOBILE : IMG_WIDTH}
+          style={{ objectFit: "contain" }}
+        />
       </CartBoxImg>
       <CartBoxDetails>
         <CartBoxInfo>
