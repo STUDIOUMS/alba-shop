@@ -6,7 +6,6 @@ import {
   Grid2,
   Stack,
   styled,
-  Tab,
   Tabs,
   Typography,
   useMediaQuery,
@@ -25,9 +24,9 @@ import noPhoto from "@/assets/no-photo.svg";
 import CustomTabPanel from "@/ui/CustomTabPanel";
 import Attributes from "./Attributes";
 import CustomTab from "@/ui/CustomTab";
-import { AlertCourier, AlertDelivery, AlertPickup } from "@/components/Alerts";
+import { AlertDelivery } from "@/components/Alerts";
 import Image from "next/image";
-import Link from "next/link";
+import Docs from "@/components/Docs";
 
 type ProductCardProps = {
   good: Product;
@@ -74,8 +73,6 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-
-  console.log(good.docs);
 
   return (
     <>
@@ -165,13 +162,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
           <Attributes attrs={good.relatedAttrs} />
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={2}>
-          {good.docs.map((doc) => (
-            <Typography variant="body1" component="p" key={doc.id}>
-              <Link href={doc.file} target="_blank">
-                {doc.name}
-              </Link>
-            </Typography>
-          ))}
+          <Docs docs={good.docs} />
         </CustomTabPanel>
       </Box>
 
