@@ -10,6 +10,14 @@ type DocsProps = {
 
 const Docs = (props: DocsProps): JSX.Element => {
   const { docs } = props;
+
+  if (!docs.length)
+    return (
+      <Typography variant="body1" component="div">
+        Документов нет
+      </Typography>
+    );
+
   return (
     <Box>
       {docs.map((doc) => (
