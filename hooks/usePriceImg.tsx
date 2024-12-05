@@ -13,9 +13,11 @@ type UsePriceImgProps = {
 
 export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
   const { defaultPack, packs } = props;
-  const [currentPack, setCurrentPack] = useState<RelatedPack>(defaultPack);
+  const [currentPack, setCurrentPack] = useState<RelatedPack>(
+    defaultPack || { id: 0, img: "", pack: "", price: "", product: 0 }
+  );
   const [currentPackId, setCurrentPackId] = useState<number>(
-    defaultPack.id || 1
+    defaultPack.id || 0
   );
 
   useEffect(() => {
