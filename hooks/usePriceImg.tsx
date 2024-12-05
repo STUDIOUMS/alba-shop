@@ -14,7 +14,9 @@ type UsePriceImgProps = {
 export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
   const { defaultPack, packs } = props;
   const [currentPack, setCurrentPack] = useState<RelatedPack>(defaultPack);
-  const [currentPackId, setCurrentPackId] = useState<number>(defaultPack.id);
+  const [currentPackId, setCurrentPackId] = useState<number>(
+    defaultPack.id || 1
+  );
 
   useEffect(() => {
     const foundPack = packs.find((pack) => pack.pack.id === currentPackId);
