@@ -27,6 +27,7 @@ import Attributes from "./Attributes";
 import CustomTab from "@/ui/CustomTab";
 import { AlertCourier, AlertDelivery, AlertPickup } from "@/components/Alerts";
 import Image from "next/image";
+import Link from "next/link";
 
 type ProductCardProps = {
   good: Product;
@@ -73,6 +74,8 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+
+  console.log(good.docs);
 
   return (
     <>
@@ -162,7 +165,13 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
           <Attributes attrs={good.relatedAttrs} />
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={2}>
-          Документы
+          {good.docs.map((doc) => (
+            <Typography variant="body1" component="p" key={doc.id}>
+              <Link href={doc.file} target="_blank">
+                {doc.name}
+              </Link>
+            </Typography>
+          ))}
         </CustomTabPanel>
       </Box>
 

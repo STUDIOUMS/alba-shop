@@ -54,12 +54,20 @@ export type ProductCat = {
   slug: string;
 };
 
+export type DocType = {
+  id: number;
+  name: string;
+  file: string;
+  product: number;
+};
+
 export type Product = {
   id: number;
   relatedAttrs: RelatedAttrs[];
   relatedPacks: RelatedPack[];
   defaultPack: RelatedPack;
   categories: ProductCat[];
+  docs: DocType[];
   slug: string;
   title: string;
   description: string;
