@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { DocType } from "@/types";
 import { Box, Typography } from "@mui/material";
-import iconFile from "@/assets/doc.svg";
+import docFile from "@/assets/doc.svg";
 import Image from "next/image";
 
 type DocsProps = {
@@ -28,7 +28,7 @@ const Docs = (props: DocsProps): JSX.Element => {
             style={{ display: "inline-flex", alignItems: "center" }}
           >
             <Image
-              src={iconFile.src}
+              src={docFile.src}
               alt=""
               width={20}
               height={20}
