@@ -11,6 +11,7 @@ import PriceBox from "../PriceBox";
 import { GoodChip, GoodImage, GoodItem, GoodItemTitle } from "./styles";
 import noPhoto from "@/assets/no-photo.svg";
 import Image from "next/image";
+import CustomBtn from "@/ui/CustomBtn";
 
 type GoodProps = {
   el: Product;
@@ -26,6 +27,8 @@ const Good = (props: GoodProps): JSX.Element => {
     defaultPack: el.defaultPack,
     packs: el.relatedPacks,
   });
+
+  const noPack = !currentPack.pack.id;
 
   const isSale = el.relatedPacks.some((el) => el.oldPrice !== null);
 
@@ -95,19 +98,23 @@ const Good = (props: GoodProps): JSX.Element => {
           {el.new && <GoodChip color="primary" label="new" />}
         </Box>
 
-        <PriceBox
-          price={Number(currentPack.price)}
-          oldprice={Number(currentPack.oldPrice)}
-          sx={{ mb: 3 }}
-        />
+        {!noPack && (
+          <>
+            <PriceBox
+              price={Number(currentPack.price)}
+              oldprice={Number(currentPack.oldPrice)}
+              sx={{ mb: 3 }}
+            />
 
-        <Box sx={{ mb: conditionMB }}>
-          <Packages
-            currentPackID={currentPack.id}
-            handler={choosePack}
-            packs={el.relatedPacks}
-          />
-        </Box>
+            <Box sx={{ mb: conditionMB }}>
+              <Packages
+                currentPackID={currentPack.id}
+                handler={choosePack}
+                packs={el.relatedPacks}
+              />
+            </Box>
+          </>
+        )}
       </Box>
 
       <AddCart
@@ -116,6 +123,7 @@ const Good = (props: GoodProps): JSX.Element => {
         pack={currentPack.pack.name}
         price={Number(currentPack.price)}
         small
+        noPack={noPack}
       />
     </GoodItem>
   );

@@ -68,6 +68,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
     packs: good.relatedPacks,
   });
 
+  const noPack = !currentPack.pack.id;
   const isSale = good.relatedPacks.some((el) => el.oldPrice !== null);
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
@@ -104,20 +105,24 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
             Код товара: <b>{good.art}</b>
           </Typography>
 
-          <PriceBox
-            price={Number(currentPack.price)}
-            oldprice={Number(currentPack.oldPrice)}
-            size="large"
-            sx={{ mb: 6 }}
-          />
+          {!noPack && (
+            <>
+              <PriceBox
+                price={Number(currentPack.price)}
+                oldprice={Number(currentPack.oldPrice)}
+                size="large"
+                sx={{ mb: 6 }}
+              />
 
-          <Box sx={{ mb: 6 }}>
-            <Packages
-              currentPackID={currentPack.id}
-              handler={choosePack}
-              packs={good.relatedPacks}
-            />
-          </Box>
+              <Box sx={{ mb: 6 }}>
+                <Packages
+                  currentPackID={currentPack.id}
+                  handler={choosePack}
+                  packs={good.relatedPacks}
+                />
+              </Box>
+            </>
+          )}
 
           <Stack
             direction={isMobile ? "column" : "row"}
@@ -128,15 +133,18 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
               pack={currentPack.pack.name}
               price={Number(currentPack.price)}
               img={currentPack.img}
+              noPack={noPack}
             />
-            <CustomBtn
-              onClick={() => setQuickModal(true)}
-              color="secondary"
-              variant="outlined"
-              sx={{ ml: isMobile ? 0 : 4, mt: isMobile ? 4 : 0 }}
-            >
-              Быстрый заказ
-            </CustomBtn>
+            {!noPack && (
+              <CustomBtn
+                onClick={() => setQuickModal(true)}
+                color="secondary"
+                variant="outlined"
+                sx={{ ml: isMobile ? 0 : 4, mt: isMobile ? 4 : 0 }}
+              >
+                Быстрый заказ
+              </CustomBtn>
+            )}
           </Stack>
 
           <AlertDelivery variant="outlined" sx={{ mt: 6 }} />

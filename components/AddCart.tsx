@@ -12,10 +12,11 @@ type AddCartProps = {
   img: string;
   price: number;
   small?: boolean;
+  noPack?: boolean;
 };
 
 const AddCart = (props: AddCartProps): JSX.Element => {
-  const { el, img, pack, price, small } = props;
+  const { el, img, pack, price, small, noPack } = props;
   const { setOrder } = useOrderStore();
   const { setMessage, view } = useAppStore();
   const [count, setCount] = useState<number>(1);
@@ -35,6 +36,13 @@ const AddCart = (props: AddCartProps): JSX.Element => {
     setOrder(order);
     setMessage(`Товар ${el.title} был добавлен в корзину`);
   };
+
+  if (noPack)
+    return (
+      <CustomBtn color="secondary" variant="outlined" sx={{ fontSize: 14 }}>
+        Сообщить о наличии
+      </CustomBtn>
+    );
 
   return (
     <Stack direction={view === "grid" ? "row" : "column"}>
