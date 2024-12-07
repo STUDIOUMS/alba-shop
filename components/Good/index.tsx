@@ -11,7 +11,7 @@ import PriceBox from "../PriceBox";
 import { GoodChip, GoodImage, GoodItem, GoodItemTitle } from "./styles";
 import noPhoto from "@/assets/no-photo.svg";
 import Image from "next/image";
-import CustomBtn from "@/ui/CustomBtn";
+import { isSaleDefine } from "@/utils/helpers";
 
 type GoodProps = {
   el: Product;
@@ -22,15 +22,12 @@ const Good = (props: GoodProps): JSX.Element => {
   const { el, slide } = props;
   const { view } = useAppStore();
   const isGrid = view === "grid";
+  const isSale = isSaleDefine(el.relatedPacks);
 
-  const { choosePack, currentPack } = usePriceImg({
+  const { choosePack, currentPack, noPack } = usePriceImg({
     defaultPack: el.defaultPack,
     packs: el.relatedPacks,
   });
-
-  const noPack = !currentPack.pack.id;
-
-  const isSale = el.relatedPacks.some((el) => el.oldPrice !== null);
 
   const conditionAI = slide
     ? "normal !important"

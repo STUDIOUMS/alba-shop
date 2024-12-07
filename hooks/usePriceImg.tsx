@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 type UsePriceImgReturn = {
   choosePack: (id: number) => void;
   currentPack: RelatedPack;
+  noPack: boolean;
 };
 
 type UsePriceImgProps = {
@@ -46,5 +47,6 @@ export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
   return {
     choosePack: choosePack,
     currentPack,
+    noPack: !currentPack.pack.id,
   };
 };

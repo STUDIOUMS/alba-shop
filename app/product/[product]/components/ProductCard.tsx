@@ -27,6 +27,7 @@ import CustomTab from "@/ui/CustomTab";
 import { AlertDelivery } from "@/components/Alerts";
 import Image from "next/image";
 import Docs from "@/components/Docs";
+import { isSaleDefine } from "@/utils/helpers";
 
 type ProductCardProps = {
   good: Product;
@@ -62,14 +63,12 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const [tabValue, setTabValue] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSale = isSaleDefine(good.relatedPacks);
 
-  const { choosePack, currentPack } = usePriceImg({
+  const { choosePack, currentPack, noPack } = usePriceImg({
     defaultPack: good.defaultPack,
     packs: good.relatedPacks,
   });
-
-  const noPack = !currentPack.pack.id;
-  const isSale = good.relatedPacks.some((el) => el.oldPrice !== null);
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);

@@ -3,7 +3,7 @@ import { Product, RelatedPack } from "@/types";
 
 export const packFactory = Factory.Sync.makeFactory<RelatedPack>({
   id: Factory.each((i) => i + 1),
-  img: "http://img.com",
+  img: "http://img.com/images/image.webp",
   oldPrice: "",
   pack: Factory.each((i) => ({ id: i + 1, name: `${i + 1} шт` })),
   price: Factory.each((i) => `${i + 1}00`),

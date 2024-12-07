@@ -1,4 +1,4 @@
-import { Order } from "@/types";
+import { Order, RelatedPack } from "@/types";
 
 // createDate
 export function createDate(dateString: string, time?: boolean) {
@@ -35,4 +35,8 @@ export const getTotalPrice = (orders: Order[]): number => {
     const total = order.count * order.price;
     return (acum += total);
   }, 0);
+};
+
+export const isSaleDefine = (relatedPacks: RelatedPack[]): boolean => {
+  return relatedPacks.some((el) => el.oldPrice !== null);
 };

@@ -44,7 +44,7 @@ export type RelatedPack = {
   };
   img: string;
   price: string;
-  oldPrice: string;
+  oldPrice: string | null;
   product: number;
 };
 
