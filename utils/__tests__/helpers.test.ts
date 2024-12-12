@@ -14,7 +14,7 @@ describe("Utilites", () => {
 
   it("createDate with time", () => {
     const output = createDate("2024-11-03T15:08:43.267311Z", true);
-    expect(output).toBe("3 Ноябрь 2024, 17:08");
+    expect(output).toBe("3 Ноябрь 2024, 15:08");
   });
 
   it("createArray", () => {

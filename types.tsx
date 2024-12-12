@@ -143,3 +143,12 @@ export type Feedback = {
   senderEmail: string;
   message: string;
 };
+
+export type StaticPage = {
+  id: number;
+  title: string;
+  uri: string;
+  body: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

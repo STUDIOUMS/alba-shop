@@ -17,7 +17,7 @@ const RootLayout = (props: LayoutProps): JSX.Element => {
   const { message, setMessage } = useAppStore();
 
   return (
-    <html lang="en">
+    <html lang="ru">
       <body>
         <Providers>
           <Stack sx={{ minHeight: "100vh" }} className="app">

@@ -21,9 +21,11 @@ export function createDate(dateString: string, time?: boolean) {
   const day = date.getDate();
   const month = months[date.getMonth()];
   const year = date.getFullYear();
-  const hours = date.getHours();
+  const hours = date.getUTCHours();
   const mins =
-    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    date.getUTCMinutes() < 10
+      ? "0" + date.getUTCMinutes()
+      : date.getUTCMinutes();
   const timeString = `, ${hours}:${mins}`;
   return `${day} ${month} ${year}${time ? timeString : ""}`;
 }
