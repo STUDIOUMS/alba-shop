@@ -8,6 +8,7 @@ import CustomBtn from "@/ui/CustomBtn";
 import BasketModal from "./BasketModal";
 import Link from "next/link";
 import CartItem from "@/components/CartItem";
+import CartHead from "@/components/CartItem/CartHead";
 
 const BasketList = (): JSX.Element => {
   const [modal, setModal] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const BasketList = (): JSX.Element => {
     <>
       {orders.length ? (
         <>
+          <CartHead />
           {orders.map((order) => (
             <CartItem key={order.id} order={order} />
           ))}
