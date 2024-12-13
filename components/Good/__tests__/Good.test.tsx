@@ -40,7 +40,6 @@ describe("Catalog product card", () => {
         })}
       />
     );
-    screen.debug();
     expect(screen.getByText("sale")).toBeDefined();
   });
 

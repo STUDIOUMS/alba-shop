@@ -70,16 +70,14 @@ const Good = (props: GoodProps): JSX.Element => {
           }}
         >
           <Link href={`/product/${el.slug}`}>
-            {currentPack.img ? (
+            {noPhoto.src && (
               <Image
-                src={currentPack.img}
-                alt=""
-                width={120}
-                height={120}
+                src={currentPack.img ? currentPack.img : noPhoto.src}
+                alt={el.title}
+                width={currentPack.img ? 120 : 90}
+                height={currentPack.img ? 120 : 90}
                 style={{ objectFit: "contain" }}
               />
-            ) : (
-              <Image src={noPhoto.src} alt="" width={90} height={90} />
             )}
           </Link>
         </GoodImage>

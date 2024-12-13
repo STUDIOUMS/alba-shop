@@ -1,12 +1,33 @@
 import Link from "next/link";
 import { DocType } from "@/types";
-import { Box, Typography } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import docFile from "@/assets/doc.svg";
-import Image from "next/image";
 
 type DocsProps = {
   docs: DocType[];
 };
+
+const Item = styled(Box)(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  lineHeight: theme.typography.body1.lineHeight,
+  marginBottom: theme.spacing(2),
+  a: {
+    position: "relative",
+    paddingLeft: theme.spacing(8),
+    "&::before": {
+      backgroundImage: `url(${docFile.src})`,
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: 20,
+      content: '""',
+      display: "block",
+      position: "absolute",
+      left: 0,
+      width: 20,
+      height: 20,
+    },
+  },
+}));
 
 const Docs = (props: DocsProps): JSX.Element => {
   const { docs } = props;
@@ -21,22 +42,15 @@ const Docs = (props: DocsProps): JSX.Element => {
   return (
     <Box>
       {docs.map((doc) => (
-        <Typography variant="body1" component="div" key={doc.id} sx={{ mb: 2 }}>
+        <Item key={doc.id}>
           <Link
             href={doc.file}
             target="_blank"
             style={{ display: "inline-flex", alignItems: "center" }}
           >
-            <Image
-              src={docFile.src}
-              alt=""
-              width={20}
-              height={20}
-              style={{ marginRight: 12 }}
-            />
             {doc.name}
           </Link>
-        </Typography>
+        </Item>
       ))}
     </Box>
   );
