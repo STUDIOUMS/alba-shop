@@ -18,7 +18,7 @@ const ChooseFace = (props: ChooseFaceProps): JSX.Element => {
         variant={face === "individual" ? "contained" : "outlined"}
         color={face === "individual" ? "primary" : "secondary"}
         onClick={() => {
-          setFace("individual"), setPayment("acquiring");
+          setFace("individual"), setPayment("online");
         }}
         size="small"
         sx={{ mr: 4 }}
