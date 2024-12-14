@@ -2,9 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   createArray,
   createDate,
+  getOrderToLines,
   getTotalPrice,
   isSaleDefine,
 } from "../helpers";
+import { checkoutItemFactory, orderFactory } from "./Factory";
+
+const orders = orderFactory.buildList(2);
+const checkoutItems = checkoutItemFactory.buildList(2);
 
 describe("Utilites", () => {
   it("createDate", () => {
@@ -33,6 +38,7 @@ describe("Utilites", () => {
         price: 100,
         slug: "slug",
         title: "Title",
+        productId: 1,
       },
     ]);
     expect(output).toBe(300);
@@ -64,5 +70,10 @@ describe("Utilites", () => {
       },
     ]);
     expect(output).toBeFalsy();
+  });
+
+  it("getOrderToLines", () => {
+    const output = getOrderToLines(orders);
+    expect(output).toStrictEqual(checkoutItems);
   });
 });

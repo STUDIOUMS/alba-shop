@@ -1,4 +1,4 @@
-import { Order, RelatedPack } from "@/types";
+import { CheckoutOrderItem, Order, RelatedPack } from "@/types";
 
 // createDate
 export function createDate(dateString: string, time?: boolean) {
@@ -41,4 +41,15 @@ export const getTotalPrice = (orders: Order[]): number => {
 
 export const isSaleDefine = (relatedPacks: RelatedPack[]): boolean => {
   return relatedPacks.some((el) => el.oldPrice !== null);
+};
+
+export const getOrderToLines = (orders: Order[]): CheckoutOrderItem[] => {
+  return orders.map((el) => {
+    const newLine: CheckoutOrderItem = {
+      price: Number(el.price),
+      productId: el.productId,
+      quantity: el.count,
+    };
+    return newLine;
+  });
 };

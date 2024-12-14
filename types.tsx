@@ -96,34 +96,17 @@ export type Order = {
   art: string;
   count: number;
   pack: string;
+  productId: number;
 };
 
 export type Face = "individual" | "legal";
-export type CreatedOrder = {
-  name: string;
-  email?: string;
-  phone: string;
-  addition: string;
-  city?: string;
-  address?: string;
-  delivery: Delivery;
-  payment: Payment;
-  inn?: string;
-  company?: string;
-  status: "waiting" | "canceled" | "processed" | "done";
-  price: number;
-  deliveryPrice: number;
-  total: number;
-  list: Order[];
-};
-
 export type Delivery = "courier" | "pickup";
 export type Payment =
-  | "acquiring"
+  | "online"
   | "bill"
+  | "bill-nds"
   | "delivery-cash"
-  | "delivery-card"
-  | "bill-nds";
+  | "delivery-card";
 
 export type FormOrderValues = {
   name: string;
@@ -151,4 +134,23 @@ export type StaticPage = {
   body: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type CheckoutOrderItem = {
+  productId: number;
+  quantity: number;
+  price: number;
+};
+export type CheckoutOrder = {
+  products: CheckoutOrderItem[];
+  clientFio: string;
+  clientEmail: string;
+  clientPhone: string;
+  legalEntity: boolean;
+  deliveryType: number;
+  paymentType: Payment;
+  note: string;
+  titleOrganization: string;
+  inn: string;
+  address: string;
 };

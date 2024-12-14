@@ -10,6 +10,7 @@ const CartHead = (): JSX.Element => {
   return (
     <CartBox
       sx={{
+        color: theme.palette.grey[700],
         border: 0,
         pt: 0,
         pb: 0,

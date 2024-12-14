@@ -11,3 +11,39 @@ Content-Type: application/json
 ###
 
 GET https://api.alba-72.ru/api/v1/catalog/products
+
+###
+
+POST https://api.alba-72.ru/api/v1/orders
+
+Content-Type: application/json
+
+{
+  "address": "street",
+  "clientEmail": "admin@test.com",
+  "clientFio": "Kostya",
+  "clientPhone": "1234566",
+  "deliveryType": 0,
+  "inn": "555",
+  "legalEntity": true,
+  "products": [
+      {
+          "price": 180,
+          "productId": 2,
+          "quantity": 1
+      },
+      {
+          "price": 342,
+          "productId": 9,
+          "quantity": 1
+      },
+      {
+          "price": 130,
+          "productId": 1,
+          "quantity": 3
+      }
+  ],
+  "note": "test",
+  "titleOrganization": "organization",
+  "paymentType": "bill"
+}

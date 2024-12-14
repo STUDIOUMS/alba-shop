@@ -30,6 +30,7 @@ const AddCart = (props: AddCartProps): JSX.Element => {
     count,
     img,
     pack,
+    productId: el.id,
   };
 
   const addCartHandler = () => {

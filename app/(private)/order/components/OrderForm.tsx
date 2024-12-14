@@ -6,11 +6,12 @@ import {
   Face,
   FormOrderValues,
   Payment,
-  CreatedOrder,
+  CheckoutOrder,
 } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import {
+  CircularProgress,
   FormControlLabel,
   Grid2,
   Radio,
@@ -25,13 +26,20 @@ import OrderCart from "@/components/OrderCart";
 import Link from "next/link";
 import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
-import { getTotalPrice } from "@/utils/helpers";
+import { getOrderToLines, getTotalPrice } from "@/utils/helpers";
+import useMutateData from "@/hooks/useMutateData";
 
 const OrderForm = (): JSX.Element => {
   const { orders } = useOrderStore();
   const [face, setFace] = useState<Face>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
-  const [payment, setPayment] = useState<Payment>("acquiring");
+  const [payment, setPayment] = useState<Payment>("online");
+
+  const { mutate, isPending } = useMutateData<CheckoutOrder>({
+    key: ["orders"],
+    method: "POST",
+    uri: "/orders",
+  });
 
   const totalPrice = getTotalPrice(orders);
   const deliveryPrice =
@@ -45,25 +53,26 @@ const OrderForm = (): JSX.Element => {
     formState: { errors },
   } = useForm<FormOrderValues>();
 
-  const placeOrder = (data: FormOrderValues) => {
-    const newOrder: CreatedOrder = {
-      addition: data.addition,
-      name: data.name,
-      phone: data.phone,
-      address: data.address,
-      city: data.city,
-      company: data.company,
-      email: data.email,
-      inn: data.inn,
-      delivery,
-      deliveryPrice,
-      list: orders,
-      payment,
-      price: totalPrice,
-      status: "waiting",
-      total: totalPriceDelivery,
+  const placeOrder = (formdata: FormOrderValues) => {
+    const newOrder: CheckoutOrder = {
+      address: formdata.address,
+      clientEmail: formdata.email,
+      clientFio: formdata.name,
+      clientPhone: formdata.phone,
+      deliveryType: delivery === "courier" ? 0 : 1,
+      inn: formdata.inn,
+      legalEntity: face === "legal",
+      products: getOrderToLines(orders),
+      note: formdata.addition,
+      titleOrganization: formdata.company ? formdata.company : "",
+      paymentType: payment,
     };
     console.log(newOrder);
+    mutate(newOrder, {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    });
   };
 
   return (
@@ -177,36 +186,18 @@ const OrderForm = (): JSX.Element => {
             {delivery === "pickup" && <AlertPickup />}
             {delivery === "courier" && <AlertCourier />}
             {delivery === "courier" && (
-              <Grid2 container spacing={6} sx={{ mt: 6 }}>
-                <Grid2 size={{ xs: 12, lg: 6 }}>
-                  <CustomInput
-                    label="Город"
-                    fullWidth
-                    sx={{ m: 0 }}
-                    slotProps={{
-                      input: {
-                        ...register("city", { required: ERROR_TEXT }),
-                      },
-                    }}
-                    error={errors.city ? true : false}
-                    helperText={errors.city && errors.city.message}
-                  />
-                </Grid2>
-                <Grid2 size={{ xs: 12, lg: 6 }}>
-                  <CustomInput
-                    label="Улица, дом, кв"
-                    fullWidth
-                    sx={{ m: 0 }}
-                    slotProps={{
-                      input: {
-                        ...register("address", { required: ERROR_TEXT }),
-                      },
-                    }}
-                    error={errors.address ? true : false}
-                    helperText={errors.address && errors.address.message}
-                  />
-                </Grid2>
-              </Grid2>
+              <CustomInput
+                label="Улица, дом, кв"
+                fullWidth
+                sx={{ m: 0, mt: 4 }}
+                slotProps={{
+                  input: {
+                    ...register("address", { required: ERROR_TEXT }),
+                  },
+                }}
+                error={errors.address ? true : false}
+                helperText={errors.address && errors.address.message}
+              />
             )}
           </OrderSection>
 
@@ -215,11 +206,11 @@ const OrderForm = (): JSX.Element => {
               {face === "individual" && (
                 <>
                   <FormControlLabel
-                    value="acquiring"
+                    value="online"
                     control={
                       <Radio
                         size="small"
-                        onChange={() => setPayment("acquiring")}
+                        onChange={() => setPayment("online")}
                       />
                     }
                     label="Оплатить онлайн"
@@ -291,7 +282,12 @@ const OrderForm = (): JSX.Element => {
                 Вернуться в корзину
               </CustomBtn>
             </Link>
-            <CustomBtn type="submit">Оформить заказ</CustomBtn>
+            <CustomBtn type="submit">
+              Оформить заказ{" "}
+              {isPending && (
+                <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} />
+              )}
+            </CustomBtn>
           </Stack>
         </form>
       </Grid2>

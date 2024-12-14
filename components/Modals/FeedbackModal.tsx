@@ -60,7 +60,11 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
 
   return (
     <CustomModal close={close} open={show} title="Обратная связь">
-      <form onSubmit={handleSubmit(feedbackHandler)} autoCorrect="false">
+      <form
+        onSubmit={handleSubmit(feedbackHandler)}
+        autoCorrect="false"
+        noValidate
+      >
         <CustomInput
           label="ФИО"
           fullWidth
@@ -73,7 +77,17 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           label="E-mail"
           fullWidth
           type="email"
-          inputProps={{ ...register("email") }}
+          inputProps={{
+            ...register("email", {
+              required: ERROR_TEXT,
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: "Введите корректный E-mail",
+              },
+            }),
+          }}
+          helperText={errors.email && errors.email.message}
+          error={errors.email ? true : false}
         />
 
         <CustomInput
@@ -90,7 +104,9 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           fullWidth
           multiline
           rows={3}
-          inputProps={{ ...register("message") }}
+          inputProps={{ ...register("message", { required: ERROR_TEXT }) }}
+          helperText={errors.message && errors.message.message}
+          error={errors.message ? true : false}
         />
 
         <CustomBtn type="submit" color="primary" fullWidth>
