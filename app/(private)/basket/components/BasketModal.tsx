@@ -19,7 +19,12 @@ const BasketModal = (props: BasketModalProps): JSX.Element => {
         Все товары будут удалены из корзины.
       </Typography>
       <Stack direction="row">
-        <CustomBtn fullWidth sx={{ mr: 4 }} onClick={() => deleteAllOrders()}>
+        <CustomBtn
+          color="error"
+          fullWidth
+          sx={{ mr: 4 }}
+          onClick={() => deleteAllOrders()}
+        >
           Очистить
         </CustomBtn>
         <CustomBtn
