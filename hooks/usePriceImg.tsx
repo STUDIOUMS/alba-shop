@@ -9,7 +9,7 @@ type UsePriceImgReturn = {
 
 type UsePriceImgProps = {
   packs: RelatedPack[];
-  defaultPack: RelatedPack;
+  defaultPack: RelatedPack | undefined;
 };
 
 const emptyPack: RelatedPack = {

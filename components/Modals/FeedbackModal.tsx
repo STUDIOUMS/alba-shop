@@ -110,7 +110,7 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
         />
 
         <CustomBtn type="submit" color="primary" fullWidth>
-          Оправить
+          Отправить
           {isPending && (
             <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} />
           )}
