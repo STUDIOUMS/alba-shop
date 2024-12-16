@@ -3,6 +3,7 @@ import {
   createArray,
   createDate,
   getOrderToLines,
+  getPackNames,
   getTotalPrice,
   isSaleDefine,
 } from "../helpers";
@@ -75,5 +76,17 @@ describe("Utilites", () => {
   it("getOrderToLines", () => {
     const output = getOrderToLines(orders);
     expect(output).toStrictEqual(checkoutItems);
+  });
+
+  it("getPackNames", () => {
+    const output = getPackNames(
+      [
+        { id: 1, name: "Pack 1" },
+        { id: 2, name: "Pack 2" },
+        { id: 3, name: "Pack 3" },
+      ],
+      ["1", "2"]
+    );
+    expect(output).toStrictEqual("Pack 1, Pack 2");
   });
 });

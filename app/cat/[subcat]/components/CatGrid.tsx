@@ -10,6 +10,7 @@ import { Category, Pack, Product, Response } from "@/types";
 import { Grid2 } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import CatLoading from "./CatLoading";
+import ChosenFilter from "@/components/ChosenFilter/ChosenFilter";
 
 type CatGridProps = {
   cat: Category;
@@ -47,6 +48,7 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
 
       <Grid2 size={{ xs: 12, lg: 9 }}>
         <Sort />
+        {succesPacks && <ChosenFilter packs={dataPacks.results} />}
         {isSuccess && <GoodList products={data.results} />}
       </Grid2>
     </Grid2>

@@ -1,4 +1,4 @@
-import { CheckoutOrderItem, Order, RelatedPack } from "@/types";
+import { CheckoutOrderItem, Order, Pack, RelatedPack } from "@/types";
 
 // createDate
 export function createDate(dateString: string, time?: boolean) {
@@ -52,4 +52,11 @@ export const getOrderToLines = (orders: Order[]): CheckoutOrderItem[] => {
     };
     return newLine;
   });
+};
+
+export const getPackNames = (packs: Pack[], params?: string[]): string => {
+  return packs
+    .filter((el: Pack) => params?.includes(el.id.toString()))
+    .map((el: Pack) => el.name)
+    .join(", ");
 };
