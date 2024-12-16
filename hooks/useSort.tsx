@@ -25,6 +25,7 @@ const useSort = (): SortReturn => {
     const val = createQueryString(value);
     router.push(pathname + "?" + val);
   };
+
   return {
     sortHandler,
     value,

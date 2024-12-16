@@ -22,28 +22,18 @@ Content-Type: application/json
   "address": "street",
   "clientEmail": "admin@test.com",
   "clientFio": "Kostya",
-  "clientPhone": "1234566",
+  "clientPhone": "1234567890",
   "deliveryType": 0,
   "inn": "555",
-  "legalEntity": true,
+  "legalEntity": false,
   "products": [
-      {
-          "price": 180,
-          "productId": 2,
-          "quantity": 1
-      },
-      {
-          "price": 342,
-          "productId": 9,
-          "quantity": 1
-      },
-      {
-          "price": 130,
-          "productId": 1,
-          "quantity": 3
-      }
+    {
+      "price": 180,
+      "productId": 2,
+      "quantity": 1
+    }
   ],
   "note": "test",
   "titleOrganization": "organization",
-  "paymentType": "bill"
+  "paymentType": "online"
 }

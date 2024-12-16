@@ -1,5 +1,5 @@
 import * as Factory from "factory.ts";
-import { CheckoutOrderItem, Order } from "@/types";
+import { CheckoutOrderItem, Order, Product } from "@/types";
 
 export const orderFactory = Factory.Sync.makeFactory<Order>({
   id: Factory.each((i) => String(i + 1)),

@@ -1,5 +1,5 @@
 import { Product } from "@/types";
-import { Grid2 } from "@mui/material";
+import { Alert, AlertTitle, Grid2 } from "@mui/material";
 import Good from "../Good";
 
 type GoodListProps = {
@@ -10,11 +10,20 @@ const GoodList = (props: GoodListProps): JSX.Element => {
   const { products } = props;
 
   return (
-    <Grid2 container spacing={4} sx={{ mb: 10 }}>
-      {products.map((product) => (
-        <Good key={product.id} el={product} />
-      ))}
-    </Grid2>
+    <>
+      {products.length ? (
+        <Grid2 container spacing={4} sx={{ mb: 10 }}>
+          {products.map((product) => (
+            <Good key={product.id} el={product} />
+          ))}
+        </Grid2>
+      ) : (
+        <Alert severity="info" variant="outlined">
+          <AlertTitle>Не найдено</AlertTitle>В данной категории нет товаров по
+          данным критериям
+        </Alert>
+      )}
+    </>
   );
 };
 

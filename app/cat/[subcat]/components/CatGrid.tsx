@@ -7,7 +7,7 @@ import Sort from "@/components/Sort";
 import { PRODUCTS_LIMIT } from "@/constants";
 import useGetData from "@/hooks/useGetData";
 import { Category, Pack, Product, Response } from "@/types";
-import { Alert, AlertTitle, Grid2 } from "@mui/material";
+import { Grid2 } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import CatLoading from "./CatLoading";
 
@@ -48,12 +48,6 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
       <Grid2 size={{ xs: 12, lg: 9 }}>
         <Sort />
         {isSuccess && <GoodList products={data.results} />}
-        {isSuccess && !data.results.length && (
-          <Alert severity="info" variant="outlined">
-            <AlertTitle>Не найдено</AlertTitle>В данной категории нет товаров по
-            данным критериям
-          </Alert>
-        )}
       </Grid2>
     </Grid2>
   );
