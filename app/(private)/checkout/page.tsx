@@ -1,22 +1,22 @@
+"use client";
+
 import { BreadCrumbsItem } from "@/types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import Section from "@/ui/Section";
 import OrderForm from "./components/OrderForm";
 import { Typography } from "@mui/material";
-
-// Metatags
-export const metadata = {
-  title: "Оформление заказа",
-  description: "Оформление заказа",
-};
+import { useEffect } from "react";
 
 /* BreadCrumbs */
 const crumbs: BreadCrumbsItem[] = [
-  { name: "Корзина", slug: `/basket` },
   { name: "Оформление заказа", slug: `/order` },
 ];
 
 function OrderPage() {
+  useEffect(() => {
+    document.title = "Оформление заказа";
+  }, []);
+
   return (
     <Section>
       <BreadCrumbs links={crumbs} />

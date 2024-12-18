@@ -154,3 +154,10 @@ export type CheckoutOrder = {
   inn: string;
   address: string;
 };
+
+export type SuccessfulOrder = CheckoutOrder & {
+  id: number;
+  number: number;
+  createdAt: Date;
+  updatedAt: Date;
+};

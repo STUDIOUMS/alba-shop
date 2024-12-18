@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
 import { COURIER_PRICE, ERROR_TEXT } from "@/constants";
 import {
   Delivery,
@@ -18,22 +22,20 @@ import {
   RadioGroup,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import ChooseFace from "./ChooseFace";
 import OrderSection from "./OrderSection";
 import OrderCart from "@/components/OrderCart";
-import Link from "next/link";
 import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
 import { getOrderToLines, getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 
 const OrderForm = (): JSX.Element => {
-  const { orders } = useOrderStore();
+  const { orders, setPlacedOrder } = useOrderStore();
   const [face, setFace] = useState<Face>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
+  const router = useRouter();
 
   const { mutate, isPending } = useMutateData<CheckoutOrder>({
     key: ["orders"],
@@ -49,11 +51,10 @@ const OrderForm = (): JSX.Element => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormOrderValues>();
 
-  const placeOrder = (formdata: FormOrderValues) => {
+  const placeOrderFunc = (formdata: FormOrderValues) => {
     const newOrder: CheckoutOrder = {
       address: formdata.address,
       clientEmail: formdata.email,
@@ -67,10 +68,10 @@ const OrderForm = (): JSX.Element => {
       titleOrganization: formdata.company ? formdata.company : "",
       paymentType: payment,
     };
-    console.log(newOrder);
     mutate(newOrder, {
       onSuccess: (data) => {
-        console.log(data);
+        setPlacedOrder(data);
+        router.push("/success");
       },
     });
   };
@@ -78,7 +79,7 @@ const OrderForm = (): JSX.Element => {
   return (
     <Grid2 container spacing={6}>
       <Grid2 size={{ xs: 12, lg: 8 }}>
-        <form onSubmit={handleSubmit(placeOrder)}>
+        <form onSubmit={handleSubmit(placeOrderFunc)}>
           <OrderSection title="Личные данные">
             <ChooseFace face={face} setFace={setFace} setPayment={setPayment} />
 

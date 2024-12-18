@@ -1,10 +1,12 @@
-import { Order } from "@/types";
+import { Order, SuccessfulOrder } from "@/types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 interface OrderStore {
   orders: Order[];
+  placed: SuccessfulOrder | null;
   setOrder: (data: Order) => void;
+  setPlacedOrder: (data: SuccessfulOrder) => void;
   changeCount: (id: string, count: string) => void;
   deleteOrder: (id: string) => void;
   deleteAllOrders: () => void;
@@ -15,6 +17,7 @@ export const useOrderStore = create<OrderStore>()(
     persist(
       (set) => ({
         orders: [],
+        placed: null,
 
         setOrder: (data) =>
           set((state) => {
@@ -42,6 +45,8 @@ export const useOrderStore = create<OrderStore>()(
             return { orders: state.orders };
           }),
 
+        setPlacedOrder: (data) => set(() => ({ placed: data })),
+
         deleteOrder: (id) =>
           set((state) => {
             return { orders: state.orders.filter((order) => order.id !== id) };
@@ -49,7 +54,10 @@ export const useOrderStore = create<OrderStore>()(
 
         deleteAllOrders: () => set(() => ({ orders: [] })),
       }),
-      { name: "orders" }
+      {
+        name: "orders",
+        partialize: (state) => ({ orders: state.orders }),
+      }
     )
   )
 );

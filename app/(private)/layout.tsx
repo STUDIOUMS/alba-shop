@@ -1,15 +1,26 @@
 "use client";
 
 import { useOrderStore } from "@/store/useOrderStore";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import { Fragment } from "react";
 
 type PrivateLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function PrivateLayout(props: PrivateLayoutProps) {
+const routes: string[] = ["/basket", "/checkout"];
+
+const PrivateLayout = (props: PrivateLayoutProps) => {
   const { children } = props;
-  const orders = useOrderStore();
-  if (!orders) redirect("/");
-  return <div>{children}</div>;
-}
+  const { orders } = useOrderStore();
+  const pathname = usePathname();
+  const isRoute = routes.some((route) => route === pathname);
+
+  if (!orders.length && isRoute) {
+    redirect("/");
+  }
+
+  return <Fragment>{children}</Fragment>;
+};
+
+export default PrivateLayout;
