@@ -1,13 +1,7 @@
 import { Order } from "@/types";
 import { CartBox, CartBoxDetails, CartBoxImg, CartBoxInfo } from "./styles";
 import nofoto from "@/assets/no-photo.svg";
-import {
-  Box,
-  IconButton,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Link from "next/link";
 import PriceBox from "../PriceBox";
 import { QuantityInput } from "@/ui/QuantityInput";
@@ -18,7 +12,7 @@ type CartItemProps = {
   order: Order;
 };
 
-export const IMG_WIDTH = 150;
+export const IMG_WIDTH = 120;
 export const IMG_WIDTH_MOBILE = 80;
 
 const CartItem = (props: CartItemProps): JSX.Element => {
@@ -41,13 +35,13 @@ const CartItem = (props: CartItemProps): JSX.Element => {
       </CartBoxImg>
       <CartBoxDetails>
         <CartBoxInfo>
-          <Typography variant="h3" component="div" sx={{ mb: 4 }}>
+          <Typography variant="h4" component="div" sx={{ mb: 4 }}>
             <Link href={`/product/${order.slug}`}>{order.title}</Link>
           </Typography>
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="body2" color="textSecondary">
             Фасовка: <b>{order.pack}</b>
           </Typography>
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="body2" color="textSecondary">
             Код товара: <b>{order.art}</b>
           </Typography>
         </CartBoxInfo>

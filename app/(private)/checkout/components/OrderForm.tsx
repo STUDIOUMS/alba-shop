@@ -31,7 +31,7 @@ import { getOrderToLines, getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 
 const OrderForm = (): JSX.Element => {
-  const { orders, setPlacedOrder } = useOrderStore();
+  const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
   const [face, setFace] = useState<Face>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
@@ -71,7 +71,8 @@ const OrderForm = (): JSX.Element => {
     mutate(newOrder, {
       onSuccess: (data) => {
         setPlacedOrder(data);
-        router.push("/success");
+        deleteAllOrders();
+        router.push("/basket");
       },
     });
   };

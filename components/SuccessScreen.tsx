@@ -1,32 +1,19 @@
-"use client";
-
 import { useOrderStore } from "@/store/useOrderStore";
-import Section from "@/ui/Section";
 import { Alert, Typography } from "@mui/material";
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
 
-const SuccessPage = () => {
-  const { placed, deleteAllOrders } = useOrderStore();
-
-  useEffect(() => {
-    deleteAllOrders();
-  }, []);
-
-  if (!placed) {
-    redirect("/");
-  }
+const SuccessScreen = (): JSX.Element => {
+  const { placed } = useOrderStore();
 
   return (
-    <Section>
+    <div>
       <Typography variant="h2">
         Заказ №{placed?.number} успешно добавлен
       </Typography>
       <Alert variant="outlined" color="info">
         Менеджер свяжется с Вами в течении 15 минут.
       </Alert>
-    </Section>
+    </div>
   );
 };
 
-export default SuccessPage;
+export default SuccessScreen;

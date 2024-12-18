@@ -8,8 +8,8 @@ export const CartBox = styled(Box)<BoxProps>(({ theme }) => ({
   borderWidth: 1,
   borderRadius: 6,
   display: "flex",
-  marginBottom: theme.spacing(4),
-  padding: theme.spacing(4),
+  marginBottom: theme.spacing(3),
+  padding: theme.spacing(2),
   position: "relative",
   [theme.breakpoints.down("md")]: {
     alignItems: "flex-start",
