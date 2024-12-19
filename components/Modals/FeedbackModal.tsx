@@ -1,6 +1,6 @@
 "use client";
 
-import { ERROR_TEXT } from "@/constants";
+import { EMAIL_PATTERN, ERROR_TEXT } from "@/constants";
 import useMutateData from "@/hooks/useMutateData";
 import { useAppStore } from "@/store/useAppStore";
 import { Feedback } from "@/types";
@@ -80,10 +80,7 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           inputProps={{
             ...register("email", {
               required: ERROR_TEXT,
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "Введите корректный E-mail",
-              },
+              pattern: EMAIL_PATTERN,
             }),
           }}
           helperText={errors.email && errors.email.message}

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-import { COURIER_PRICE, ERROR_TEXT } from "@/constants";
+import { redirect } from "next/navigation";
+import { COURIER_PRICE, EMAIL_PATTERN, ERROR_TEXT } from "@/constants";
 import {
   Delivery,
   Face,
@@ -35,7 +35,6 @@ const OrderForm = (): JSX.Element => {
   const [face, setFace] = useState<Face>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
-  const router = useRouter();
 
   const { mutate, isPending } = useMutateData<CheckoutOrder>({
     key: ["orders"],
@@ -72,7 +71,7 @@ const OrderForm = (): JSX.Element => {
       onSuccess: (data) => {
         setPlacedOrder(data);
         deleteAllOrders();
-        router.push("/basket");
+        redirect("/basket");
       },
     });
   };
@@ -108,9 +107,14 @@ const OrderForm = (): JSX.Element => {
                   sx={{ m: 0 }}
                   slotProps={{
                     input: {
-                      ...register("email"),
+                      ...register("email", {
+                        required: ERROR_TEXT,
+                        pattern: EMAIL_PATTERN,
+                      }),
                     },
                   }}
+                  error={errors.email ? true : false}
+                  helperText={errors.email && errors.email.message}
                 />
               </Grid2>
 

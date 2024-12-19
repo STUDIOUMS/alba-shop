@@ -9,9 +9,10 @@ const SuccessScreen = (): JSX.Element => {
       <Typography variant="h2">
         Заказ №{placed?.number} успешно добавлен
       </Typography>
-      <Alert variant="outlined" color="info">
+      <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
         Менеджер свяжется с Вами в течении 15 минут.
       </Alert>
+      <Typography variant="h3">Детали заказа</Typography>
     </div>
   );
 };
