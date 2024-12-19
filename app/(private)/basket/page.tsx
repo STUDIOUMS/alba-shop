@@ -11,6 +11,7 @@ import BasketButtons from "./components/BasketButtons";
 import BasketTable from "./components/BasketTable";
 import CustomBtn from "@/ui/CustomBtn";
 import SuccessScreen from "@/components/SuccessScreen";
+import Carousel from "@/components/Carousel";
 
 /* BreadCrumbs */
 const crumbs: BreadCrumbsItem[] = [{ name: "Корзина", slug: `/basket` }];
@@ -39,9 +40,10 @@ function BasketPage() {
           <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
             Ваша корзина пуста
           </Alert>
-          <CustomBtn href="/cat" variant="outlined" color="secondary">
-            Вернуться в каталог
+          <CustomBtn href="/" variant="outlined" color="secondary">
+            Вернуться на главную
           </CustomBtn>
+          <Carousel param="new" title="Новинки" />
         </>
       )}
       {placed && <SuccessScreen />}
