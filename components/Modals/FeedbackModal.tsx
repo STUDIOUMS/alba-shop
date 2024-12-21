@@ -1,6 +1,11 @@
 "use client";
 
-import { EMAIL_PATTERN, ERROR_TEXT } from "@/constants";
+import {
+  EMAIL_PATTERN,
+  ERROR_TEXT,
+  PHONE_MASK,
+  PHONE_PATTERN,
+} from "@/constants";
 import useMutateData from "@/hooks/useMutateData";
 import { useAppStore } from "@/store/useAppStore";
 import { Feedback } from "@/types";
@@ -8,6 +13,7 @@ import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import CustomModal from "@/ui/CustomModal";
 import { CircularProgress } from "@mui/material";
+import { useMask } from "@react-input/mask";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -31,6 +37,8 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
     formState: { errors },
     reset,
   } = useForm<FormData>();
+
+  const phoneRef = useMask(PHONE_MASK);
 
   const { mutate, isPending } = useMutateData<Feedback>({
     key: ["feedback"],
@@ -78,10 +86,7 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           fullWidth
           type="email"
           inputProps={{
-            ...register("email", {
-              required: ERROR_TEXT,
-              pattern: EMAIL_PATTERN,
-            }),
+            ...register("email", EMAIL_PATTERN),
           }}
           helperText={errors.email && errors.email.message}
           error={errors.email ? true : false}
@@ -91,7 +96,10 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           label="Телефон"
           fullWidth
           type="tel"
-          inputProps={{ ...register("phone", { required: ERROR_TEXT }) }}
+          inputProps={{
+            ...register("phone", PHONE_PATTERN),
+          }}
+          inputRef={phoneRef}
           helperText={errors.phone && errors.phone.message}
           error={errors.phone ? true : false}
         />

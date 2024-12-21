@@ -1,8 +1,9 @@
-import { ERROR_TEXT } from "@/constants";
+import { ERROR_TEXT, PHONE_MASK, PHONE_PATTERN } from "@/constants";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import CustomModal from "@/ui/CustomModal";
 import { CircularProgress } from "@mui/material";
+import { useMask } from "@react-input/mask";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -17,6 +18,8 @@ type QuickModalProps = {
 
 const QuickModal = (props: QuickModalProps): JSX.Element => {
   const { close, productId, show } = props;
+  const phoneRef = useMask(PHONE_MASK);
+
   const {
     handleSubmit,
     reset,
@@ -32,12 +35,17 @@ const QuickModal = (props: QuickModalProps): JSX.Element => {
     <CustomModal close={close} open={show} title="Быстрый заказ">
       <form onSubmit={handleSubmit(quickHandler)} autoCorrect="false">
         <CustomInput
-          label="Номер телефона"
+          label="Телефон"
           fullWidth
-          inputProps={{ ...register("phone", { required: ERROR_TEXT }) }}
+          type="tel"
+          inputProps={{
+            ...register("phone", PHONE_PATTERN),
+          }}
+          inputRef={phoneRef}
           helperText={errors.phone && errors.phone.message}
           error={errors.phone ? true : false}
         />
+
         <CustomBtn type="submit" color="primary" fullWidth>
           Оправить
           <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} />

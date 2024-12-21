@@ -28,4 +28,17 @@ describe("Feedback Modal", () => {
     await userEvent.click(btn);
     expect(screen.getByText("Введите корректный E-mail")).toBeDefined();
   });
+
+  it("Phone input mask", async () => {
+    render(
+      <TestWrapper>
+        <FeedbackModal close={() => {}} show={true} />
+      </TestWrapper>
+    );
+    const btn = screen.getByRole("button", { name: "Отправить" });
+    const phoneField = screen.getByRole("textbox", { name: "Телефон" });
+    await userEvent.type(phoneField, "+7 (555) 555-");
+    await userEvent.click(btn);
+    expect(screen.getByText("Номер должен быть полным")).toBeDefined();
+  });
 });

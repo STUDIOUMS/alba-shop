@@ -6,7 +6,24 @@ export const PRODUCTS_LIMIT = 8;
 export const BLOG_LIMIT = 3;
 export const COURIER_PRICE = 100;
 export const ERROR_TEXT = "Обязательное поле";
+
 export const EMAIL_PATTERN = {
-  value: /\S+@\S+\.\S+/,
-  message: "Введите корректный E-mail",
+  required: ERROR_TEXT,
+  pattern: {
+    value: /\S+@\S+\.\S+/,
+    message: "Введите корректный E-mail",
+  },
+};
+
+export const PHONE_MASK = {
+  mask: "+7 (___) ___-__-__",
+  replacement: { _: /\d/ },
+};
+
+export const PHONE_PATTERN = {
+  required: ERROR_TEXT,
+  minLength: {
+    message: "Номер должен быть полным",
+    value: 18,
+  },
 };

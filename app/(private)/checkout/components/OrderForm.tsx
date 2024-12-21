@@ -4,7 +4,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { COURIER_PRICE, EMAIL_PATTERN, ERROR_TEXT } from "@/constants";
+import {
+  COURIER_PRICE,
+  EMAIL_PATTERN,
+  ERROR_TEXT,
+  PHONE_MASK,
+  PHONE_PATTERN,
+} from "@/constants";
 import {
   Delivery,
   Face,
@@ -29,12 +35,14 @@ import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
 import { getOrderToLines, getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
+import { useMask } from "@react-input/mask";
 
 const OrderForm = (): JSX.Element => {
   const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
   const [face, setFace] = useState<Face>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
+  const phoneRef = useMask(PHONE_MASK);
 
   const { mutate, isPending } = useMutateData<CheckoutOrder>({
     key: ["orders"],
@@ -107,10 +115,7 @@ const OrderForm = (): JSX.Element => {
                   sx={{ m: 0 }}
                   slotProps={{
                     input: {
-                      ...register("email", {
-                        required: ERROR_TEXT,
-                        pattern: EMAIL_PATTERN,
-                      }),
+                      ...register("email", EMAIL_PATTERN),
                     },
                   }}
                   error={errors.email ? true : false}
@@ -120,17 +125,15 @@ const OrderForm = (): JSX.Element => {
 
               <Grid2 size={{ xs: 12, lg: 6 }}>
                 <CustomInput
-                  type="tel"
                   label="Телефон *"
                   fullWidth
-                  sx={{ m: 0 }}
-                  slotProps={{
-                    input: {
-                      ...register("phone", { required: ERROR_TEXT }),
-                    },
+                  type="tel"
+                  inputProps={{
+                    ...register("phone", PHONE_PATTERN),
                   }}
-                  error={errors.phone ? true : false}
+                  inputRef={phoneRef}
                   helperText={errors.phone && errors.phone.message}
+                  error={errors.phone ? true : false}
                 />
               </Grid2>
 
