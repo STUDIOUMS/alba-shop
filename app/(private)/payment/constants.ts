@@ -1,3 +1,5 @@
+// https://www.tbank.ru/kassa/dev/payments/
+
 export const URL = {
   pay: "https://securepay.tinkoff.ru/v2/Init",
   payTest: "https://rest-api-test.tinkoff.ru/v2/Init",
