@@ -134,7 +134,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
               img={currentPack.img}
               noPack={noPack}
             />
-            {!noPack && (
+            {/* {!noPack && (
               <CustomBtn
                 onClick={() => setQuickModal(true)}
                 color="secondary"
@@ -143,7 +143,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
               >
                 Быстрый заказ
               </CustomBtn>
-            )}
+            )} */}
           </Stack>
 
           <AlertDelivery variant="outlined" sx={{ mt: 6 }} />

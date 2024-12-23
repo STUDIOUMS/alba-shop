@@ -33,9 +33,11 @@ import OrderSection from "./OrderSection";
 import OrderCart from "@/components/OrderCart";
 import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
-import { getOrderToLines, getTotalPrice } from "@/utils/helpers";
+import { createNewOrder, getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 import { useMask } from "@react-input/mask";
+import { changeOrders, getPaymentData, PAYMENT_URL } from "./constants";
+import { PaymentResponse } from "./types";
 
 const OrderForm = (): JSX.Element => {
   const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
@@ -61,27 +63,34 @@ const OrderForm = (): JSX.Element => {
     formState: { errors },
   } = useForm<FormOrderValues>();
 
-  const placeOrderFunc = (formdata: FormOrderValues) => {
-    const newOrder: CheckoutOrder = {
-      address: formdata.address,
-      clientEmail: formdata.email,
-      clientFio: formdata.name,
-      clientPhone: formdata.phone,
-      deliveryType: delivery === "courier" ? 0 : 1,
-      inn: formdata.inn,
-      legalEntity: face === "legal",
-      products: getOrderToLines(orders),
-      note: formdata.addition,
-      titleOrganization: formdata.company ? formdata.company : "",
-      paymentType: payment,
-    };
-    mutate(newOrder, {
-      onSuccess: (data) => {
-        setPlacedOrder(data);
-        deleteAllOrders();
-        redirect("/basket");
-      },
-    });
+  const placeOrderFunc = async (formdata: FormOrderValues) => {
+    if (payment === "online") {
+      // Online payment
+      const payData = getPaymentData({ Items: changeOrders(orders) });
+      const response = await fetch(PAYMENT_URL.pay, {
+        body: JSON.stringify(payData),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data: PaymentResponse = await response.json();
+      window.open(data.PaymentURL, "_blank");
+    } else {
+      // Other payments
+      const newOrder = createNewOrder(
+        formdata,
+        face,
+        delivery,
+        payment,
+        orders
+      );
+      mutate(newOrder, {
+        onSuccess: (data) => {
+          setPlacedOrder(data);
+          deleteAllOrders();
+          redirect("/basket");
+        },
+      });
+    }
   };
 
   return (
@@ -131,6 +140,7 @@ const OrderForm = (): JSX.Element => {
                   inputProps={{
                     ...register("phone", PHONE_PATTERN),
                   }}
+                  placeholder="+7 (___) ___-__-__"
                   inputRef={phoneRef}
                   helperText={errors.phone && errors.phone.message}
                   error={errors.phone ? true : false}

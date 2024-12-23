@@ -12,7 +12,6 @@ const SuccessScreen = (): JSX.Element => {
       <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
         Менеджер свяжется с Вами в течении 15 минут.
       </Alert>
-      <Typography variant="h3">Детали заказа</Typography>
     </div>
   );
 };
