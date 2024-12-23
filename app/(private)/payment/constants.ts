@@ -10,11 +10,11 @@ export const payData = {
   TerminalKey: "TinkoffBankTest",
   Amount: 500,
   OrderId: "21095",
-  Description: "Подарочная карта на 1000 рублей",
+  Description: "Моющее средство",
   Token: "68711168852240a2f34b6a8b19d2cfbd296c7d2a6dff8b23eda6278985959346",
   DATA: {
     Phone: "+71234567890",
-    Email: "a@test.com",
+    Email: "uralmetstroy@list.ru",
   },
   Receipt: {
     Email: "a@test.ru",

@@ -6,7 +6,7 @@ interface OrderStore {
   orders: Order[];
   placed: SuccessfulOrder | null;
   setOrder: (data: Order) => void;
-  setPlacedOrder: (data: SuccessfulOrder) => void;
+  setPlacedOrder: (data: SuccessfulOrder | null) => void;
   changeCount: (id: string, count: string) => void;
   deleteOrder: (id: string) => void;
   deleteAllOrders: () => void;
@@ -31,6 +31,7 @@ export const useOrderStore = create<OrderStore>()(
                 return el;
               });
             } else {
+              state.placed = null;
               state.orders = [...state.orders, data];
             }
             return { orders: state.orders };
