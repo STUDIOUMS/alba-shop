@@ -99,6 +99,12 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           inputProps={{
             ...register("phone", PHONE_PATTERN),
           }}
+          slotProps={{
+            input: {
+              startAdornment: "+7",
+            },
+          }}
+          placeholder={PHONE_MASK.mask}
           inputRef={phoneRef}
           helperText={errors.phone && errors.phone.message}
           error={errors.phone ? true : false}

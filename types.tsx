@@ -113,10 +113,10 @@ export type FormOrderValues = {
   email: string;
   phone: string;
   city: string;
-  street: string;
   address: string;
   addition: string;
   inn: string;
+  street?: string;
   company?: string;
 };
 

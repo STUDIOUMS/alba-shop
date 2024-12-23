@@ -3,7 +3,7 @@ export type PayDataItem = {
   Price: number;
   Quantity: number;
   Amount: number;
-  Tax: "vat10" | "vat20";
+  Tax: "none" | "vat0" | "vat10" | "vat20" | "vat110" | "vat120";
   Ean13?: string;
 };
 
@@ -17,10 +17,19 @@ export type PayData = {
     Phone: string;
     Email: string;
   };
-  Receipt: {
+  CustomerKey?: string;
+  SuccessURL?: string;
+  FailURL?: string;
+  Receipt?: {
     Email: string;
     Phone: string;
-    Taxation: string;
+    Taxation:
+      | "osn"
+      | "usn_income"
+      | "usn_income_outcome"
+      | "envd"
+      | "esn"
+      | "patent";
     Items: PayDataItem[];
   };
 };

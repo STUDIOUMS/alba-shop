@@ -37,7 +37,7 @@ describe("Feedback Modal", () => {
     );
     const btn = screen.getByRole("button", { name: "Отправить" });
     const phoneField = screen.getByRole("textbox", { name: "Телефон" });
-    await userEvent.type(phoneField, "+7 (555) 555-");
+    await userEvent.type(phoneField, "+7 (555) 555-55");
     await userEvent.click(btn);
     expect(screen.getByText("Номер должен быть полным")).toBeDefined();
   });

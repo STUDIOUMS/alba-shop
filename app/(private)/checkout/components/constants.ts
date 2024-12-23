@@ -9,11 +9,6 @@ type getPaymentDataProps = {
   Email?: string;
 };
 
-export const PAYMENT_URL = {
-  pay: "https://securepay.tinkoff.ru/v2/Init",
-  status: "https://securepay.tinkoff.ru/v2/GetState",
-};
-
 export const changeOrders = (orders: Order[]): PayDataItem[] => {
   return orders.map((order) => ({
     Amount: order.count * order.price * 100,
@@ -38,7 +33,7 @@ export const getPaymentData = (props: getPaymentDataProps): PayData => {
       Email: "uralmetstroy@list.ru",
     },
     Receipt: {
-      Email: "a@test.ru",
+      Email: "uralmetstroy@list.ru",
       Phone: "+79031234567",
       Taxation: "osn",
       Items: [

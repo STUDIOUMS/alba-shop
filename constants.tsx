@@ -1,4 +1,10 @@
 export const SERVER_URL = "https://api.alba-72.ru/api/v1";
+export const PAYMENT_URL = {
+  pay: "https://securepay.tinkoff.ru/v2/Init",
+  test: "https://rest-api-test.tinkoff.ru/v2/Init",
+  status: "https://securepay.tinkoff.ru/v2/GetState",
+};
+
 export const CURRENCY = "руб.";
 export const PHONE = "+7 (123) 456 78 90";
 export const PHONE_NUMBER = "+71234567890";
@@ -16,7 +22,7 @@ export const EMAIL_PATTERN = {
 };
 
 export const PHONE_MASK = {
-  mask: "+7 (___) ___-__-__",
+  mask: " (___) ___-__-__",
   replacement: { _: /\d/ },
 };
 
@@ -24,6 +30,6 @@ export const PHONE_PATTERN = {
   required: ERROR_TEXT,
   minLength: {
     message: "Номер должен быть полным",
-    value: 18,
+    value: 16,
   },
 };

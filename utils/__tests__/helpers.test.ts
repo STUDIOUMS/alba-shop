@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   createArray,
   createDate,
+  createNewOrder,
   getOrderToLines,
   getPackNames,
   getTotalPrice,
@@ -88,5 +89,36 @@ describe("Utilites", () => {
       ["1", "2"]
     );
     expect(output).toStrictEqual("Pack 1, Pack 2");
+  });
+
+  it("createNewOrder", () => {
+    const output = createNewOrder(
+      {
+        addition: "",
+        address: "Street",
+        city: "City",
+        email: "test@test.com",
+        inn: "",
+        name: "Name",
+        phone: "123456789",
+      },
+      "individual",
+      "courier",
+      "bill",
+      []
+    );
+    expect(output).toStrictEqual({
+      address: "Street",
+      clientEmail: "test@test.com",
+      clientFio: "Name",
+      clientPhone: "123456789",
+      deliveryType: 0,
+      inn: "",
+      legalEntity: false,
+      note: "",
+      paymentType: "bill",
+      products: [],
+      titleOrganization: "",
+    });
   });
 });

@@ -11,7 +11,7 @@ const Div = styled(Box)(({ theme }) => ({
   borderStyle: "solid",
   borderWidth: 1,
   borderRadius: 6,
-  marginBottom: theme.spacing(6),
+  marginBottom: theme.spacing(4),
 }));
 
 const Head = styled(Box)(({ theme }) => ({

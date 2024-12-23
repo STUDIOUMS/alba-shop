@@ -36,8 +36,8 @@ import { AlertCourier, AlertPickup } from "@/components/Alerts";
 import { createNewOrder, getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 import { useMask } from "@react-input/mask";
-import { changeOrders, getPaymentData, PAYMENT_URL } from "./constants";
-import { PaymentResponse } from "./types";
+import { changeOrders, getPaymentData } from "./constants";
+import { postPayment } from "@/utils/api";
 
 const OrderForm = (): JSX.Element => {
   const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
@@ -67,12 +67,7 @@ const OrderForm = (): JSX.Element => {
     if (payment === "online") {
       // Online payment
       const payData = getPaymentData({ Items: changeOrders(orders) });
-      const response = await fetch(PAYMENT_URL.pay, {
-        body: JSON.stringify(payData),
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data: PaymentResponse = await response.json();
+      const data = await postPayment(payData);
       window.open(data.PaymentURL, "_blank");
     } else {
       // Other payments
@@ -100,7 +95,7 @@ const OrderForm = (): JSX.Element => {
           <OrderSection title="Личные данные">
             <ChooseFace face={face} setFace={setFace} setPayment={setPayment} />
 
-            <Grid2 container spacing={6}>
+            <Grid2 container spacing={4}>
               <Grid2 size={{ xs: 12, lg: 6 }}>
                 <CustomInput
                   label="Ваше ФИО *"
@@ -140,7 +135,12 @@ const OrderForm = (): JSX.Element => {
                   inputProps={{
                     ...register("phone", PHONE_PATTERN),
                   }}
-                  placeholder="+7 (___) ___-__-__"
+                  slotProps={{
+                    input: {
+                      startAdornment: "+7",
+                    },
+                  }}
+                  placeholder={PHONE_MASK.mask}
                   inputRef={phoneRef}
                   helperText={errors.phone && errors.phone.message}
                   error={errors.phone ? true : false}
