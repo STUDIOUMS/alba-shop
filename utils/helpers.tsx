@@ -9,6 +9,9 @@ import {
   Payment,
   RelatedPack,
 } from "@/types";
+import { customAlphabet } from "nanoid";
+
+const nanoId = customAlphabet("1234567890", 10);
 
 // createDate
 export function createDate(dateString: string, time?: boolean) {
@@ -91,5 +94,6 @@ export const createNewOrder = (
     paymentType: payment,
     products: getOrderToLines(orders),
     titleOrganization: company ? company : "",
+    number: nanoId(),
   };
 };

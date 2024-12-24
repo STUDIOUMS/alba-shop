@@ -4,10 +4,15 @@ import { Order } from "@/types";
 import { PayData, PayDataItem } from "./types";
 
 type getPaymentDataProps = {
-  Items?: PayDataItem[];
-  Phone?: string;
-  Email?: string;
+  Items: PayDataItem[];
+  Email: string;
+  Phone: string;
 };
+
+const PAYMENT_KEY = process.env.NEXT_PUBLIC_PAYMENT_KEY || "TinkoffBankTest";
+const TOKEN =
+  process.env.NEXT_PUBLIC_PAYMENT_TOKEN ||
+  "68711168852240a2f34b6a8b19d2cfbd296c7d2a6dff8b23eda6278985959346";
 
 export const changeOrders = (orders: Order[]): PayDataItem[] => {
   return orders.map((order) => ({
@@ -22,29 +27,20 @@ export const changeOrders = (orders: Order[]): PayDataItem[] => {
 export const getPaymentData = (props: getPaymentDataProps): PayData => {
   const { Items, Email, Phone } = props;
   return {
-    TerminalKey: "TinkoffBankTest",
-    //Amount: Items.reduce((acum, el) => (acum += el.Amount), 0),
-    Amount: 100,
+    TerminalKey: PAYMENT_KEY,
+    Amount: Items.reduce((acum, el) => (acum += el.Amount), 0),
     OrderId: "21095",
     Description: "Оплата товаров на сайте alba-72.ru",
-    Token: "68711168852240a2f34b6a8b19d2cfbd296c7d2a6dff8b23eda6278985959346",
+    Token: TOKEN,
     DATA: {
-      Phone: "+71234567890",
-      Email: "uralmetstroy@list.ru",
+      Phone,
+      Email,
     },
     Receipt: {
-      Email: "uralmetstroy@list.ru",
-      Phone: "+79031234567",
+      Email,
+      Phone,
       Taxation: "osn",
-      Items: [
-        {
-          Amount: 100,
-          Name: "Test product",
-          Price: 100,
-          Quantity: 1,
-          Tax: "vat10",
-        },
-      ],
+      Items,
     },
   };
 };

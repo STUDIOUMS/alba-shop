@@ -8,7 +8,7 @@ export type PayDataItem = {
 };
 
 export type PayData = {
-  TerminalKey: "TinkoffBankTest";
+  TerminalKey: string;
   Amount: number;
   OrderId: string;
   Description: string;
