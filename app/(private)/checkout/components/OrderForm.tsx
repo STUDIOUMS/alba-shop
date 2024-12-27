@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import {
   COURIER_PRICE,
   EMAIL_PATTERN,
@@ -36,8 +35,12 @@ import { AlertCourier, AlertPickup } from "@/components/Alerts";
 import { createNewOrder, getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 import { useMask } from "@react-input/mask";
-import { changeOrders, getPaymentData } from "./constants";
+import { changeOrders, getPaymentData } from "./utils";
 import { postPayment } from "@/utils/api";
+import { customAlphabet } from "nanoid";
+import { redirect } from "next/navigation";
+
+const nanoId = customAlphabet("01234567890", 10);
 
 const OrderForm = (): JSX.Element => {
   const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
@@ -64,26 +67,34 @@ const OrderForm = (): JSX.Element => {
   } = useForm<FormOrderValues>();
 
   const placeOrderFunc = async (formdata: FormOrderValues) => {
-    // if (payment === "online") {
-    //   // Online payment
-    //   const payData = getPaymentData({
-    //     Items: changeOrders(orders),
-    //     Email: formdata.email,
-    //     Phone: formdata.phone,
-    //   });
-    //   const data = await postPayment(payData);
-    //   window.open(data.PaymentURL, "_blank");
-    // } else {
-    // Other payments
-    const newOrder = createNewOrder(formdata, face, delivery, payment, orders);
-    mutate(newOrder, {
-      onSuccess: (data) => {
-        setPlacedOrder(data);
-        deleteAllOrders();
-        redirect("/basket");
-      },
-    });
-    // }
+    const orderId = nanoId();
+    const newOrder: CheckoutOrder = {
+      ...createNewOrder(formdata, face, delivery, payment, orders),
+      id: orderId,
+    };
+    if (payment === "online") {
+      // Online payment
+      const payData = getPaymentData({
+        Items: changeOrders(orders),
+        Email: formdata.email,
+        Phone: formdata.phone,
+        orderId,
+      });
+      const data = await postPayment(payData);
+      console.log(data);
+      window.open(data.PaymentURL, "_blank");
+    } else {
+      // Other payments
+      mutate(newOrder, {
+        onSuccess: (data) => {
+          console.log(newOrder);
+          console.log(data);
+          setPlacedOrder(data);
+          deleteAllOrders();
+          redirect("/basket");
+        },
+      });
+    }
   };
 
   return (
@@ -300,7 +311,7 @@ const OrderForm = (): JSX.Element => {
               </CustomBtn>
             </Link>
             <CustomBtn type="submit">
-              Оформить заказ{" "}
+              {payment === "online" ? "Оплатить заказ" : "Оформить заказ"}{" "}
               {isPending && (
                 <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} />
               )}

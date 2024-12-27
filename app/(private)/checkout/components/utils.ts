@@ -7,12 +7,13 @@ type getPaymentDataProps = {
   Items: PayDataItem[];
   Email: string;
   Phone: string;
+  orderId: string;
 };
 
-const PAYMENT_KEY = process.env.NEXT_PUBLIC_PAYMENT_KEY || "TinkoffBankTest";
+const TERMINAL_KEY = process.env.NEXT_PUBLIC_TERMINAL_KEY || "TinkoffBankTest";
 const TOKEN =
   process.env.NEXT_PUBLIC_PAYMENT_TOKEN ||
-  "68711168852240a2f34b6a8b19d2cfbd296c7d2a6dff8b23eda6278985959346";
+  "t.w9zJLCIITRN1M26ZaWSJbdzGAsov3PO8ogo17uYwwGZdG06I04Jew28dnoaGN6Ts5Op1IsB4wkVh-mU-mxjZag";
 
 export const changeOrders = (orders: Order[]): PayDataItem[] => {
   return orders.map((order) => ({
@@ -25,11 +26,11 @@ export const changeOrders = (orders: Order[]): PayDataItem[] => {
 };
 
 export const getPaymentData = (props: getPaymentDataProps): PayData => {
-  const { Items, Email, Phone } = props;
+  const { Items, Email, Phone, orderId } = props;
   return {
-    TerminalKey: PAYMENT_KEY,
+    TerminalKey: TERMINAL_KEY,
     Amount: Items.reduce((acum, el) => (acum += el.Amount), 0),
-    OrderId: "21095",
+    OrderId: orderId,
     Description: "Оплата товаров на сайте alba-72.ru",
     Token: TOKEN,
     DATA: {

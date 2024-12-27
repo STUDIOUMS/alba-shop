@@ -3,6 +3,7 @@ const nextConfig = {
   env: {
     API_URL: "https://api.alba-72.ru/api/v1",
   },
+  reactStrictMode: false,
   images: {
     localPatterns: [
       {

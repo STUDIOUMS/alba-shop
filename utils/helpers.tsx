@@ -9,9 +9,6 @@ import {
   Payment,
   RelatedPack,
 } from "@/types";
-import { customAlphabet } from "nanoid";
-
-const nanoId = customAlphabet("1234567890", 10);
 
 // createDate
 export function createDate(dateString: string, time?: boolean) {
@@ -80,7 +77,7 @@ export const createNewOrder = (
   delivery: Delivery,
   payment: Payment,
   orders: Order[]
-): CheckoutOrder => {
+): Omit<CheckoutOrder, "id"> => {
   const { addition, address, email, inn, name, phone, company } = formdata;
   return {
     address,

@@ -17,11 +17,14 @@ import Carousel from "@/components/Carousel";
 const crumbs: BreadCrumbsItem[] = [{ name: "Корзина", slug: `/basket` }];
 
 function BasketPage() {
-  const { orders, placed } = useOrderStore();
+  const { orders, placed, setPlacedOrder } = useOrderStore();
 
   useEffect(() => {
     document.title = "Корзина";
-  }, []);
+    return () => {
+      setPlacedOrder(null);
+    };
+  }, [setPlacedOrder]);
 
   return (
     <Section>
