@@ -153,7 +153,6 @@ export type CheckoutOrder = {
   titleOrganization: string;
   inn: string;
   address: string;
-  number?: string;
 };
 
 export type SuccessfulOrder = CheckoutOrder & {

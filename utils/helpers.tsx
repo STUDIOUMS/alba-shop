@@ -94,6 +94,5 @@ export const createNewOrder = (
     paymentType: payment,
     products: getOrderToLines(orders),
     titleOrganization: company ? company : "",
-    number: nanoId(),
   };
 };

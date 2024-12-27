@@ -64,32 +64,26 @@ const OrderForm = (): JSX.Element => {
   } = useForm<FormOrderValues>();
 
   const placeOrderFunc = async (formdata: FormOrderValues) => {
-    if (payment === "online") {
-      // Online payment
-      const payData = getPaymentData({
-        Items: changeOrders(orders),
-        Email: formdata.email,
-        Phone: formdata.phone,
-      });
-      const data = await postPayment(payData);
-      window.open(data.PaymentURL, "_blank");
-    } else {
-      // Other payments
-      const newOrder = createNewOrder(
-        formdata,
-        face,
-        delivery,
-        payment,
-        orders
-      );
-      mutate(newOrder, {
-        onSuccess: (data) => {
-          setPlacedOrder(data);
-          deleteAllOrders();
-          redirect("/basket");
-        },
-      });
-    }
+    // if (payment === "online") {
+    //   // Online payment
+    //   const payData = getPaymentData({
+    //     Items: changeOrders(orders),
+    //     Email: formdata.email,
+    //     Phone: formdata.phone,
+    //   });
+    //   const data = await postPayment(payData);
+    //   window.open(data.PaymentURL, "_blank");
+    // } else {
+    // Other payments
+    const newOrder = createNewOrder(formdata, face, delivery, payment, orders);
+    mutate(newOrder, {
+      onSuccess: (data) => {
+        setPlacedOrder(data);
+        deleteAllOrders();
+        redirect("/basket");
+      },
+    });
+    // }
   };
 
   return (
