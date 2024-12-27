@@ -19,7 +19,7 @@ const BasketButtons = (): JSX.Element => {
           Очистить корзину
         </CustomBtn>
         <Link href="/checkout" passHref>
-          <CustomBtn>Оформить заказ</CustomBtn>
+          <CustomBtn>Перейти к оформлению</CustomBtn>
         </Link>
       </Stack>
 
