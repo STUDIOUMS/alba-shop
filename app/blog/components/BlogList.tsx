@@ -8,6 +8,8 @@ import Pager from "@/ui/Pager";
 import BlogCard from "./BlogCard";
 import Loading from "../[blog]/loading";
 
+const PAGE_COUNT = 5;
+
 const BlogList = (): JSX.Element => {
   const { data, isLoading, isError, isSuccess } = useGetData<
     Response<BlogItem>
@@ -28,7 +30,7 @@ const BlogList = (): JSX.Element => {
               <BlogCard key={el.id} item={el} />
             ))}
           </Box>
-          <Pager count={10} size="large" />
+          <Pager count={Math.ceil(data.count / PAGE_COUNT)} size="large" />
         </>
       )}
 
