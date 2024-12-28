@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import "./fonts.css";
+// import "./fonts.css";
 
 const theme = createTheme({
   spacing: 4,
