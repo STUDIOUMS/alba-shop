@@ -2,7 +2,6 @@
 
 import { Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useOrderStore } from "@/store/useOrderStore";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/theme";
 import Styles from "./Styles";

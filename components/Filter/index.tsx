@@ -1,14 +1,11 @@
 "use client";
 
 import { Pack } from "@/types";
-import CheckField from "../CheckField";
-import { Box, FormGroup } from "@mui/material";
+import { Drawer, useMediaQuery, useTheme } from "@mui/material";
 import CustomBtn from "@/ui/CustomBtn";
-import Range from "@/ui/Range";
-import { FilterDiv, FilterFooter, FilterHeader } from "./styles";
+import { useState } from "react";
+import FilterBox from "./Filter";
 import useFilter from "@/hooks/useFilter";
-import CustomCheck from "@/ui/CustomCheck";
-import FilterPack from "./FilterPack";
 
 type FilterProps = {
   packs: Pack[];
@@ -16,6 +13,9 @@ type FilterProps = {
 
 const Filter = (props: FilterProps): JSX.Element => {
   const { packs } = props;
+  const [show, setShow] = useState(false);
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
 
   const {
     applyFilter,
@@ -33,92 +33,54 @@ const Filter = (props: FilterProps): JSX.Element => {
     prices,
   } = useFilter();
 
+  if (!isTablet)
+    return (
+      <FilterBox
+        packs={packs}
+        applyFilter={applyFilter}
+        choosePackHandler={choosePackHandler}
+        discountState={discountState}
+        hitState={hitState}
+        isResetDisabled={isResetDisabled}
+        newState={newState}
+        packState={packState}
+        prices={prices}
+        resetFilter={resetFilter}
+        setDiscountState={setDiscountState}
+        setHitState={setHitState}
+        setNewState={setNewState}
+        setPrices={setPrices}
+      />
+    );
+
   return (
-    <FilterDiv>
-      <FilterHeader>Фильтр</FilterHeader>
-      <Box>
-        <Box sx={{ p: 4 }}>
-          <FormGroup>
-            <CheckField
-              label="Хит"
-              control={
-                <CustomCheck
-                  value="hit"
-                  checked={hitState}
-                  onChange={(e) => setHitState(e.target.checked)}
-                />
-              }
-            />
-            <CheckField
-              label="Скидка"
-              control={
-                <CustomCheck
-                  value="discount"
-                  checked={discountState}
-                  onChange={(e) => setDiscountState(e.target.checked)}
-                />
-              }
-            />
-            <CheckField
-              label="Новинки"
-              control={
-                <CustomCheck
-                  value="new"
-                  checked={newState}
-                  onChange={(e) => setNewState(e.target.checked)}
-                />
-              }
-            />
-          </FormGroup>
-        </Box>
-
-        <FilterHeader size="small">Цена</FilterHeader>
-        <Box sx={{ p: 4 }}>
-          <Range setValues={setPrices} values={prices} max={1000} />
-        </Box>
-
-        <FilterHeader size="small">Фасовка</FilterHeader>
-        <Box sx={{ p: 4 }}>
-          <FormGroup>
-            {packs.map((pack) => (
-              <FilterPack
-                key={pack.id}
-                handler={choosePackHandler}
-                id={pack.id.toString()}
-                label={pack.name}
-                isChecked={
-                  packState.length
-                    ? packState.some((el) => el === pack.id.toString())
-                    : false
-                }
-                reseted={!packState.length}
-              />
-            ))}
-          </FormGroup>
-        </Box>
-      </Box>
-
-      <FilterFooter direction="row">
-        <CustomBtn
-          variant="outlined"
-          color="primary"
-          fullWidth
-          onClick={applyFilter}
-          sx={{ mr: 2 }}
-        >
-          Применить
-        </CustomBtn>
-        <CustomBtn
-          variant="outlined"
-          color="secondary"
-          fullWidth
-          disabled={isResetDisabled}
-          onClick={resetFilter}
-        >
-          Сбросить
-        </CustomBtn>
-      </FilterFooter>
-    </FilterDiv>
+    <>
+      <CustomBtn
+        variant="outlined"
+        color="secondary"
+        onClick={() => setShow(true)}
+      >
+        Показать фильтр
+      </CustomBtn>
+      <Drawer open={show} onClose={() => setShow(false)}>
+        <FilterBox
+          packs={packs}
+          applyFilter={applyFilter}
+          choosePackHandler={choosePackHandler}
+          discountState={discountState}
+          hitState={hitState}
+          isResetDisabled={isResetDisabled}
+          newState={newState}
+          packState={packState}
+          prices={prices}
+          resetFilter={resetFilter}
+          setDiscountState={setDiscountState}
+          setHitState={setHitState}
+          setNewState={setNewState}
+          setPrices={setPrices}
+        />
+      </Drawer>
+    </>
   );
 };
 

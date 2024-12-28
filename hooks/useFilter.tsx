@@ -1,7 +1,7 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { SetStateAction, useCallback, useState } from "react";
 
-type FilterReturn = {
+export type FilterReturn = {
   hitState: boolean;
   discountState: boolean;
   newState: boolean;
