@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
-import { CURRENCY } from "@/constants";
 import { Delivery, Order } from "@/types";
 import OrderCartItem, { Item } from "./OrderCartItem";
+import { TEXTS } from "@/texts";
 
 type OrderCartProps = {
   delivery: Delivery;
@@ -30,13 +30,13 @@ const OrderCart = (props: OrderCartProps): JSX.Element => {
       <Item display="flex" justifyContent="space-between">
         Доставка:{" "}
         <span>
-          <b>{deliveryPrice}</b> {CURRENCY}
+          <b>{deliveryPrice}</b> {TEXTS.common.currency}
         </span>
       </Item>
       <Item display="flex" justifyContent="space-between">
         Итого:{" "}
         <span>
-          <b>{totalPrice}</b> {CURRENCY}
+          <b>{totalPrice}</b> {TEXTS.common.currency}
         </span>
       </Item>
     </OrderCartWrap>

@@ -1,4 +1,4 @@
-import { ERROR_TEXT, PHONE_MASK, PHONE_PATTERN } from "@/constants";
+import { FORM_SETTINGS } from "@/constants";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import CustomModal from "@/ui/CustomModal";
@@ -18,7 +18,7 @@ type QuickModalProps = {
 
 const QuickModal = (props: QuickModalProps): JSX.Element => {
   const { close, productId, show } = props;
-  const phoneRef = useMask(PHONE_MASK);
+  const phoneRef = useMask(FORM_SETTINGS.mask);
 
   const {
     handleSubmit,
@@ -39,7 +39,7 @@ const QuickModal = (props: QuickModalProps): JSX.Element => {
           fullWidth
           type="tel"
           inputProps={{
-            ...register("phone", PHONE_PATTERN),
+            ...register("phone", FORM_SETTINGS.phone),
           }}
           inputRef={phoneRef}
           helperText={errors.phone && errors.phone.message}

@@ -18,7 +18,9 @@ export const getData = async <T>(uri: string): Promise<T> => {
   return data;
 };
 
-export const mutateData = async <T>(props: MutateDataProps<T>) => {
+export const mutateData = async <T, K>(
+  props: MutateDataProps<T>
+): Promise<K> => {
   const { method, uri, body } = props;
   const response = await fetch(process.env.API_URL + uri, {
     method,

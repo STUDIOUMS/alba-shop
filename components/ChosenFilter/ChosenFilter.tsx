@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Box, Chip, Typography } from "@mui/material";
 import { Pack } from "@/types";
-import { CURRENCY } from "@/constants";
 import { getPackNames } from "@/utils/helpers";
+import { TEXTS } from "@/texts";
 
 type ChosenFilterProps = {
   packs: Pack[];
@@ -35,8 +35,8 @@ const ChosenFilter = (props: ChosenFilterProps): JSX.Element => {
   if (isHit) output.push("Хит");
   if (isDiscount) output.push("Скидки");
   if (isNew) output.push("Новинки");
-  if (isPriceMin) output.push(`От: ${priceMin} ${CURRENCY}`);
-  if (isPriceMax) output.push(`До: ${priceMax} ${CURRENCY}`);
+  if (isPriceMin) output.push(`От: ${priceMin} ${TEXTS.common.currency}`);
+  if (isPriceMax) output.push(`До: ${priceMax} ${TEXTS.common.currency}`);
   if (isPack) output.push(`Упаковка: ${packString}`);
 
   if (!output.length) {

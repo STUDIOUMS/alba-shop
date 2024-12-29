@@ -127,6 +127,12 @@ export type Feedback = {
   message: string;
 };
 
+export type FeedbackResponse = Feedback & {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type StaticPage = {
   id: number;
   title: string;
@@ -157,8 +163,8 @@ export type CheckoutOrder = {
 };
 
 export type SuccessfulOrder = CheckoutOrder & {
-  id: number;
   number: number;
   createdAt: Date;
   updatedAt: Date;
+  paymentUrl: string;
 };

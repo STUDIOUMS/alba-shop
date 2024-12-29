@@ -1,4 +1,4 @@
-import { CURRENCY } from "@/constants";
+import { TEXTS } from "@/texts";
 import { Stack, StackProps, Typography } from "@mui/material";
 
 type PriceSizeType = "large" | "small";
@@ -26,7 +26,7 @@ const PriceBox = (props: PriceBoxProps): JSX.Element => {
         variant={size === "large" ? "body1" : "body2"}
         component="span"
       >
-        {CURRENCY}
+        {TEXTS.common.currency}
       </Typography>
       {oldprice ? (
         <Stack
@@ -48,7 +48,7 @@ const PriceBox = (props: PriceBoxProps): JSX.Element => {
             {oldprice}
           </Typography>
           <Typography variant="body2" color="error" component="span">
-            {CURRENCY}
+            {TEXTS.common.currency}
           </Typography>
         </Stack>
       ) : (

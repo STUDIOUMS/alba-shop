@@ -1,4 +1,4 @@
-import { CURRENCY } from "@/constants";
+import { TEXTS } from "@/texts";
 import { Order } from "@/types";
 import { getTotalPrice } from "@/utils/helpers";
 import { Typography } from "@mui/material";
@@ -13,7 +13,7 @@ const BasketTotal = (props: BasketTotalProps): JSX.Element => {
 
   return (
     <Typography variant="h2" fontWeight={400} textAlign="right" component="div">
-      Итого: <b>{totalPrice}</b> <small>{CURRENCY}</small>
+      Итого: <b>{totalPrice}</b> <small>{TEXTS.common.currency}</small>
     </Typography>
   );
 };

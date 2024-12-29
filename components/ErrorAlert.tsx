@@ -1,10 +1,11 @@
+import { TEXTS } from "@/texts";
 import { Alert, AlertTitle } from "@mui/material";
 
 const ErrorAlert = () => {
   return (
     <Alert variant="outlined" severity="error">
-      <AlertTitle>500 - Ошибка сервера</AlertTitle>
-      Попробуйте посетить данную страницу позже.
+      <AlertTitle>{TEXTS.notifications.error.title}</AlertTitle>
+      {TEXTS.notifications.error.text}
     </Alert>
   );
 };

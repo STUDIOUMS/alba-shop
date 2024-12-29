@@ -1,6 +1,6 @@
 "use client";
 
-import { CURRENCY } from "@/constants";
+import { TEXTS } from "@/texts";
 import { Box, Slider, Stack, Typography } from "@mui/material";
 import { SetStateAction } from "react";
 
@@ -34,10 +34,10 @@ const Range = (props: RangeProps): JSX.Element => {
     <Box>
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="h5">
-          {values[0]} {CURRENCY}
+          {values[0]} {TEXTS.common.currency}
         </Typography>
         <Typography variant="h5">
-          {values[1]} {CURRENCY}
+          {values[1]} {TEXTS.common.currency}
         </Typography>
       </Stack>
       <Slider

@@ -1,3 +1,6 @@
+import { TEXTS } from "./texts";
+
+// URL
 export const SERVER_URL = "https://api.alba-72.ru/api/v1";
 export const PAYMENT_URL = {
   pay: "https://securepay.tinkoff.ru/v2/Init",
@@ -5,31 +8,29 @@ export const PAYMENT_URL = {
   status: "https://securepay.tinkoff.ru/v2/GetState",
 };
 
-export const CURRENCY = "руб.";
-export const PHONE = "+7 (123) 456 78 90";
-export const PHONE_NUMBER = "+71234567890";
+// Settings
 export const PRODUCTS_LIMIT = 8;
 export const BLOG_LIMIT = 3;
 export const COURIER_PRICE = 100;
-export const ERROR_TEXT = "Обязательное поле";
 
-export const EMAIL_PATTERN = {
-  required: ERROR_TEXT,
-  pattern: {
-    value: /\S+@\S+\.\S+/,
-    message: "Введите корректный E-mail",
+// FORM_SETTINGS
+export const FORM_SETTINGS = {
+  email: {
+    required: TEXTS.forms.errorText,
+    pattern: {
+      value: /\S+@\S+\.\S+/,
+      message: TEXTS.forms.incorrectEmail,
+    },
   },
-};
-
-export const PHONE_MASK = {
-  mask: " (___) ___-__-__",
-  replacement: { _: /\d/ },
-};
-
-export const PHONE_PATTERN = {
-  required: ERROR_TEXT,
-  minLength: {
-    message: "Номер должен быть полным",
-    value: 16,
+  phone: {
+    required: TEXTS.forms.errorText,
+    minLength: {
+      message: TEXTS.forms.incorrectPhone,
+      value: 16,
+    },
+  },
+  mask: {
+    mask: " (___) ___-__-__",
+    replacement: { _: /\d/ },
   },
 };

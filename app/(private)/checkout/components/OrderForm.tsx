@@ -3,19 +3,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import {
-  COURIER_PRICE,
-  EMAIL_PATTERN,
-  ERROR_TEXT,
-  PHONE_MASK,
-  PHONE_PATTERN,
-} from "@/constants";
+import { COURIER_PRICE, FORM_SETTINGS } from "@/constants";
 import {
   Delivery,
   Face,
   FormOrderValues,
   Payment,
   CheckoutOrder,
+  SuccessfulOrder,
 } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
@@ -39,17 +34,18 @@ import { changeOrders, getPaymentData } from "./utils";
 import { postPayment } from "@/utils/api";
 import { customAlphabet } from "nanoid";
 import { redirect } from "next/navigation";
+import { TEXTS } from "@/texts";
 
-const nanoId = customAlphabet("01234567890", 10);
+const nanoId = customAlphabet("0123456789", 10);
 
 const OrderForm = (): JSX.Element => {
   const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
   const [face, setFace] = useState<Face>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
-  const phoneRef = useMask(PHONE_MASK);
+  const phoneRef = useMask(FORM_SETTINGS.mask);
 
-  const { mutate, isPending } = useMutateData<CheckoutOrder>({
+  const { mutate, isPending } = useMutateData<CheckoutOrder, SuccessfulOrder>({
     key: ["orders"],
     method: "POST",
     uri: "/orders",
@@ -114,7 +110,7 @@ const OrderForm = (): JSX.Element => {
                   helperText={errors.name && errors.name.message}
                   slotProps={{
                     input: {
-                      ...register("name", { required: ERROR_TEXT }),
+                      ...register("name", { required: TEXTS.forms.errorText }),
                     },
                   }}
                 />
@@ -128,7 +124,7 @@ const OrderForm = (): JSX.Element => {
                   sx={{ m: 0 }}
                   slotProps={{
                     input: {
-                      ...register("email", EMAIL_PATTERN),
+                      ...register("email", FORM_SETTINGS.email),
                     },
                   }}
                   error={errors.email ? true : false}
@@ -142,14 +138,14 @@ const OrderForm = (): JSX.Element => {
                   fullWidth
                   type="tel"
                   inputProps={{
-                    ...register("phone", PHONE_PATTERN),
+                    ...register("phone", FORM_SETTINGS.phone),
                   }}
                   slotProps={{
                     input: {
                       startAdornment: "+7",
                     },
                   }}
-                  placeholder={PHONE_MASK.mask}
+                  placeholder={FORM_SETTINGS.mask.mask}
                   inputRef={phoneRef}
                   helperText={errors.phone && errors.phone.message}
                   error={errors.phone ? true : false}
@@ -165,7 +161,9 @@ const OrderForm = (): JSX.Element => {
                       sx={{ m: 0 }}
                       slotProps={{
                         input: {
-                          ...register("inn", { required: ERROR_TEXT }),
+                          ...register("inn", {
+                            required: TEXTS.forms.errorText,
+                          }),
                         },
                       }}
                       error={errors.inn ? true : false}
@@ -180,7 +178,9 @@ const OrderForm = (): JSX.Element => {
                       sx={{ m: 0 }}
                       slotProps={{
                         input: {
-                          ...register("company", { required: ERROR_TEXT }),
+                          ...register("company", {
+                            required: TEXTS.forms.errorText,
+                          }),
                         },
                       }}
                       error={errors.company ? true : false}
@@ -220,7 +220,7 @@ const OrderForm = (): JSX.Element => {
                 sx={{ m: 0, mt: 4 }}
                 slotProps={{
                   input: {
-                    ...register("address", { required: ERROR_TEXT }),
+                    ...register("address", { required: TEXTS.forms.errorText }),
                   },
                 }}
                 error={errors.address ? true : false}

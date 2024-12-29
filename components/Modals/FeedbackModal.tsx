@@ -1,20 +1,16 @@
 "use client";
 
-import {
-  EMAIL_PATTERN,
-  ERROR_TEXT,
-  PHONE_MASK,
-  PHONE_PATTERN,
-} from "@/constants";
+import { useForm } from "react-hook-form";
+import { FORM_SETTINGS } from "@/constants";
 import useMutateData from "@/hooks/useMutateData";
 import { useAppStore } from "@/store/useAppStore";
-import { Feedback } from "@/types";
+import { TEXTS } from "@/texts";
+import { Feedback, FeedbackResponse } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import CustomModal from "@/ui/CustomModal";
 import { CircularProgress } from "@mui/material";
 import { useMask } from "@react-input/mask";
-import { useForm } from "react-hook-form";
 
 type FormData = {
   name: string;
@@ -38,9 +34,9 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
     reset,
   } = useForm<FormData>();
 
-  const phoneRef = useMask(PHONE_MASK);
+  const phoneRef = useMask(FORM_SETTINGS.mask);
 
-  const { mutate, isPending } = useMutateData<Feedback>({
+  const { mutate, isPending } = useMutateData<Feedback, FeedbackResponse>({
     key: ["feedback"],
     method: "POST",
     uri: "/web/feedback/",
@@ -58,9 +54,7 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
         onSuccess: () => {
           reset();
           close();
-          setMessage(
-            "Ваше сообщение было отправлено. Менеджер свяжется с вами в ближайшее время"
-          );
+          setMessage(TEXTS.feedback.success);
         },
       }
     );
@@ -76,7 +70,9 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
         <CustomInput
           label="ФИО"
           fullWidth
-          inputProps={{ ...register("name", { required: ERROR_TEXT }) }}
+          inputProps={{
+            ...register("name", { required: TEXTS.forms.errorText }),
+          }}
           helperText={errors.name && errors.name.message}
           error={errors.name ? true : false}
         />
@@ -86,7 +82,7 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           fullWidth
           type="email"
           inputProps={{
-            ...register("email", EMAIL_PATTERN),
+            ...register("email", FORM_SETTINGS.email),
           }}
           helperText={errors.email && errors.email.message}
           error={errors.email ? true : false}
@@ -97,14 +93,14 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           fullWidth
           type="tel"
           inputProps={{
-            ...register("phone", PHONE_PATTERN),
+            ...register("phone", FORM_SETTINGS.phone),
           }}
           slotProps={{
             input: {
               startAdornment: "+7",
             },
           }}
-          placeholder={PHONE_MASK.mask}
+          placeholder={FORM_SETTINGS.mask.mask}
           inputRef={phoneRef}
           helperText={errors.phone && errors.phone.message}
           error={errors.phone ? true : false}
@@ -115,7 +111,9 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           fullWidth
           multiline
           rows={3}
-          inputProps={{ ...register("message", { required: ERROR_TEXT }) }}
+          inputProps={{
+            ...register("message", { required: TEXTS.forms.errorText }),
+          }}
           helperText={errors.message && errors.message.message}
           error={errors.message ? true : false}
         />

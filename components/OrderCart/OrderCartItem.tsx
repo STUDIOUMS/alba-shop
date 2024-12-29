@@ -1,4 +1,4 @@
-import { CURRENCY } from "@/constants";
+import { TEXTS } from "@/texts";
 import { Order } from "@/types";
 import { Box, Stack, styled, Typography } from "@mui/material";
 
@@ -34,7 +34,7 @@ const OrderCartItem = (props: OrderCartItemProps): JSX.Element => {
           Кол-во: <b>{order.count}</b> шт.
         </Typography>
         <Typography variant="body2">
-          Стоимость: <b>{total}</b> {CURRENCY}
+          Стоимость: <b>{total}</b> {TEXTS.common.currency}
         </Typography>
       </Stack>
     </Item>

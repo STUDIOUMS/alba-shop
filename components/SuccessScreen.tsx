@@ -1,4 +1,5 @@
 import { useOrderStore } from "@/store/useOrderStore";
+import { TEXTS } from "@/texts";
 import { Alert, Typography } from "@mui/material";
 
 const SuccessScreen = (): JSX.Element => {
@@ -10,7 +11,7 @@ const SuccessScreen = (): JSX.Element => {
         Заказ №{placed?.number} успешно добавлен
       </Typography>
       <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
-        Менеджер свяжется с Вами в течении 15 минут.
+        {TEXTS.notifications.successfulResponse}
       </Alert>
     </div>
   );

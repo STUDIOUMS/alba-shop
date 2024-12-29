@@ -6,6 +6,7 @@ import logo from "@/assets/logo.svg";
 import Socials from "../Socials";
 import CustomContainer from "@/ui/CustomContainer";
 import FootMenu from "./FootMenu";
+import { TEXTS } from "@/texts";
 
 const Footer = (): JSX.Element => {
   const theme = useTheme();
@@ -31,7 +32,7 @@ const Footer = (): JSX.Element => {
                 height={50}
               />
             </div>
-            &copy; 2023 site.com
+            &copy; {TEXTS.common.copyright}
           </Grid2>
 
           {isDesktop && (
@@ -44,7 +45,7 @@ const Footer = (): JSX.Element => {
 
           <Grid2 size={{ lg: 3, xs: 12 }}>
             <Socials />
-            <p>+7 (999) 999-99-99</p>
+            <p>{TEXTS.common.phoneString}</p>
           </Grid2>
         </Grid2>
       </CustomContainer>
