@@ -13,10 +13,11 @@ type AddCartProps = {
   price: number;
   small?: boolean;
   noPack?: boolean;
+  link: string;
 };
 
 const AddCart = (props: AddCartProps): JSX.Element => {
-  const { el, img, pack, price, small, noPack } = props;
+  const { el, img, pack, price, small, noPack, link } = props;
   const { setOrder } = useOrderStore();
   const { setMessage, view } = useAppStore();
   const [count, setCount] = useState<number>(1);
@@ -24,7 +25,7 @@ const AddCart = (props: AddCartProps): JSX.Element => {
   const order: Order = {
     id: String(el.id) + "-" + pack,
     title: el.title,
-    slug: el.slug,
+    slug: link,
     art: el.art,
     price,
     count,
@@ -47,7 +48,7 @@ const AddCart = (props: AddCartProps): JSX.Element => {
 
   return (
     <Stack direction={view === "grid" ? "row" : "column"}>
-      <QuantityInput onChange={(e, val) => setCount(Number(val))} />
+      <QuantityInput onChange={(__, val) => setCount(Number(val))} />
       <CustomBtn
         color="primary"
         variant="outlined"

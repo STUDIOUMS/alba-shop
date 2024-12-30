@@ -36,6 +36,14 @@ export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
   );
 
   useEffect(() => {
+    const hashId = Number(window.location.hash.split("-")[1]);
+    const foundPack = packs.find((pack) => pack.id === hashId);
+    if (foundPack) {
+      setCurrentPack(foundPack);
+    }
+  }, []);
+
+  useEffect(() => {
     const foundPack = packs.find((pack) => pack.pack.id === currentPackId);
     if (foundPack) {
       setCurrentPack(foundPack);
@@ -51,7 +59,7 @@ export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
     currentPack,
     noPack: !currentPack.pack.id,
     link:
-      currentPack.pack.name !== packs[0].pack.name
+      !!packs.length && currentPack.pack.name !== packs[0].pack.name
         ? `${slug}#pack-${currentPack.id}`
         : slug,
   };

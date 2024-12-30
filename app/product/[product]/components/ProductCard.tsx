@@ -64,7 +64,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isSale = isSaleDefine(good.relatedPacks);
 
-  const { choosePack, currentPack, noPack } = usePriceImg({
+  const { choosePack, currentPack, noPack, link } = usePriceImg({
     defaultPack: good.defaultPack,
     packs: good.relatedPacks,
     slug: good.slug,
@@ -133,6 +133,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
               price={Number(currentPack.price)}
               img={currentPack.img}
               noPack={noPack}
+              link={link}
             />
           </Stack>
 

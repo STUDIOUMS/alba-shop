@@ -120,6 +120,7 @@ const Good = (props: GoodProps): JSX.Element => {
         price={Number(currentPack.price)}
         small
         noPack={noPack}
+        link={link}
       />
     </GoodItem>
   );

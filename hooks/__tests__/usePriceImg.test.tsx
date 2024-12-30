@@ -13,6 +13,7 @@ describe("usePriceImg", () => {
         usePriceImg({
           defaultPack: packs[0],
           packs: packs,
+          slug: "product",
         }),
       { wrapper: TestWrapper }
     );
@@ -28,6 +29,7 @@ describe("usePriceImg", () => {
         usePriceImg({
           defaultPack: undefined,
           packs: [],
+          slug: "product",
         }),
       { wrapper: TestWrapper }
     );
