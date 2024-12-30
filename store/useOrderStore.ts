@@ -32,6 +32,7 @@ export const useOrderStore = create<OrderStore>()(
                 return el;
               });
             } else {
+              state.placed = null;
               state.orders = [...state.orders, data];
             }
             return { orders: state.orders };

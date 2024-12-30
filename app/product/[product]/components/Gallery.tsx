@@ -1,3 +1,5 @@
+"use client";
+
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import Fancybox from "@/components/Fancybox";
 import Image from "next/image";

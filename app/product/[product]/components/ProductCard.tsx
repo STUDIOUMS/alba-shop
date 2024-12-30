@@ -16,7 +16,6 @@ import QuickModal from "@/components/Modals/QuickModal";
 import PriceBox from "@/components/PriceBox";
 import { usePriceImg } from "@/hooks/usePriceImg";
 import { Product } from "@/types";
-import CustomBtn from "@/ui/CustomBtn";
 import Packages from "@/ui/Packages";
 import Gallery from "./Gallery";
 import { GoodChip } from "@/components/Good/styles";
@@ -68,6 +67,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
   const { choosePack, currentPack, noPack } = usePriceImg({
     defaultPack: good.defaultPack,
     packs: good.relatedPacks,
+    slug: good.slug,
   });
 
   const handleChange = (e: React.SyntheticEvent, newValue: number) => {
@@ -134,16 +134,6 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
               img={currentPack.img}
               noPack={noPack}
             />
-            {/* {!noPack && (
-              <CustomBtn
-                onClick={() => setQuickModal(true)}
-                color="secondary"
-                variant="outlined"
-                sx={{ ml: isMobile ? 0 : 4, mt: isMobile ? 4 : 0 }}
-              >
-                Быстрый заказ
-              </CustomBtn>
-            )} */}
           </Stack>
 
           <AlertDelivery variant="outlined" sx={{ mt: 6 }} />

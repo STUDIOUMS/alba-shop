@@ -24,9 +24,10 @@ const Good = (props: GoodProps): JSX.Element => {
   const isGrid = view === "grid";
   const isSale = isSaleDefine(el.relatedPacks);
 
-  const { choosePack, currentPack, noPack } = usePriceImg({
+  const { choosePack, currentPack, noPack, link } = usePriceImg({
     defaultPack: el.defaultPack,
     packs: el.relatedPacks,
+    slug: el.slug,
   });
 
   const conditionAI = slide
@@ -69,7 +70,7 @@ const Good = (props: GoodProps): JSX.Element => {
             minWidth: conditionMW,
           }}
         >
-          <Link href={`/product/${el.slug}`}>
+          <Link href={`/product/${link}`}>
             {noPhoto.src && (
               <Image
                 src={currentPack.img ? currentPack.img : noPhoto.src}
@@ -82,7 +83,7 @@ const Good = (props: GoodProps): JSX.Element => {
           </Link>
         </GoodImage>
         <GoodItemTitle>
-          <Link href={`/product/${el.slug}`}>{el.title}</Link>
+          <Link href={`/product/${link}`}>{el.title}</Link>
         </GoodItemTitle>
       </Stack>
 

@@ -1,15 +1,17 @@
 import { RelatedPack } from "@/types";
 import { useEffect, useState } from "react";
 
+type UsePriceImgProps = {
+  packs: RelatedPack[];
+  defaultPack: RelatedPack | undefined;
+  slug: string;
+};
+
 type UsePriceImgReturn = {
   choosePack: (id: number) => void;
   currentPack: RelatedPack;
   noPack: boolean;
-};
-
-type UsePriceImgProps = {
-  packs: RelatedPack[];
-  defaultPack: RelatedPack | undefined;
+  link: string;
 };
 
 const emptyPack: RelatedPack = {
@@ -25,7 +27,7 @@ const emptyPack: RelatedPack = {
 };
 
 export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
-  const { defaultPack, packs } = props;
+  const { defaultPack, packs, slug } = props;
   const [currentPack, setCurrentPack] = useState<RelatedPack>(
     defaultPack || emptyPack
   );
@@ -48,5 +50,9 @@ export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
     choosePack: choosePack,
     currentPack,
     noPack: !currentPack.pack.id,
+    link:
+      currentPack.pack.name !== packs[0].pack.name
+        ? `${slug}#pack-${currentPack.id}`
+        : slug,
   };
 };

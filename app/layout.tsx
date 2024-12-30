@@ -18,18 +18,6 @@ const RootLayout = (props: LayoutProps): JSX.Element => {
 
   return (
     <html lang="ru">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         <Providers>
           <Stack sx={{ minHeight: "100vh" }} className="app">
