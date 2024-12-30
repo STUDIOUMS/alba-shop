@@ -1,14 +1,4 @@
-import {
-  CheckoutOrder,
-  CheckoutOrderItem,
-  Delivery,
-  Face,
-  FormOrderValues,
-  Order,
-  Pack,
-  Payment,
-  RelatedPack,
-} from "@/types";
+import { Order, Pack, RelatedPack } from "@/types";
 
 // createDate
 export function createDate(dateString: string, time?: boolean) {
@@ -53,43 +43,9 @@ export const isSaleDefine = (relatedPacks: RelatedPack[]): boolean => {
   return relatedPacks.some((el) => el.oldPrice !== null);
 };
 
-export const getOrderToLines = (orders: Order[]): CheckoutOrderItem[] => {
-  return orders.map((el) => {
-    const newLine: CheckoutOrderItem = {
-      price: Number(el.price),
-      productId: el.productId,
-      quantity: el.count,
-    };
-    return newLine;
-  });
-};
-
 export const getPackNames = (packs: Pack[], params?: string[]): string => {
   return packs
     .filter((el: Pack) => params?.includes(el.id.toString()))
     .map((el: Pack) => el.name)
     .join(", ");
-};
-
-export const createNewOrder = (
-  formdata: FormOrderValues,
-  entity: Face,
-  delivery: Delivery,
-  payment: Payment,
-  orders: Order[]
-): Omit<CheckoutOrder, "id"> => {
-  const { addition, address, email, inn, name, phone, company } = formdata;
-  return {
-    address,
-    clientEmail: email,
-    clientFio: name,
-    clientPhone: phone,
-    deliveryType: delivery === "courier" ? 0 : 1,
-    inn,
-    legalEntity: entity === "legal",
-    note: addition,
-    paymentType: payment,
-    products: getOrderToLines(orders),
-    titleOrganization: company ? company : "",
-  };
 };

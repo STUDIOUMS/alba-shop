@@ -4,14 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { COURIER_PRICE, FORM_SETTINGS } from "@/constants";
-import {
-  Delivery,
-  Face,
-  FormOrderValues,
-  Payment,
-  CheckoutOrder,
-  SuccessfulOrder,
-} from "@/types";
+import { FormOrderValues } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
 import {
@@ -22,25 +15,27 @@ import {
   RadioGroup,
   Stack,
 } from "@mui/material";
-import ChooseFace from "./ChooseFace";
+import ChooseEntity from "./ChooseEntity";
 import OrderSection from "./OrderSection";
 import OrderCart from "@/components/OrderCart";
 import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
-import { createNewOrder, getTotalPrice } from "@/utils/helpers";
+import { getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 import { useMask } from "@react-input/mask";
-import { changeOrders, getPaymentData } from "./utils";
-import { postPayment } from "@/utils/api";
-import { customAlphabet } from "nanoid";
-import { redirect } from "next/navigation";
 import { TEXTS } from "@/texts";
-
-const nanoId = customAlphabet("0123456789", 10);
+import {
+  CheckoutOrder,
+  Delivery,
+  Entity,
+  Payment,
+  SuccessfulOrder,
+} from "./types";
+import { createNewOrder } from "./utils";
 
 const OrderForm = (): JSX.Element => {
   const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
-  const [face, setFace] = useState<Face>("individual");
+  const [entity, setEntity] = useState<Entity>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
   const phoneRef = useMask(FORM_SETTINGS.mask);
@@ -62,35 +57,24 @@ const OrderForm = (): JSX.Element => {
     formState: { errors },
   } = useForm<FormOrderValues>();
 
-  const placeOrderFunc = async (formdata: FormOrderValues) => {
-    const orderId = nanoId();
-    const newOrder: CheckoutOrder = {
-      ...createNewOrder(formdata, face, delivery, payment, orders),
-      id: orderId,
-    };
-    if (payment === "online") {
-      // Online payment
-      const payData = getPaymentData({
-        Items: changeOrders(orders),
-        Email: formdata.email,
-        Phone: formdata.phone,
-        orderId,
-      });
-      const data = await postPayment(payData);
-      console.log(data);
-      window.open(data.PaymentURL, "_blank");
-    } else {
-      // Other payments
-      mutate(newOrder, {
-        onSuccess: (data) => {
-          console.log(newOrder);
-          console.log(data);
-          setPlacedOrder(data);
-          deleteAllOrders();
-          redirect("/basket");
-        },
-      });
-    }
+  const placeOrderFunc = (formdata: FormOrderValues) => {
+    const newOrder = createNewOrder(
+      formdata,
+      entity,
+      delivery,
+      payment,
+      orders
+    );
+    console.log(newOrder);
+
+    mutate(newOrder, {
+      onSuccess: (data) => {
+        console.log(data);
+        // setPlacedOrder(data);
+        // deleteAllOrders();
+        // redirect("/basket");
+      },
+    });
   };
 
   return (
@@ -98,7 +82,11 @@ const OrderForm = (): JSX.Element => {
       <Grid2 size={{ xs: 12, lg: 8 }}>
         <form onSubmit={handleSubmit(placeOrderFunc)}>
           <OrderSection title="Личные данные">
-            <ChooseFace face={face} setFace={setFace} setPayment={setPayment} />
+            <ChooseEntity
+              entity={entity}
+              setFace={setEntity}
+              setPayment={setPayment}
+            />
 
             <Grid2 container spacing={4}>
               <Grid2 size={{ xs: 12, lg: 6 }}>
@@ -152,7 +140,7 @@ const OrderForm = (): JSX.Element => {
                 />
               </Grid2>
 
-              {face === "legal" && (
+              {entity === "legal" && (
                 <>
                   <Grid2 size={{ xs: 12, lg: 6 }}>
                     <CustomInput
@@ -231,7 +219,7 @@ const OrderForm = (): JSX.Element => {
 
           <OrderSection title="Оплата">
             <RadioGroup value={payment}>
-              {face === "individual" && (
+              {entity === "individual" && (
                 <>
                   <FormControlLabel
                     value="online"
@@ -265,7 +253,7 @@ const OrderForm = (): JSX.Element => {
                   />
                 </>
               )}
-              {face === "legal" && (
+              {entity === "legal" && (
                 <>
                   <FormControlLabel
                     value="bill"

@@ -1,9 +1,3 @@
-import {
-  PayData,
-  PaymentResponse,
-} from "@/app/(private)/checkout/components/types";
-import { PAYMENT_URL } from "@/constants";
-
 export type ApiMethod = "POST" | "PATCH" | "PUT" | "DELETE";
 
 type MutateDataProps<T> = {
@@ -29,15 +23,4 @@ export const mutateData = async <T, K>(
   });
   const data = await response.json();
   return data;
-};
-
-export const postPayment = async (
-  payData: PayData
-): Promise<PaymentResponse> => {
-  const response = await fetch(PAYMENT_URL.pay, {
-    body: JSON.stringify(payData),
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-  });
-  return await response.json();
 };

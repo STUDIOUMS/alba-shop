@@ -1,22 +1,22 @@
-import { Face, Payment } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import { Stack } from "@mui/material";
 import { SetStateAction } from "react";
+import { Entity, Payment } from "./types";
 
-type ChooseFaceProps = {
-  face: Face;
-  setFace: React.Dispatch<SetStateAction<Face>>;
+type ChooseEntityProps = {
+  entity: Entity;
+  setFace: React.Dispatch<SetStateAction<Entity>>;
   setPayment: React.Dispatch<SetStateAction<Payment>>;
 };
 
-const ChooseFace = (props: ChooseFaceProps): JSX.Element => {
-  const { face, setFace, setPayment } = props;
+const ChooseEntity = (props: ChooseEntityProps): JSX.Element => {
+  const { entity, setFace, setPayment } = props;
 
   return (
     <Stack direction="row" sx={{ mb: 6 }}>
       <CustomBtn
-        variant={face === "individual" ? "contained" : "outlined"}
-        color={face === "individual" ? "primary" : "secondary"}
+        variant={entity === "individual" ? "contained" : "outlined"}
+        color={entity === "individual" ? "primary" : "secondary"}
         onClick={() => {
           setFace("individual"), setPayment("online");
         }}
@@ -26,8 +26,8 @@ const ChooseFace = (props: ChooseFaceProps): JSX.Element => {
         Физическое лицо
       </CustomBtn>
       <CustomBtn
-        variant={face === "legal" ? "contained" : "outlined"}
-        color={face === "legal" ? "primary" : "secondary"}
+        variant={entity === "legal" ? "contained" : "outlined"}
+        color={entity === "legal" ? "primary" : "secondary"}
         onClick={() => {
           setFace("legal"), setPayment("bill");
         }}
@@ -39,4 +39,4 @@ const ChooseFace = (props: ChooseFaceProps): JSX.Element => {
   );
 };
 
-export default ChooseFace;
+export default ChooseEntity;

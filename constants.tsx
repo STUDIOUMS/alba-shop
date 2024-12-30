@@ -2,11 +2,6 @@ import { TEXTS } from "./texts";
 
 // URL
 export const SERVER_URL = "https://api.alba-72.ru/api/v1";
-export const PAYMENT_URL = {
-  pay: "https://securepay.tinkoff.ru/v2/Init",
-  test: "https://rest-api-test.tinkoff.ru/v2/Init",
-  status: "https://securepay.tinkoff.ru/v2/GetState",
-};
 
 // Settings
 export const PRODUCTS_LIMIT = 8;

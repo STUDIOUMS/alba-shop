@@ -1,7 +1,8 @@
 import { Box, styled } from "@mui/material";
-import { Delivery, Order } from "@/types";
+import { Order } from "@/types";
 import OrderCartItem, { Item } from "./OrderCartItem";
 import { TEXTS } from "@/texts";
+import { Delivery } from "@/app/(private)/checkout/components/types";
 
 type OrderCartProps = {
   delivery: Delivery;

@@ -1,4 +1,5 @@
-import { Order, SuccessfulOrder } from "@/types";
+import { SuccessfulOrder } from "@/app/(private)/checkout/components/types";
+import { Order } from "@/types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 

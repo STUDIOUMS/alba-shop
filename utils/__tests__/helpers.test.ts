@@ -2,13 +2,15 @@ import { describe, expect, it } from "vitest";
 import {
   createArray,
   createDate,
-  createNewOrder,
-  getOrderToLines,
   getPackNames,
   getTotalPrice,
   isSaleDefine,
 } from "../helpers";
 import { checkoutItemFactory, orderFactory } from "./Factory";
+import {
+  createNewOrder,
+  getOrderToLines,
+} from "@/app/(private)/checkout/components/utils";
 
 const orders = orderFactory.buildList(2);
 const checkoutItems = checkoutItemFactory.buildList(2);
