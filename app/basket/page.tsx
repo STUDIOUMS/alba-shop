@@ -17,7 +17,7 @@ import Carousel from "@/components/Carousel";
 const crumbs: BreadCrumbsItem[] = [{ name: "Корзина", slug: `/basket` }];
 
 function BasketPage() {
-  const { orders, placed } = useOrderStore();
+  const { orders } = useOrderStore();
 
   useEffect(() => {
     document.title = "Корзина";
@@ -28,14 +28,14 @@ function BasketPage() {
       <BreadCrumbs links={crumbs} />
       <Typography variant="h1">Корзина</Typography>
 
-      {!!orders.length && !placed && (
+      {!!orders.length && (
         <>
           <BasketTable orders={orders} />
           <BasketTotal orders={orders} />
           <BasketButtons />
         </>
       )}
-      {!orders.length && !placed && (
+      {!orders.length && (
         <>
           <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
             Ваша корзина пуста
@@ -46,7 +46,6 @@ function BasketPage() {
           <Carousel param="new" title="Новинки" />
         </>
       )}
-      {placed && <SuccessScreen />}
     </Section>
   );
 }
