@@ -32,18 +32,23 @@ import {
   SuccessfulOrder,
 } from "./types";
 import { createNewOrder } from "./utils";
+import SuccessScreen from "@/components/SuccessScreen";
+import { redirect } from "next/navigation";
 
 const OrderForm = (): JSX.Element => {
-  const { orders, setPlacedOrder, deleteAllOrders } = useOrderStore();
+  const { orders, deleteAllOrders } = useOrderStore();
   const [entity, setEntity] = useState<Entity>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
+  const [successState, setSuccessState] = useState<SuccessfulOrder | null>(
+    null
+  );
   const phoneRef = useMask(FORM_SETTINGS.mask);
 
   const { mutate, isPending } = useMutateData<CheckoutOrder, SuccessfulOrder>({
     key: ["orders"],
     method: "POST",
-    uri: "/orders",
+    uri: "/orders/",
   });
 
   const totalPrice = getTotalPrice(orders);
@@ -65,17 +70,20 @@ const OrderForm = (): JSX.Element => {
       payment,
       orders
     );
-    console.log(newOrder);
-
     mutate(newOrder, {
       onSuccess: (data) => {
-        console.log(data);
-        // setPlacedOrder(data);
-        // deleteAllOrders();
-        // redirect("/basket");
+        if (payment !== "online") {
+          setSuccessState(data);
+          deleteAllOrders();
+        } else {
+          console.log(data);
+        }
       },
     });
   };
+
+  if (!!successState) return <SuccessScreen placedOrder={successState} />;
+  if (!successState && !orders.length) redirect("/basket");
 
   return (
     <Grid2 container spacing={6}>

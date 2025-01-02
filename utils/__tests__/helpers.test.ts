@@ -10,7 +10,7 @@ import { checkoutItemFactory, orderFactory } from "./Factory";
 import {
   createNewOrder,
   getOrderToLines,
-} from "@/app/(private)/checkout/components/utils";
+} from "@/app/checkout/components/utils";
 
 const orders = orderFactory.buildList(2);
 const checkoutItems = checkoutItemFactory.buildList(2);

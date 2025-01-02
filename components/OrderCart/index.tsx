@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import { Order } from "@/types";
 import OrderCartItem, { Item } from "./OrderCartItem";
 import { TEXTS } from "@/texts";
-import { Delivery } from "@/app/(private)/checkout/components/types";
+import { Delivery } from "@/app/checkout/components/types";
 
 type OrderCartProps = {
   delivery: Delivery;
