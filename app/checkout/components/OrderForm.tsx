@@ -34,15 +34,14 @@ import {
 import { createNewOrder } from "./utils";
 import SuccessScreen from "@/components/SuccessScreen";
 import { redirect } from "next/navigation";
+import { mutateData } from "@/utils/api";
 
 const OrderForm = (): JSX.Element => {
   const { orders, deleteAllOrders } = useOrderStore();
   const [entity, setEntity] = useState<Entity>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
-  const [successState, setSuccessState] = useState<SuccessfulOrder | null>(
-    null
-  );
+  const [success, setSuccess] = useState<SuccessfulOrder | null>(null);
   const phoneRef = useMask(FORM_SETTINGS.mask);
 
   const { mutate, isPending } = useMutateData<CheckoutOrder, SuccessfulOrder>({
@@ -62,7 +61,7 @@ const OrderForm = (): JSX.Element => {
     formState: { errors },
   } = useForm<FormOrderValues>();
 
-  const placeOrderFunc = (formdata: FormOrderValues) => {
+  const placeOrderFunc = async (formdata: FormOrderValues) => {
     const newOrder = createNewOrder(
       formdata,
       entity,
@@ -73,8 +72,9 @@ const OrderForm = (): JSX.Element => {
     mutate(newOrder, {
       onSuccess: (data) => {
         if (payment !== "online") {
-          setSuccessState(data);
+          setSuccess(data);
           deleteAllOrders();
+          console.log(data);
         } else {
           console.log(data);
         }
@@ -82,8 +82,8 @@ const OrderForm = (): JSX.Element => {
     });
   };
 
-  if (!!successState) return <SuccessScreen placedOrder={successState} />;
-  if (!successState && !orders.length) redirect("/basket");
+  if (!!success) return <SuccessScreen placedOrder={success} />;
+  if (!success && !orders.length) redirect("/basket");
 
   return (
     <Grid2 container spacing={6}>
@@ -136,15 +136,11 @@ const OrderForm = (): JSX.Element => {
                   inputProps={{
                     ...register("phone", FORM_SETTINGS.phone),
                   }}
-                  slotProps={{
-                    input: {
-                      startAdornment: "+7",
-                    },
-                  }}
                   placeholder={FORM_SETTINGS.mask.mask}
                   inputRef={phoneRef}
                   helperText={errors.phone && errors.phone.message}
                   error={errors.phone ? true : false}
+                  defaultValue="+7 "
                 />
               </Grid2>
 

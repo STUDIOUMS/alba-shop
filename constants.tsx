@@ -25,7 +25,7 @@ export const FORM_SETTINGS = {
     },
   },
   mask: {
-    mask: " (___) ___-__-__",
+    mask: "+7 (___) ___-__-__",
     replacement: { _: /\d/ },
   },
 };

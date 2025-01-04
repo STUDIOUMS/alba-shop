@@ -1,7 +1,7 @@
 "use client";
 
 import useGetData from "@/hooks/useGetData";
-import { BlogItem, Response } from "@/types";
+import { BlogItem, ServerResponse } from "@/types";
 import { Grid2 } from "@mui/material";
 import ErrorAlert from "../ErrorAlert";
 import BlogsWidjetItem from "./BlogsWidjetItem";
@@ -9,7 +9,7 @@ import Loading from "./Loading";
 
 const BlogsWidjet = (): JSX.Element => {
   const { data, isLoading, isSuccess, isError } = useGetData<
-    Response<BlogItem>
+    ServerResponse<BlogItem>
   >({
     key: ["blog"],
     uri: "/blog/articles?limit=2",

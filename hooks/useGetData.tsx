@@ -1,5 +1,5 @@
-import { getData } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
+import { getData } from "@/utils/api";
 
 type UseGetDataProps<T> = {
   key: string[];

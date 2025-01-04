@@ -5,7 +5,6 @@ import {
   Delivery,
   Entity,
   Payment,
-  SuccessfulOrder,
 } from "./types";
 
 export const getOrderToLines = (orders: Order[]): CheckoutOrderItem[] => {

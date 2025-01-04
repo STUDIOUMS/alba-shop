@@ -1,3 +1,5 @@
+import { SERVER_URL } from "@/constants";
+
 export type ApiMethod = "POST" | "PATCH" | "PUT" | "DELETE";
 
 type MutateDataProps<T> = {
@@ -7,7 +9,7 @@ type MutateDataProps<T> = {
 };
 
 export const getData = async <T>(uri: string): Promise<T> => {
-  const response = await fetch(process.env.API_URL + uri);
+  const response = await fetch(SERVER_URL + uri);
   const data = await response.json();
   return data;
 };
@@ -16,7 +18,7 @@ export const mutateData = async <T, K>(
   props: MutateDataProps<T>
 ): Promise<K> => {
   const { method, uri, body } = props;
-  const response = await fetch(process.env.API_URL + uri, {
+  const response = await fetch(SERVER_URL + uri, {
     method,
     headers: { "Content-Type": "application/json" },
     body: body ? JSON.stringify(body) : null,

@@ -25,14 +25,16 @@ export type CheckoutOrder = {
   paymentType: Payment;
   note: string;
   titleOrganization: string;
-  inn: string;
-  address: string;
+  inn?: string;
+  address?: string;
 };
 
 export type SuccessfulOrder = CheckoutOrder & {
   id: string;
-  number: number;
+  number: string;
   createdAt: Date;
   updatedAt: Date;
-  paymentUrl: string;
+  paymentUrl: string | null;
+  successUrl: string | null;
+  failUrl: string | null;
 };

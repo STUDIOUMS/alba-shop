@@ -3,7 +3,7 @@
 import ErrorAlert from "@/components/ErrorAlert";
 import { Alert, AlertTitle, Box } from "@mui/material";
 import useGetData from "@/hooks/useGetData";
-import { BlogItem, Response } from "@/types";
+import { BlogItem, ServerResponse } from "@/types";
 import Pager from "@/ui/Pager";
 import BlogCard from "./BlogCard";
 import Loading from "../[blog]/loading";
@@ -12,7 +12,7 @@ const PAGE_COUNT = 5;
 
 const BlogList = (): JSX.Element => {
   const { data, isLoading, isError, isSuccess } = useGetData<
-    Response<BlogItem>
+    ServerResponse<BlogItem>
   >({
     key: ["blog"],
     uri: "/blog/articles?ordering=-id",

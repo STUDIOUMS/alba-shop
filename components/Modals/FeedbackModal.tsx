@@ -95,15 +95,11 @@ const FeedbackModal = (props: FeedbackModalProps): JSX.Element => {
           inputProps={{
             ...register("phone", FORM_SETTINGS.phone),
           }}
-          slotProps={{
-            input: {
-              startAdornment: "+7",
-            },
-          }}
           placeholder={FORM_SETTINGS.mask.mask}
           inputRef={phoneRef}
           helperText={errors.phone && errors.phone.message}
           error={errors.phone ? true : false}
+          defaultValue="+7 "
         />
 
         <CustomInput

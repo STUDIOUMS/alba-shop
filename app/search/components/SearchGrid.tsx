@@ -3,7 +3,7 @@
 import ErrorAlert from "@/components/ErrorAlert";
 import GoodList from "@/components/GoodList";
 import useGetData from "@/hooks/useGetData";
-import { Product, Response } from "@/types";
+import { Product, ServerResponse } from "@/types";
 import { Alert, AlertTitle } from "@mui/material";
 import SearchSkelets from "./SearchSkelets";
 
@@ -14,12 +14,12 @@ type SearchGridProps = {
 const SearchGrid = (props: SearchGridProps): JSX.Element => {
   const { query } = props;
 
-  const { data, isError, isLoading, isSuccess } = useGetData<Response<Product>>(
-    {
-      key: ["search", query],
-      uri: `/catalog/products?search=${query}`,
-    }
-  );
+  const { data, isError, isLoading, isSuccess } = useGetData<
+    ServerResponse<Product>
+  >({
+    key: ["search", query],
+    uri: `/catalog/products?search=${query}`,
+  });
 
   if (isError) return <ErrorAlert />;
   if (isLoading) return <SearchSkelets />;

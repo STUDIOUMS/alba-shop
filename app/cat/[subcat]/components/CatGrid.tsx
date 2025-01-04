@@ -6,7 +6,7 @@ import GoodList from "@/components/GoodList";
 import Sort from "@/components/Sort";
 import { PRODUCTS_LIMIT } from "@/constants";
 import useGetData from "@/hooks/useGetData";
-import { Category, Pack, Product, Response } from "@/types";
+import { Category, Pack, Product, ServerResponse } from "@/types";
 import { Grid2 } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import CatLoading from "./CatLoading";
@@ -23,15 +23,15 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
     ? `&${queryParams.toString()}`
     : "";
 
-  const { data, isLoading, isError, isSuccess } = useGetData<Response<Product>>(
-    {
-      key: ["products", queryParamsString],
-      uri: `/catalog/products?categories=${cat.id}&limit=${PRODUCTS_LIMIT}${queryParamsString}`,
-    }
-  );
+  const { data, isLoading, isError, isSuccess } = useGetData<
+    ServerResponse<Product>
+  >({
+    key: ["products", queryParamsString],
+    uri: `/catalog/products?categories=${cat.id}&limit=${PRODUCTS_LIMIT}${queryParamsString}`,
+  });
 
   const { data: dataPacks, isSuccess: succesPacks } = useGetData<
-    Response<Pack>
+    ServerResponse<Pack>
   >({
     key: ["packs"],
     uri: `/catalog/packs`,

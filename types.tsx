@@ -5,10 +5,10 @@ export type BreadCrumbsItem = {
   slug: string;
 };
 
-export type Response<T> = {
+export type ServerResponse<T> = {
   count: number;
-  next: string;
-  previous: string;
+  next: string | null;
+  previous: string | null;
   results: T[];
 };
 

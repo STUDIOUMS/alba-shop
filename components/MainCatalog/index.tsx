@@ -2,7 +2,7 @@
 
 import useGetData from "@/hooks/useGetData";
 import { Typography } from "@mui/material";
-import { Category, Response } from "@/types";
+import { Category, ServerResponse } from "@/types";
 import Section from "@/ui/Section";
 import Link from "next/link";
 import ErrorAlert from "../ErrorAlert";
@@ -20,7 +20,7 @@ type MainCatalogProps = {
 const MainCatalog = (props: MainCatalogProps): JSX.Element => {
   const { count, title, type = "main" } = props;
   const { data, isLoading, isSuccess, isError } = useGetData<
-    Response<Category>
+    ServerResponse<Category>
   >({
     key: ["catalog"],
     uri: `/catalog/categories${count ? `?limit=${count}` : ""}`,

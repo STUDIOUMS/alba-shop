@@ -3,7 +3,7 @@
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Section from "@/ui/Section";
-import { Product, Response } from "@/types";
+import { Product, ServerResponse } from "@/types";
 import Good from "../Good";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -21,12 +21,12 @@ type CarouselProps = {
 const Carousel = (props: CarouselProps): JSX.Element => {
   const { param, title } = props;
 
-  const { data, isLoading, isError, isSuccess } = useGetData<Response<Product>>(
-    {
-      key: [param],
-      uri: `/catalog/products/?${param}=true&limit=10`,
-    }
-  );
+  const { data, isLoading, isError, isSuccess } = useGetData<
+    ServerResponse<Product>
+  >({
+    key: [param],
+    uri: `/catalog/products/?${param}=true&limit=10`,
+  });
 
   if (isLoading) return <CarouselLoading />;
 

@@ -30,13 +30,14 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^7.0.0",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/node": "^22.10.1",
     "@vitejs/plugin-react": "^4.3.4",
     "factory.ts": "^1.4.2",
     "jsdom": "^25.0.1",
+    "nock": "^14.0.0-beta.19",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }
