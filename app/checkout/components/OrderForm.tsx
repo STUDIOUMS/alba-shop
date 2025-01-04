@@ -7,14 +7,7 @@ import { COURIER_PRICE, FORM_SETTINGS } from "@/constants";
 import { FormOrderValues } from "@/types";
 import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
-import {
-  CircularProgress,
-  FormControlLabel,
-  Grid2,
-  Radio,
-  RadioGroup,
-  Stack,
-} from "@mui/material";
+import { CircularProgress, FormControlLabel, Grid2, Radio, RadioGroup, Stack } from "@mui/material";
 import ChooseEntity from "./ChooseEntity";
 import OrderSection from "./OrderSection";
 import OrderCart from "@/components/OrderCart";
@@ -24,17 +17,10 @@ import { getTotalPrice } from "@/utils/helpers";
 import useMutateData from "@/hooks/useMutateData";
 import { useMask } from "@react-input/mask";
 import { TEXTS } from "@/texts";
-import {
-  CheckoutOrder,
-  Delivery,
-  Entity,
-  Payment,
-  SuccessfulOrder,
-} from "./types";
+import { CheckoutOrder, Delivery, Entity, Payment, SuccessfulOrder } from "./types";
 import { createNewOrder } from "./utils";
 import SuccessScreen from "@/components/SuccessScreen";
 import { redirect } from "next/navigation";
-import { mutateData } from "@/utils/api";
 
 const OrderForm = (): JSX.Element => {
   const { orders, deleteAllOrders } = useOrderStore();
@@ -51,8 +37,7 @@ const OrderForm = (): JSX.Element => {
   });
 
   const totalPrice = getTotalPrice(orders);
-  const deliveryPrice =
-    delivery === "courier" && totalPrice < 1000 ? COURIER_PRICE : 0;
+  const deliveryPrice = delivery === "courier" && totalPrice < 1000 ? COURIER_PRICE : 0;
   const totalPriceDelivery = totalPrice + deliveryPrice;
 
   const {
@@ -62,19 +47,12 @@ const OrderForm = (): JSX.Element => {
   } = useForm<FormOrderValues>();
 
   const placeOrderFunc = async (formdata: FormOrderValues) => {
-    const newOrder = createNewOrder(
-      formdata,
-      entity,
-      delivery,
-      payment,
-      orders
-    );
+    const newOrder = createNewOrder(formdata, entity, delivery, payment, orders);
     mutate(newOrder, {
       onSuccess: (data) => {
         if (payment !== "online") {
           setSuccess(data);
           deleteAllOrders();
-          console.log(data);
         } else {
           console.log(data);
         }
@@ -90,11 +68,7 @@ const OrderForm = (): JSX.Element => {
       <Grid2 size={{ xs: 12, lg: 8 }}>
         <form onSubmit={handleSubmit(placeOrderFunc)}>
           <OrderSection title="Личные данные">
-            <ChooseEntity
-              entity={entity}
-              setFace={setEntity}
-              setPayment={setPayment}
-            />
+            <ChooseEntity entity={entity} setFace={setEntity} setPayment={setPayment} />
 
             <Grid2 container spacing={4}>
               <Grid2 size={{ xs: 12, lg: 6 }}>
@@ -188,19 +162,13 @@ const OrderForm = (): JSX.Element => {
             <RadioGroup sx={{ mb: 4 }} value={delivery}>
               <FormControlLabel
                 value="pickup"
-                control={
-                  <Radio size="small" onChange={() => setDelivery("pickup")} />
-                }
+                control={<Radio size="small" onChange={() => setDelivery("pickup")} />}
                 label="Самовывоз"
               />
               <FormControlLabel
                 value="courier"
-                control={
-                  <Radio size="small" onChange={() => setDelivery("courier")} />
-                }
-                label={`Курьерcкая доставка - ${
-                  totalPrice > 1000 ? 0 : COURIER_PRICE
-                }₽`}
+                control={<Radio size="small" onChange={() => setDelivery("courier")} />}
+                label={`Курьерcкая доставка - ${totalPrice > 1000 ? 0 : COURIER_PRICE}₽`}
               />
             </RadioGroup>
             {delivery === "pickup" && <AlertPickup />}
@@ -227,32 +195,17 @@ const OrderForm = (): JSX.Element => {
                 <>
                   <FormControlLabel
                     value="online"
-                    control={
-                      <Radio
-                        size="small"
-                        onChange={() => setPayment("online")}
-                      />
-                    }
+                    control={<Radio size="small" onChange={() => setPayment("online")} />}
                     label="Оплатить онлайн"
                   />
                   <FormControlLabel
                     value="delivery-card"
-                    control={
-                      <Radio
-                        size="small"
-                        onChange={() => setPayment("delivery-card")}
-                      />
-                    }
+                    control={<Radio size="small" onChange={() => setPayment("delivery-card")} />}
                     label="Оплата при доставке (Картой курьеру)"
                   />
                   <FormControlLabel
                     value="delivery-cash"
-                    control={
-                      <Radio
-                        size="small"
-                        onChange={() => setPayment("delivery-cash")}
-                      />
-                    }
+                    control={<Radio size="small" onChange={() => setPayment("delivery-cash")} />}
                     label="Оплата при доставке (Наличными курьеру)"
                   />
                 </>
@@ -261,19 +214,12 @@ const OrderForm = (): JSX.Element => {
                 <>
                   <FormControlLabel
                     value="bill"
-                    control={
-                      <Radio size="small" onChange={() => setPayment("bill")} />
-                    }
+                    control={<Radio size="small" onChange={() => setPayment("bill")} />}
                     label="Оплата по счету без НДС"
                   />
                   <FormControlLabel
                     value="bill-nds"
-                    control={
-                      <Radio
-                        size="small"
-                        onChange={() => setPayment("bill-nds")}
-                      />
-                    }
+                    control={<Radio size="small" onChange={() => setPayment("bill-nds")} />}
                     label="Оплата по счету с НДС"
                   />
                 </>
@@ -305,7 +251,7 @@ const OrderForm = (): JSX.Element => {
             <CustomBtn type="submit">
               {payment === "online" ? "Оплатить заказ" : "Оформить заказ"}{" "}
               {isPending && (
-                <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} />
+                <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} aria-label="Loading" />
               )}
             </CustomBtn>
           </Stack>
