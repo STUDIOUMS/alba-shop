@@ -23,7 +23,7 @@ const MainCatalog = (props: MainCatalogProps): JSX.Element => {
     ServerResponse<Category>
   >({
     key: ["catalog"],
-    uri: `/catalog/categories${count ? `?limit=${count}` : ""}`,
+    uri: `/catalog/categories/${count ? `?limit=${count}` : ""}`,
   });
 
   if (isLoading) return <MainCatalogLoading type={type} />;

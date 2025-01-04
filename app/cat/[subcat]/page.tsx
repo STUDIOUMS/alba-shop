@@ -2,7 +2,7 @@ import { BreadCrumbsItem, Category } from "@/types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import Section from "@/ui/Section";
 import { getData } from "@/utils/api";
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CatGrid from "./components/CatGrid";
 
 type Params = {

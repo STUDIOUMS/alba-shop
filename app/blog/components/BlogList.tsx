@@ -15,7 +15,7 @@ const BlogList = (): JSX.Element => {
     ServerResponse<BlogItem>
   >({
     key: ["blog"],
-    uri: "/blog/articles?ordering=-id",
+    uri: "/blog/articles/?ordering=-id",
   });
 
   if (isLoading) return <Loading />;

@@ -12,7 +12,7 @@ type Params = {
 // Metatags
 export async function generateMetadata(props: Params) {
   const { product } = await props.params;
-  const item = await getData<Product>(`/catalog/products/${product}`);
+  const item = await getData<Product>(`/catalog/products/${product}/`);
   return {
     title: item ? item.title : "Not found",
   };
@@ -20,7 +20,7 @@ export async function generateMetadata(props: Params) {
 
 async function ProductPage(props: Params) {
   const { product } = await props.params;
-  const item = await getData<Product>(`/catalog/products/${product}`);
+  const item = await getData<Product>(`/catalog/products/${product}/`);
 
   // Breadcrumbs
   let crumbs: BreadCrumbsItem[] = [

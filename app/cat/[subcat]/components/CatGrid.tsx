@@ -27,14 +27,14 @@ const CatGrid = (props: CatGridProps): JSX.Element => {
     ServerResponse<Product>
   >({
     key: ["products", queryParamsString],
-    uri: `/catalog/products?categories=${cat.id}&limit=${PRODUCTS_LIMIT}${queryParamsString}`,
+    uri: `/catalog/products/?categories=${cat.id}&limit=${PRODUCTS_LIMIT}${queryParamsString}`,
   });
 
   const { data: dataPacks, isSuccess: succesPacks } = useGetData<
     ServerResponse<Pack>
   >({
     key: ["packs"],
-    uri: `/catalog/packs`,
+    uri: `/catalog/packs/`,
   });
 
   if (isLoading) return <CatLoading />;

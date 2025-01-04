@@ -11,7 +11,7 @@ type Params = {
 // Metatags
 export async function generateMetadata(props: Params) {
   const { blog } = await props.params;
-  const post = await getData<BlogItem>(`/blog/articles/${blog}`);
+  const post = await getData<BlogItem>(`/blog/articles/${blog}/`);
   return {
     title: post.title,
     description: post.short,
@@ -20,7 +20,7 @@ export async function generateMetadata(props: Params) {
 
 export default async function BlogPage(props: Params) {
   const { blog } = await props.params;
-  const post = await getData<BlogItem>(`/blog/articles/${blog}`);
+  const post = await getData<BlogItem>(`/blog/articles/${blog}/`);
 
   // Breadcrumbs
   let crumbs: BreadCrumbsItem[] = [

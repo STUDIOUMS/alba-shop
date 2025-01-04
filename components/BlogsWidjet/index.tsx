@@ -12,7 +12,7 @@ const BlogsWidjet = (): JSX.Element => {
     ServerResponse<BlogItem>
   >({
     key: ["blog"],
-    uri: "/blog/articles?limit=2",
+    uri: "/blog/articles/?limit=2",
   });
 
   if (isLoading) return <Loading />;

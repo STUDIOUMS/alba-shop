@@ -1,6 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import nock from "nock";
+import { SERVER_URL } from "@/constants";
 
 const client = new QueryClient();
 
@@ -10,8 +11,4 @@ export const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   </QueryClientProvider>
 );
 
-export const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={client}>{children}</QueryClientProvider>
-);
-
-export const API_NOCK = nock("https://api.alba-72.ru/api/v1");
+export const API_NOCK = nock(SERVER_URL);
