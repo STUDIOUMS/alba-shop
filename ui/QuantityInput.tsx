@@ -70,6 +70,9 @@ const NumberInput = (props: NumberInputProps) => {
         decrementButton: {
           children: <span>-</span>,
         },
+        input: {
+          "aria-label": "Количество позиций",
+        },
       }}
       {...props}
     />
@@ -77,7 +80,5 @@ const NumberInput = (props: NumberInputProps) => {
 };
 
 export const QuantityInput = (props: NumberInputProps): JSX.Element => {
-  return (
-    <NumberInput aria-label="Количество" min={1} defaultValue={1} {...props} />
-  );
+  return <NumberInput aria-label="Количество" min={1} defaultValue={1} {...props} />;
 };

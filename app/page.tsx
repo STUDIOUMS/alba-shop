@@ -13,7 +13,7 @@ export const metadata = {
   description: "Главная",
 };
 
-export default async function Home() {
+export default function Home() {
   return (
     <div>
       <Banner />
