@@ -1,40 +1,22 @@
-import { Box, styled, Typography } from "@mui/material";
-import { BoxProps } from "@mui/system";
+import { BoxProps, Typography } from "@mui/material";
+import { OrderSectionDiv, OrderSectionHead, OrderSectionInner } from "./styles";
 
 type OrderSectionProps = BoxProps & {
   children: React.ReactNode;
   title: string;
 };
 
-const Div = styled(Box)(({ theme }) => ({
-  borderColor: theme.palette.grey[300],
-  borderStyle: "solid",
-  borderWidth: 1,
-  borderRadius: 6,
-  marginBottom: theme.spacing(4),
-}));
-
-const Head = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.grey[100],
-  borderRadius: "5px 5px 0 0",
-  padding: `${theme.spacing(3)} ${theme.spacing(6)}`,
-}));
-
-const Inner = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(6),
-}));
-
 const OrderSection = (props: OrderSectionProps): JSX.Element => {
   const { children, title } = props;
   return (
-    <Div {...props}>
-      <Head>
+    <OrderSectionDiv {...props}>
+      <OrderSectionHead>
         <Typography variant="h4" sx={{ m: 0 }}>
           {title}
         </Typography>
-      </Head>
-      <Inner>{children}</Inner>
-    </Div>
+      </OrderSectionHead>
+      <OrderSectionInner>{children}</OrderSectionInner>
+    </OrderSectionDiv>
   );
 };
 

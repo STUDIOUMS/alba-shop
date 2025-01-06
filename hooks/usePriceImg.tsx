@@ -28,9 +28,7 @@ const emptyPack: RelatedPack = {
 
 export const usePriceImg = (props: UsePriceImgProps): UsePriceImgReturn => {
   const { defaultPack, packs, slug } = props;
-  const [currentPack, setCurrentPack] = useState<RelatedPack>(
-    defaultPack || emptyPack
-  );
+  const [currentPack, setCurrentPack] = useState<RelatedPack>(defaultPack || emptyPack);
   const [currentPackId, setCurrentPackId] = useState<number>(
     defaultPack ? defaultPack.id : 0
   );

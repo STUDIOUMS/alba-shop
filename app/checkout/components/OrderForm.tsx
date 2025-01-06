@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { COURIER_PRICE, FORM_SETTINGS } from "@/constants";
 import { FormOrderValues } from "@/types";
-import CustomBtn from "@/ui/CustomBtn";
 import CustomInput from "@/ui/CustomInput";
-import { CircularProgress, FormControlLabel, Grid2, Radio, RadioGroup, Stack } from "@mui/material";
+import { FormControlLabel, Grid2, Radio, RadioGroup } from "@mui/material";
 import ChooseEntity from "./ChooseEntity";
 import OrderSection from "./OrderSection";
 import OrderCart from "@/components/OrderCart";
@@ -21,6 +19,7 @@ import { CheckoutOrder, Delivery, Entity, Payment, SuccessfulOrder } from "./typ
 import { createNewOrder } from "./utils";
 import SuccessScreen from "@/components/SuccessScreen";
 import { redirect } from "next/navigation";
+import OrderFormButtons from "./OrderFormButtons";
 
 const OrderForm = (): JSX.Element => {
   const { orders, deleteAllOrders } = useOrderStore();
@@ -200,12 +199,16 @@ const OrderForm = (): JSX.Element => {
                   />
                   <FormControlLabel
                     value="delivery-card"
-                    control={<Radio size="small" onChange={() => setPayment("delivery-card")} />}
+                    control={
+                      <Radio size="small" onChange={() => setPayment("delivery-card")} />
+                    }
                     label="Оплата при доставке (Картой курьеру)"
                   />
                   <FormControlLabel
                     value="delivery-cash"
-                    control={<Radio size="small" onChange={() => setPayment("delivery-cash")} />}
+                    control={
+                      <Radio size="small" onChange={() => setPayment("delivery-cash")} />
+                    }
                     label="Оплата при доставке (Наличными курьеру)"
                   />
                 </>
@@ -219,7 +222,9 @@ const OrderForm = (): JSX.Element => {
                   />
                   <FormControlLabel
                     value="bill-nds"
-                    control={<Radio size="small" onChange={() => setPayment("bill-nds")} />}
+                    control={
+                      <Radio size="small" onChange={() => setPayment("bill-nds")} />
+                    }
                     label="Оплата по счету с НДС"
                   />
                 </>
@@ -242,19 +247,7 @@ const OrderForm = (): JSX.Element => {
             />
           </OrderSection>
 
-          <Stack direction="row" justifyContent="space-between">
-            <Link href="/basket" passHref>
-              <CustomBtn variant="outlined" color="secondary">
-                Вернуться в корзину
-              </CustomBtn>
-            </Link>
-            <CustomBtn type="submit">
-              {payment === "online" ? "Оплатить заказ" : "Оформить заказ"}{" "}
-              {isPending && (
-                <CircularProgress size={20} color="secondary" sx={{ ml: 3 }} aria-label="Loading" />
-              )}
-            </CustomBtn>
-          </Stack>
+          <OrderFormButtons isPending={isPending} payment={payment} />
         </form>
       </Grid2>
 
