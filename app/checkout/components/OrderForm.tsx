@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { COURIER_PRICE, FORM_SETTINGS } from "@/constants";
 import { FormOrderValues } from "@/types";
@@ -35,9 +35,10 @@ const OrderForm = (): JSX.Element => {
     uri: "/orders/",
   });
 
-  const totalPrice = getTotalPrice(orders);
-  const deliveryPrice = delivery === "courier" && totalPrice < 1000 ? COURIER_PRICE : 0;
-  const totalPriceDelivery = totalPrice + deliveryPrice;
+  const { deliveryPrice, totalPrice, totalWithDelivery } = useMemo(
+    () => getTotalPrice(orders, delivery),
+    [orders, delivery]
+  );
 
   const {
     register,
@@ -256,7 +257,7 @@ const OrderForm = (): JSX.Element => {
           delivery={delivery}
           deliveryPrice={deliveryPrice}
           orders={orders}
-          totalPrice={totalPriceDelivery}
+          totalPrice={totalWithDelivery}
         />
       </Grid2>
     </Grid2>

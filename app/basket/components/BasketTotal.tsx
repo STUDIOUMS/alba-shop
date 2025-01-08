@@ -9,7 +9,7 @@ type BasketTotalProps = {
 
 const BasketTotal = (props: BasketTotalProps): JSX.Element => {
   const { orders } = props;
-  const totalPrice: number = getTotalPrice(orders);
+  const { totalPrice } = getTotalPrice(orders);
 
   return (
     <Typography variant="h2" fontWeight={400} textAlign="right" component="div">

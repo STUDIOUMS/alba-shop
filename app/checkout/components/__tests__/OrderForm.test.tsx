@@ -4,14 +4,14 @@ import userEvent from "@testing-library/user-event";
 import OrderForm from "../OrderForm";
 import { TestWrapper } from "@/utils/__tests__/testUtils";
 import { useOrderStore } from "@/store/useOrderStore";
-import { fakeStateOrder } from "./constants";
+import { mockedOrder } from "@/utils/__tests__/constants";
 
 describe("Checkout form", () => {
   beforeAll(() => {
     const { result } = renderHook(() => useOrderStore(), {
       wrapper: TestWrapper,
     });
-    result.current.orders = [fakeStateOrder];
+    result.current.orders = [mockedOrder];
   });
 
   it("Changing button text depending on payment", async () => {

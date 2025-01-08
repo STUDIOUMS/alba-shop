@@ -7,10 +7,8 @@ import {
   isSaleDefine,
 } from "../helpers";
 import { checkoutItemFactory, orderFactory } from "./Factory";
-import {
-  createNewOrder,
-  getOrderToLines,
-} from "@/app/checkout/components/utils";
+import { createNewOrder, getOrderToLines } from "@/app/checkout/components/utils";
+import { mockedOrder, mockedPack } from "./constants";
 
 const orders = orderFactory.buildList(2);
 const checkoutItems = checkoutItemFactory.buildList(2);
@@ -31,34 +29,27 @@ describe("Utilites", () => {
     expect(output).toHaveLength(3);
   });
 
-  it("getTotalPrice", () => {
-    const output = getTotalPrice([
-      {
-        art: "123",
-        count: 3,
-        id: "1",
-        img: "http://img.com",
-        pack: "1 шт.",
-        price: 100,
-        slug: "slug",
-        title: "Title",
-        productId: 1,
-      },
-    ]);
-    expect(output).toBe(300);
+  it("getTotalPrice - without delivery", () => {
+    const output = getTotalPrice([mockedOrder]);
+    expect(output.totalPrice).toBe(300);
+  });
+
+  it("getTotalPrice - without delivery, pickup", () => {
+    const output = getTotalPrice([mockedOrder], "pickup");
+    expect(output.totalPrice).toBe(300);
+    expect(output.deliveryPrice).toBe(0);
+    expect(output.totalWithDelivery).toBe(300);
+  });
+
+  it("getTotalPrice - with delivery, courier", () => {
+    const output = getTotalPrice([mockedOrder], "courier");
+    expect(output.totalPrice).toBe(300);
+    expect(output.deliveryPrice).toBe(100);
+    expect(output.totalWithDelivery).toBe(400);
   });
 
   it("isSaleDefine - sale", () => {
-    const output = isSaleDefine([
-      {
-        id: 1,
-        img: "http://img.com",
-        oldPrice: "200",
-        pack: { id: 1, name: "pack" },
-        price: "100",
-        product: 1,
-      },
-    ]);
+    const output = isSaleDefine([mockedPack]);
     expect(output).toBeTruthy();
   });
 

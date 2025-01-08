@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { TestWrapper } from "@/utils/__tests__/testUtils";
 import BasketPage from "../page";
 import { useOrderStore } from "@/store/useOrderStore";
-import { fakeStateOrder } from "@/app/checkout/components/__tests__/constants";
+import { mockedOrder } from "@/utils/__tests__/constants";
 
 describe("Basket page", () => {
   it("Basket is empty", () => {
@@ -19,7 +19,7 @@ describe("Basket page", () => {
   it("Basket contains orders", () => {
     const { result } = renderHook(() => useOrderStore(), { wrapper: TestWrapper });
     act(() => {
-      result.current.orders = [fakeStateOrder];
+      result.current.orders = [mockedOrder];
     });
     render(
       <TestWrapper>
