@@ -1,11 +1,5 @@
 import { RelatedAttrs } from "@/types";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-} from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 
 type AttributesProps = {
   attrs: RelatedAttrs[];

@@ -123,10 +123,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
             </>
           )}
 
-          <Stack
-            direction={isMobile ? "column" : "row"}
-            justifyContent="space-between"
-          >
+          <Stack direction={isMobile ? "column" : "row"} justifyContent="space-between">
             <AddCart
               el={good}
               pack={currentPack.pack.name}
@@ -143,11 +140,7 @@ const ProductCard = (props: ProductCardProps): JSX.Element => {
 
       <Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
+          <Tabs value={tabValue} onChange={handleChange} aria-label="basic tabs example">
             <CustomTab label="Описание" {...a11yProps(0)} />
             <CustomTab label="Характеристики" {...a11yProps(1)} />
             <CustomTab label="Документы" {...a11yProps(2)} />
