@@ -42,8 +42,6 @@ export const getTotalPrice = (
   orders: Order[],
   delivery?: Delivery
 ): GetTotalPriceReturn => {
-  console.log("working");
-
   const totalPrice = orders.reduce((acum, order) => {
     const total = order.count * order.price;
     return (acum += total);
