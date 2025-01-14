@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Box, styled } from "@mui/material";
 import { Order } from "@/types";
 import OrderCartItem, { Item } from "./OrderCartItem";
@@ -23,6 +24,7 @@ const OrderCartWrap = styled(Box)(({ theme }) => ({
 
 const OrderCart = (props: OrderCartProps): JSX.Element => {
   const { deliveryPrice, orders, totalPrice } = props;
+
   return (
     <OrderCartWrap>
       {orders.map((order) => (
@@ -44,4 +46,4 @@ const OrderCart = (props: OrderCartProps): JSX.Element => {
   );
 };
 
-export default OrderCart;
+export default memo(OrderCart);
