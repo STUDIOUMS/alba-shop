@@ -5,9 +5,13 @@ import { devtools, persist } from "zustand/middleware";
 interface OrderStore {
   orders: Order[];
   setOrder: (data: Order) => void;
+  payUrlSuccess: string | null;
+  payUrlFail: string | null;
   changeCount: (id: string, count: string) => void;
   deleteOrder: (id: string) => void;
   deleteAllOrders: () => void;
+  setPayUrls: (success: string, fail: string) => void;
+  deletePayUrls: () => void;
 }
 
 export const useOrderStore = create<OrderStore>()(
@@ -15,6 +19,8 @@ export const useOrderStore = create<OrderStore>()(
     persist(
       (set) => ({
         orders: [],
+        payUrlSuccess: null,
+        payUrlFail: null,
 
         setOrder: (data) =>
           set((state) => {
@@ -48,10 +54,19 @@ export const useOrderStore = create<OrderStore>()(
           }),
 
         deleteAllOrders: () => set(() => ({ orders: [] })),
+
+        setPayUrls: (success, fail) =>
+          set(() => ({ payUrlSuccess: success, payUrlFail: fail })),
+
+        deletePayUrls: () => set(() => ({ payUrlFail: null, payUrlSuccess: null })),
       }),
       {
         name: "orders",
-        partialize: (state) => ({ orders: state.orders }),
+        partialize: (state) => ({
+          orders: state.orders,
+          payUrlFail: state.payUrlFail,
+          payUrlSuccess: state.payUrlSuccess,
+        }),
       }
     )
   )

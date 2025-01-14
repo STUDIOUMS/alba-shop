@@ -22,7 +22,7 @@ import OrderFormButtons from "./OrderFormButtons";
 import { redirect } from "next/navigation";
 
 const OrderForm = (): JSX.Element => {
-  const { orders, deleteAllOrders } = useOrderStore();
+  const { orders, deleteAllOrders, setPayUrls } = useOrderStore();
   const [entity, setEntity] = useState<Entity>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
@@ -54,9 +54,8 @@ const OrderForm = (): JSX.Element => {
           setSuccess(data);
           deleteAllOrders();
         } else {
-          if (data.paymentUrl) {
-            window.open(data.paymentUrl, "_self");
-          }
+          setPayUrls(data.successUrl!, data.failUrl!);
+          window.open(data.paymentUrl!, "_self");
         }
       },
     });
