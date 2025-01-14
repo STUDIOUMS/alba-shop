@@ -18,8 +18,8 @@ import { TEXTS } from "@/texts";
 import { CheckoutOrder, Delivery, Entity, Payment, SuccessfulOrder } from "./types";
 import { createNewOrder } from "./utils";
 import SuccessScreen from "@/components/SuccessScreen";
-import { redirect } from "next/navigation";
 import OrderFormButtons from "./OrderFormButtons";
+import { redirect } from "next/navigation";
 
 const OrderForm = (): JSX.Element => {
   const { orders, deleteAllOrders } = useOrderStore();
@@ -54,7 +54,9 @@ const OrderForm = (): JSX.Element => {
           setSuccess(data);
           deleteAllOrders();
         } else {
-          console.log(data);
+          if (data.paymentUrl) {
+            window.open(data.paymentUrl, "_self");
+          }
         }
       },
     });
