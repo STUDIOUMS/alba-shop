@@ -8,19 +8,18 @@ import { Alert, Typography } from "@mui/material";
 import { TEXTS } from "@/texts";
 import { PaymentStatus } from "../types";
 
-const SuccessPayment = () => {
+const FailedPayment = () => {
   const [success, setSuccess] = useState<boolean>(false);
-  const { paymentId, setPaymentId, deleteAllOrders } = useOrderStore();
+  const { paymentId } = useOrderStore();
 
   useEffect(() => {
     if (paymentId) {
-      fetch(`${SERVER_URL}/payments/${paymentId}/success/`, { method: "POST" })
+      fetch(`${SERVER_URL}/payments/${paymentId}/fail/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
+          console.log(data);
           if (data.status === "ok") {
-            setPaymentId(null);
             setSuccess(true);
-            deleteAllOrders();
           }
         });
     }
@@ -30,8 +29,8 @@ const SuccessPayment = () => {
     return (
       <Section>
         <Typography variant="h1">Оплата заказа</Typography>
-        <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
-          {TEXTS.notifications.successfulResponse}
+        <Alert variant="outlined" color="error" sx={{ mb: 6 }}>
+          {TEXTS.notifications.failedPayment}
         </Alert>
       </Section>
     );
@@ -39,4 +38,4 @@ const SuccessPayment = () => {
   return null;
 };
 
-export default SuccessPayment;
+export default FailedPayment;

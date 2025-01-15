@@ -2,12 +2,7 @@ export type Entity = "individual" | "legal";
 
 export type Delivery = "courier" | "pickup";
 
-export type Payment =
-  | "online"
-  | "bill"
-  | "bill-nds"
-  | "delivery-cash"
-  | "delivery-card";
+export type Payment = "online" | "bill" | "bill-nds" | "delivery-cash" | "delivery-card";
 
 export type CheckoutOrderItem = {
   productId: number;
@@ -37,4 +32,5 @@ export type SuccessfulOrder = CheckoutOrder & {
   paymentUrl: string | null;
   successUrl: string | null;
   failUrl: string | null;
+  paymentId: string;
 };
