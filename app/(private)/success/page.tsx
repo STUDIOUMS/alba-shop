@@ -9,29 +9,26 @@ import { TEXTS } from "@/texts";
 import { PaymentStatus } from "../types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import { paymentCrumbs } from "../constants";
+import { useSearchParams } from "next/navigation";
 
 const SuccessPayment = () => {
   const [success, setSuccess] = useState<boolean>(false);
-  const { paymentId, setPaymentId, deleteAllOrders } = useOrderStore();
+  const { deleteAllOrders } = useOrderStore();
+  const params = useSearchParams();
+  const payId = params.get("payId");
 
   useEffect(() => {
-    if (paymentId) {
-      fetch(`${SERVER_URL}/payments/${paymentId}/success/`, { method: "POST" })
+    if (payId) {
+      fetch(`${SERVER_URL}/payments/${payId}/success/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
           if (data.status === "ok") {
-            setSuccess(true);
             deleteAllOrders();
           }
+          setSuccess(true);
         });
     }
-  }, [paymentId, deleteAllOrders]);
-
-  useEffect(() => {
-    return () => {
-      setPaymentId(null);
-    };
-  }, [setPaymentId]);
+  }, [payId, deleteAllOrders]);
 
   if (success)
     return (

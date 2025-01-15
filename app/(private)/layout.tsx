@@ -1,15 +1,17 @@
 "use client";
 
-import { redirect } from "next/navigation";
-import { useOrderStore } from "@/store/useOrderStore";
+import { redirect, useSearchParams } from "next/navigation";
 
 type PrivateLayoutProps = {
   children: React.ReactNode;
 };
 
 const PrivateLayout = ({ children }: PrivateLayoutProps) => {
-  const { paymentId } = useOrderStore();
-  // if (!paymentId) return redirect("/");
+  const params = useSearchParams();
+  const payId = params.get("payId");
+  if (!payId) {
+    redirect("/");
+  }
   return <>{children}</>;
 };
 

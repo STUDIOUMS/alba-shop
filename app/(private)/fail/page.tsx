@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useOrderStore } from "@/store/useOrderStore";
 import { SERVER_URL } from "@/constants";
 import Section from "@/ui/Section";
 import { Alert, Typography } from "@mui/material";
@@ -9,14 +8,16 @@ import { TEXTS } from "@/texts";
 import { PaymentStatus } from "../types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import { paymentCrumbs } from "../constants";
+import { useSearchParams } from "next/navigation";
 
 const FailedPayment = () => {
   const [success, setSuccess] = useState<boolean>(false);
-  const { paymentId } = useOrderStore();
+  const params = useSearchParams();
+  const payId = params.get("payId");
 
   useEffect(() => {
-    if (paymentId) {
-      fetch(`${SERVER_URL}/payments/${paymentId}/fail/`, { method: "POST" })
+    if (payId) {
+      fetch(`${SERVER_URL}/payments/${payId}/fail/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
           console.log(data);
@@ -25,7 +26,7 @@ const FailedPayment = () => {
           }
         });
     }
-  }, [paymentId]);
+  }, [payId]);
 
   if (success)
     return (
