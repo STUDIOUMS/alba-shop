@@ -1,17 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
 import { BreadCrumbsItem } from "@/types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import Section from "@/ui/Section";
 import OrderForm from "./components/OrderForm";
 import { Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useOrderStore } from "@/store/useOrderStore";
 
 /* BreadCrumbs */
-const crumbs: BreadCrumbsItem[] = [
-  { name: "Оформление заказа", slug: `/order` },
-];
+const crumbs: BreadCrumbsItem[] = [{ name: "Оформление заказа", slug: `/order` }];
 
 function OrderPage() {
   useEffect(() => {

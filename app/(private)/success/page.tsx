@@ -7,6 +7,8 @@ import Section from "@/ui/Section";
 import { Alert, Typography } from "@mui/material";
 import { TEXTS } from "@/texts";
 import { PaymentStatus } from "../types";
+import BreadCrumbs from "@/ui/BreadCrumbs";
+import { paymentCrumbs } from "../constants";
 
 const SuccessPayment = () => {
   const [success, setSuccess] = useState<boolean>(false);
@@ -29,6 +31,7 @@ const SuccessPayment = () => {
   if (success)
     return (
       <Section>
+        <BreadCrumbs links={paymentCrumbs} />
         <Typography variant="h1">Оплата заказа</Typography>
         <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
           {TEXTS.notifications.successfulResponse}
