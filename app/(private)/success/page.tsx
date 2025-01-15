@@ -20,19 +20,24 @@ const SuccessPayment = () => {
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
           if (data.status === "ok") {
-            setPaymentId(null);
             setSuccess(true);
             deleteAllOrders();
           }
         });
     }
-  }, [paymentId]);
+  }, [paymentId, deleteAllOrders]);
+
+  useEffect(() => {
+    return () => {
+      setPaymentId(null);
+    };
+  }, [setPaymentId]);
 
   if (success)
     return (
       <Section>
         <BreadCrumbs links={paymentCrumbs} />
-        <Typography variant="h1">Оплата заказа</Typography>
+        <Typography variant="h1">Заказ успешно оплачен</Typography>
         <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
           {TEXTS.notifications.successfulResponse}
         </Alert>
