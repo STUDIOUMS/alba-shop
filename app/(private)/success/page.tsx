@@ -26,6 +26,7 @@ const SuccessPayment = () => {
           if (data.status === "ok") {
             deleteAllOrders();
             if (data.orderId) {
+              console.log(data);
               setOrderNumber(data.orderId);
             }
           }
