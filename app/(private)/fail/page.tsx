@@ -20,7 +20,6 @@ const FailedPayment = () => {
       fetch(`${SERVER_URL}/payments/${payId}/fail/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
-          console.log(data);
           if (data.status === "ok") {
             setSuccess(true);
           }

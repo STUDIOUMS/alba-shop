@@ -22,6 +22,8 @@ const SuccessPayment = () => {
       fetch(`${SERVER_URL}/payments/${payId}/success/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
+          console.log(data);
+
           if (data.status === "ok") {
             deleteAllOrders();
           }
