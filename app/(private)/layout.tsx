@@ -9,7 +9,7 @@ type PrivateLayoutProps = {
 
 const PrivateLayout = ({ children }: PrivateLayoutProps) => {
   const { paymentId } = useOrderStore();
-  if (!paymentId) return redirect("/");
+  // if (!paymentId) return redirect("/");
   return <>{children}</>;
 };
 
