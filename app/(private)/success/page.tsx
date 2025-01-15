@@ -13,6 +13,7 @@ import { useSearchParams } from "next/navigation";
 
 const SuccessPayment = () => {
   const [success, setSuccess] = useState<boolean>(false);
+  const [orderNumber, setOrderNumber] = useState<string>("");
   const { deleteAllOrders } = useOrderStore();
   const params = useSearchParams();
   const payId = params.get("payId");
@@ -22,10 +23,11 @@ const SuccessPayment = () => {
       fetch(`${SERVER_URL}/payments/${payId}/success/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
-          console.log(data);
-
           if (data.status === "ok") {
             deleteAllOrders();
+            if (data.orderId) {
+              setOrderNumber(data.orderId);
+            }
           }
           setSuccess(true);
         });
@@ -36,7 +38,7 @@ const SuccessPayment = () => {
     return (
       <Section>
         <BreadCrumbs links={paymentCrumbs} />
-        <Typography variant="h1">Заказ успешно оплачен</Typography>
+        <Typography variant="h1">Заказ №{orderNumber} успешно оплачен</Typography>
         <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
           {TEXTS.notifications.successfulResponse}
         </Alert>

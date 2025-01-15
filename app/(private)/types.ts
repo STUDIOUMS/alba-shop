@@ -1,4 +1,6 @@
 export type PaymentStatus = {
   status: "ok" | "false";
-  error: string;
+  error?: string;
+  orderId?: string;
+  paymentId?: string;
 };
