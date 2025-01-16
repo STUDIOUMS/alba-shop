@@ -10,7 +10,7 @@ import BreadCrumbs from "@/ui/BreadCrumbs";
 import { paymentCrumbs } from "../constants";
 import { useSearchParams } from "next/navigation";
 
-const FailedPayment = () => {
+const FailedPayment = (): JSX.Element => {
   const [success, setSuccess] = useState<boolean>(false);
   const params = useSearchParams();
   const payId = params.get("payId");
@@ -38,7 +38,7 @@ const FailedPayment = () => {
       </Section>
     );
 
-  return null;
+  return <></>;
 };
 
 export default FailedPayment;

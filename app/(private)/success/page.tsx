@@ -11,9 +11,10 @@ import BreadCrumbs from "@/ui/BreadCrumbs";
 import { paymentCrumbs } from "../constants";
 import { useSearchParams } from "next/navigation";
 
-const SuccessPayment = () => {
+const SuccessPayment = (): JSX.Element => {
   const [success, setSuccess] = useState<boolean>(false);
-  const [orderNumber, setOrderNumber] = useState<string>("");
+  const [orderStatus, setOrderStatus] = useState<"ok" | "false">("false");
+  const [orderStatusMsg, setOrderStatusMsg] = useState<string>("");
   const { deleteAllOrders } = useOrderStore();
   const params = useSearchParams();
   const payId = params.get("payId");
@@ -23,13 +24,12 @@ const SuccessPayment = () => {
       fetch(`${SERVER_URL}/payments/${payId}/success/`, { method: "POST" })
         .then((response) => response.json())
         .then((data: PaymentStatus) => {
+          console.log(data);
           if (data.status === "ok") {
             deleteAllOrders();
-            if (data.orderId) {
-              console.log(data);
-              setOrderNumber(data.orderId);
-            }
           }
+          setOrderStatusMsg(data.message);
+          setOrderStatus(data.status);
           setSuccess(true);
         });
     }
@@ -39,14 +39,16 @@ const SuccessPayment = () => {
     return (
       <Section>
         <BreadCrumbs links={paymentCrumbs} />
-        <Typography variant="h1">Заказ №{orderNumber} успешно оплачен</Typography>
-        <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
-          {TEXTS.notifications.successfulResponse}
-        </Alert>
+        <Typography variant="h1">{orderStatusMsg}</Typography>
+        {orderStatus === "ok" && (
+          <Alert variant="outlined" color="info" sx={{ mb: 6 }}>
+            {TEXTS.notifications.successfulResponse}
+          </Alert>
+        )}
       </Section>
     );
 
-  return null;
+  return <></>;
 };
 
 export default SuccessPayment;
