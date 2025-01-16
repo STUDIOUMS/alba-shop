@@ -1,37 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { SERVER_URL } from "@/constants";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Section from "@/ui/Section";
 import { Alert, Typography } from "@mui/material";
 import { TEXTS } from "@/texts";
 import { PaymentStatus } from "../types";
 import BreadCrumbs from "@/ui/BreadCrumbs";
 import { paymentCrumbs } from "../constants";
-import { useSearchParams } from "next/navigation";
+import useMutateData from "@/hooks/useMutateData";
 
 const FailedPayment = (): JSX.Element => {
-  const [success, setSuccess] = useState<boolean>(false);
   const params = useSearchParams();
   const payId = params.get("payId");
 
+  const { data, isSuccess, mutate } = useMutateData<null, PaymentStatus>({
+    key: ["success_payment"],
+    method: "POST",
+    uri: `/payments/${payId}/fail/`,
+  });
+
   useEffect(() => {
     if (payId) {
-      fetch(`${SERVER_URL}/payments/${payId}/fail/`, { method: "POST" })
-        .then((response) => response.json())
-        .then((data: PaymentStatus) => {
-          if (data.status === "ok") {
-            setSuccess(true);
-          }
-        });
+      mutate(null);
     }
-  }, [payId]);
+  }, [payId, mutate]);
 
-  if (success)
+  if (isSuccess && data.status === "ok")
     return (
       <Section>
         <BreadCrumbs links={paymentCrumbs} />
-        <Typography variant="h1">Оплата заказа</Typography>
+        <Typography variant="h1">Оплата заказа не совершена</Typography>
         <Alert variant="outlined" color="error" sx={{ mb: 6 }}>
           {TEXTS.notifications.failedPayment}
         </Alert>
