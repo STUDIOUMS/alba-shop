@@ -12,28 +12,20 @@ import OrderCart from "@/components/OrderCart";
 import { useOrderStore } from "@/store/useOrderStore";
 import { AlertCourier, AlertPickup } from "@/components/Alerts";
 import { getTotalPrice } from "@/utils/helpers";
-import useMutateData from "@/hooks/useMutateData";
 import { useMask } from "@react-input/mask";
 import { TEXTS } from "@/texts";
-import { CheckoutOrder, Delivery, Entity, Payment, SuccessfulOrder } from "./types";
-import { createNewOrder } from "./utils";
+import { Delivery, Entity, Payment, SuccessfulOrder } from "./types";
 import SuccessScreen from "@/components/SuccessScreen";
 import OrderFormButtons from "./OrderFormButtons";
 import { redirect } from "next/navigation";
 
 const OrderForm = (): JSX.Element => {
-  const { orders, deleteAllOrders } = useOrderStore();
+  const { orders } = useOrderStore();
   const [entity, setEntity] = useState<Entity>("individual");
   const [delivery, setDelivery] = useState<Delivery>("pickup");
   const [payment, setPayment] = useState<Payment>("online");
-  const [success, setSuccess] = useState<SuccessfulOrder | null>(null);
+  const [success] = useState<SuccessfulOrder | null>(null);
   const phoneRef = useMask(FORM_SETTINGS.mask);
-
-  const { mutate, isPending } = useMutateData<CheckoutOrder, SuccessfulOrder>({
-    key: ["orders"],
-    method: "POST",
-    uri: "/orders/",
-  });
 
   const { deliveryPrice, totalPrice, totalWithDelivery } = useMemo(
     () => getTotalPrice(orders, delivery),
@@ -47,17 +39,7 @@ const OrderForm = (): JSX.Element => {
   } = useForm<FormOrderValues>();
 
   const placeOrderFunc = async (formdata: FormOrderValues) => {
-    const newOrder = createNewOrder(formdata, entity, delivery, payment, orders);
-    mutate(newOrder, {
-      onSuccess: (data) => {
-        if (payment !== "online") {
-          setSuccess(data);
-          deleteAllOrders();
-        } else {
-          window.open(data.paymentUrl!, "_self");
-        }
-      },
-    });
+    console.log("Data");
   };
 
   if (!!success) return <SuccessScreen placedOrder={success} />;
@@ -248,7 +230,7 @@ const OrderForm = (): JSX.Element => {
             />
           </OrderSection>
 
-          <OrderFormButtons isPending={isPending} payment={payment} />
+          <OrderFormButtons isPending={false} payment={payment} />
         </form>
       </Grid2>
 
